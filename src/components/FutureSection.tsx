@@ -1,7 +1,7 @@
 import Reveal from "./Reveal";
 import { futureItems } from "@/data/content";
 
-export default function Future() {
+export default function FutureSection() {
   return (
     <section id="future">
       <Reveal className="sh inv">

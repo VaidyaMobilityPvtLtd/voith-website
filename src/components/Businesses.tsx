@@ -1,5 +1,6 @@
+import Link from "next/link";
 import Reveal from "./Reveal";
-import { businesses } from "@/data/content";
+import { businesses, routes } from "@/data/content";
 
 export default function Businesses() {
   return (
@@ -20,9 +21,9 @@ export default function Businesses() {
             <div className="biz-cat">{b.category}</div>
             <div className="biz-sub">{b.sub}</div>
             <p className="biz-desc">{b.description}</p>
-            <a href="#history" className="biz-btn">
+            <Link href={routes.industries} className="biz-btn">
               Learn More →
-            </a>
+            </Link>
           </Reveal>
         ))}
       </div>

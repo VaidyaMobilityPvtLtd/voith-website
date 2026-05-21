@@ -3,7 +3,7 @@ import { family } from "@/data/content";
 
 export default function Family() {
   return (
-    <section id="family">
+    <section id="people">
       <Reveal className="sh">
         <span className="sn">Leadership</span>
         <h2>The VOITH Family</h2>

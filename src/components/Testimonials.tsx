@@ -3,7 +3,7 @@ import { testimonials } from "@/data/content";
 
 export default function Testimonials() {
   return (
-    <section id="testimonials">
+    <section id="impact">
       <Reveal className="sh">
         <span className="sn">Voices</span>
         <h2>What People Say</h2>

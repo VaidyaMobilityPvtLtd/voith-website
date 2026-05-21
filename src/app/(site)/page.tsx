@@ -1,22 +1,19 @@
-import Topbar from "@/components/Topbar";
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import Features from "@/components/Features";
 import Businesses from "@/components/Businesses";
-import Global from "@/components/Global";
-import Milestones from "@/components/Milestones";
-import History from "@/components/History";
-import Philosophy from "@/components/Philosophy";
+import Features from "@/components/Features";
 import Family from "@/components/Family";
-import Future from "@/components/Future";
+import FutureSection from "@/components/FutureSection";
+import Global from "@/components/Global";
+import Hero from "@/components/Hero";
+import History from "@/components/History";
+import Milestones from "@/components/Milestones";
+import Philosophy from "@/components/Philosophy";
 import Testimonials from "@/components/Testimonials";
-import Footer from "@/components/Footer";
 
-export default function Home() {
+export const revalidate = 86_400;
+
+export default function HomePage() {
   return (
     <>
-      <Topbar />
-      <Nav />
       <Hero />
       <Features />
       <Businesses />
@@ -25,9 +22,8 @@ export default function Home() {
       <History />
       <Philosophy />
       <Family />
-      <Future />
+      <FutureSection />
       <Testimonials />
-      <Footer />
     </>
   );
 }

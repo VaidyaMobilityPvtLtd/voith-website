@@ -1,17 +1,10 @@
-import { features, type Feature } from "@/data/content";
+import Image from "next/image";
+import { features, founderSpotlight, type Feature } from "@/data/content";
+import founderPhoto from "@/public/dr-vaidya.png";
 
 const stroke = "#6B6968";
 
 function FeatureIcon({ icon }: { icon: Feature["icon"] }) {
-  if (icon === "bars") {
-    return (
-      <svg className="feat-icon" viewBox="0 0 36 36" fill="none" stroke={stroke} strokeWidth="1.5">
-        <rect x="4" y="18" width="6" height="14" rx="1" />
-        <rect x="15" y="10" width="6" height="22" rx="1" />
-        <rect x="26" y="4" width="6" height="28" rx="1" />
-      </svg>
-    );
-  }
   if (icon === "people") {
     return (
       <svg className="feat-icon" viewBox="0 0 36 36" fill="none" stroke={stroke} strokeWidth="1.5">
@@ -34,16 +27,38 @@ function FeatureIcon({ icon }: { icon: Feature["icon"] }) {
 
 export default function Features() {
   return (
-    <div id="features">
-      {features.map((f) => (
-        <div className="feat" key={f.label}>
-          <FeatureIcon icon={f.icon} />
-          <div>
-            <div className="feat-n">{f.label}</div>
-            <div className="feat-v">{f.value}</div>
+    <section id="features">
+      <div className="features-stats">
+        {features.map((f) => (
+          <div className="feat" key={f.label}>
+            <FeatureIcon icon={f.icon} />
+            <div>
+              <div className="feat-n">{f.label}</div>
+              <div className="feat-v">{f.value}</div>
+            </div>
           </div>
+        ))}
+      </div>
+
+      <div className="features-founder">
+        <div className="founder-copy">
+          <h2 className="founder-name">{founderSpotlight.name}</h2>
+          <div className="founder-rule" aria-hidden="true" />
+          {founderSpotlight.paragraphs.map((paragraph) => (
+            <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+          ))}
         </div>
-      ))}
-    </div>
+        <div className="founder-photo">
+          <Image
+            src={founderPhoto}
+            alt={founderSpotlight.name}
+            fill
+            sizes="(max-width: 800px) 100vw, 42vw"
+            className="founder-photo-img"
+            priority
+          />
+        </div>
+      </div>
+    </section>
   );
 }
