@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { routes } from "@/data/content";
 
 type PageShellProps = {
-  theme: "industries" | "impact" | "people" | "future";
+  theme: "industries" | "impact" | "people" | "future" | "contact";
   eyebrow: string;
   title: string;
   description: string;

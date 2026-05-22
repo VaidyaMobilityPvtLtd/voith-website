@@ -1,302 +1,253 @@
 "use client";
 
-import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { storyMilestones, type StoryMilestone } from "@/data/content";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { storyMilestones } from "@/data/content";
 
-type TimelineBlockProps = {
-  milestone: StoryMilestone;
-  isVisible: boolean;
-  isActive: boolean;
-  onImageClick: () => void;
-};
+// SVG world — vertical arc anchored to the right edge
+const VBW = 560;
+const VBH = 720;
+const CX = 540;          // arc center sits near the right edge of the viewBox
+const CY = VBH / 2;      // vertically centered → 3 o'clock is at (CX-R, CY)
+const R = 470;
+const THETA_MAX = 1.05;  // ~60° above and below 3 o'clock
+const TICK_COUNT = 80;
+const SCROLL_PER_STEP_VH = 26; // viewport-heights of scroll consumed per milestone
 
-function TimelineBlock({ milestone, isVisible, isActive, onImageClick }: TimelineBlockProps) {
-  const paragraphs = milestone.body
-    .split(/\n\n+/)
-    .map((p) => p.trim())
-    .filter(Boolean);
+type Point = { x: number; y: number };
 
-  return (
-    <article className={`story-tl-block${isVisible ? " story-tl-block--in" : ""}`}>
-      <button
-        type="button"
-        onClick={onImageClick}
-        className={`story-tl-img-btn${isActive ? " story-tl-img-btn--active" : ""}`}
-        aria-label={`View larger image: ${milestone.topic}`}
-      >
-        <Image
-          src={milestone.image}
-          alt=""
-          width={960}
-          height={540}
-          className="story-tl-img"
-          sizes="(max-width: 768px) 100vw, 520px"
-        />
-        <span className="story-tl-img-enlarge" aria-hidden="true">
-          Enlarge
-        </span>
-      </button>
-      <div className="story-tl-copy">
-        <p className="story-tl-year">{milestone.year}</p>
-        <h3 className={`story-tl-topic${isActive ? " story-tl-topic--active" : ""}`}>{milestone.topic}</h3>
-        {paragraphs.length > 0 ? (
-          <div className="story-tl-body">
-            {paragraphs.map((para) => (
-              <p key={para.slice(0, 40)}>{para}</p>
-            ))}
-          </div>
-        ) : null}
-      </div>
-    </article>
-  );
+function polar(theta: number, radius = R): Point {
+  return {
+    x: CX - radius * Math.cos(theta),
+    y: CY - radius * Math.sin(theta),
+  };
 }
 
 export default function InteractiveTimeline() {
-  const [visible, setVisible] = useState(() => storyMilestones.map(() => false));
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [lineProgress, setLineProgress] = useState(0);
-  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
-
-  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const trackRef = useRef<HTMLDivElement | null>(null);
+  const items = storyMilestones;
+  const last = items.length - 1;
+  const [progress, setProgress] = useState(0); // 0..1 — derived from scroll position
   const sectionRef = useRef<HTMLElement | null>(null);
-  const targetProgressRef = useRef(0);
-  const displayedProgressRef = useRef(0);
-  const progressRafRef = useRef<number | null>(null);
-  const lightboxOpenRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    lightboxOpenRef.current = !!lightbox;
-  }, [lightbox]);
+  const step = (2 * THETA_MAX) / Math.max(1, last);
 
-  const scrollToMilestone = useCallback((index: number) => {
-    itemRefs.current[index]?.scrollIntoView({ behavior: "smooth", block: "center" });
+  // Continuous index tracks scroll smoothly; rounded `active` snaps to nearest for highlights.
+  const continuous = progress * last;
+  const active = Math.min(last, Math.max(0, Math.round(continuous)));
+
+  const homeTheta = useCallback((i: number) => THETA_MAX - i * step, [step]);
+  const screenTheta = useCallback((i: number) => (continuous - i) * step, [continuous, step]);
+  const rotationDeg = ((THETA_MAX - continuous * step) * 180) / Math.PI;
+
+  const focus = useMemo(() => polar(0), []);
+  const arcStart = useMemo(() => polar(THETA_MAX + 0.2), []);
+  const arcEnd = useMemo(() => polar(-(THETA_MAX + 0.2)), []);
+  const arcPath = `M ${arcStart.x} ${arcStart.y} A ${R} ${R} 0 0 0 ${arcEnd.x} ${arcEnd.y}`;
+
+  const ticks = useMemo(() => {
+    const span = THETA_MAX + 0.15;
+    const list: Array<{ key: number; inner: Point; outer: Point }> = [];
+    for (let i = 0; i < TICK_COUNT; i++) {
+      const t = -span + (i / (TICK_COUNT - 1)) * 2 * span;
+      list.push({ key: i, inner: polar(t, R - 2), outer: polar(t, R + 10) });
+    }
+    return list;
   }, []);
 
-  const goPrevMilestone = useCallback(() => {
-    scrollToMilestone(Math.max(0, activeIndex - 1));
-  }, [activeIndex, scrollToMilestone]);
-
-  const goNextMilestone = useCallback(() => {
-    scrollToMilestone(Math.min(storyMilestones.length - 1, activeIndex + 1));
-  }, [activeIndex, scrollToMilestone]);
-
+  // Bind scroll position within the section to `progress` (0..1).
   useEffect(() => {
-    if (!lightbox) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightbox(null);
+    const update = () => {
+      rafRef.current = null;
+      const sec = sectionRef.current;
+      if (!sec) return;
+      const total = sec.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      const scrolled = -sec.getBoundingClientRect().top;
+      const p = Math.max(0, Math.min(1, scrolled / total));
+      setProgress((prev) => (Math.abs(prev - p) < 0.0005 ? prev : p));
     };
-    window.addEventListener("keydown", onKey);
+    const onScroll = () => {
+      if (rafRef.current != null) return;
+      rafRef.current = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
     return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
     };
-  }, [lightbox]);
+  }, []);
+
+  const jumpTo = useCallback(
+    (idx: number) => {
+      const sec = sectionRef.current;
+      if (!sec) return;
+      const total = sec.offsetHeight - window.innerHeight;
+      if (total <= 0 || last <= 0) return;
+      const clamped = Math.max(0, Math.min(last, idx));
+      const targetTop = sec.offsetTop + (clamped / last) * total;
+      window.scrollTo({ top: targetTop, behavior: "smooth" });
+    },
+    [last],
+  );
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (lightboxOpenRef.current) return;
       if (e.defaultPrevented) return;
       const target = e.target as HTMLElement | null;
       if (target?.closest?.("input, textarea, [contenteditable='true']")) return;
-      if (!sectionRef.current) return;
-      const r = sectionRef.current.getBoundingClientRect();
-      const inView = r.top < window.innerHeight * 0.85 && r.bottom > window.innerHeight * 0.15;
+      const sec = sectionRef.current;
+      if (!sec) return;
+      const r = sec.getBoundingClientRect();
+      const inView = r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5;
       if (!inView) return;
-      if (e.key === "ArrowLeft") {
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
         e.preventDefault();
-        goPrevMilestone();
-      } else if (e.key === "ArrowRight") {
+        jumpTo(active - 1);
+      } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
         e.preventDefault();
-        goNextMilestone();
+        jumpTo(active + 1);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [goPrevMilestone, goNextMilestone]);
+  }, [active, jumpTo]);
 
-  useEffect(() => {
-    const observers = itemRefs.current.map((el, i) => {
-      if (!el) return null;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setVisible((prev) => {
-              const next = [...prev];
-              next[i] = true;
-              return next;
-            });
-            obs.disconnect();
-          }
-        },
-        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
-      );
-      obs.observe(el);
-      return obs;
-    });
-    return () => observers.forEach((o) => o?.disconnect());
-  }, []);
-
-  useEffect(() => {
-    const stepProgress = () => {
-      const target = targetProgressRef.current;
-      let current = displayedProgressRef.current;
-      current += (target - current) * 0.16;
-      displayedProgressRef.current = current;
-      setLineProgress(current);
-      if (Math.abs(target - current) > 0.001) {
-        progressRafRef.current = requestAnimationFrame(stepProgress);
-      } else {
-        displayedProgressRef.current = target;
-        setLineProgress(target);
-        progressRafRef.current = null;
-      }
-    };
-
-    const update = () => {
-      const vh = window.innerHeight;
-      const focal = vh * 0.42;
-      let best = 0;
-      let bestDist = Infinity;
-
-      itemRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < 80 || rect.top > vh - 80) return;
-        const center = rect.top + rect.height / 2;
-        const dist = Math.abs(center - focal);
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = i;
-        }
-      });
-      setActiveIndex(best);
-
-      const wrap = trackRef.current;
-      if (wrap) {
-        const rect = wrap.getBoundingClientRect();
-        const passed = focal - rect.top;
-        const p = Math.max(0, Math.min(1, passed / Math.max(rect.height, 1)));
-        targetProgressRef.current = Number.isFinite(p) ? p : 0;
-        if (!progressRafRef.current) {
-          progressRafRef.current = requestAnimationFrame(stepProgress);
-        }
-      }
-    };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-      if (progressRafRef.current) cancelAnimationFrame(progressRafRef.current);
-    };
-  }, []);
+  const activeItem = items[active];
+  const sectionHeight = `calc(100vh + ${last * SCROLL_PER_STEP_VH}vh)`;
 
   return (
-    <section ref={sectionRef} id="history" className="story-tl" aria-labelledby="story-tl-heading">
-      <div className="story-tl-inner">
-        <header className="story-tl-head">
-          <p className="story-tl-kicker">Toyota Nepal · United Traders Syndicate · VOITH</p>
-          <p className="story-tl-label">
-            <span aria-hidden="true">•</span> Our story <span aria-hidden="true">•</span>
-          </p>
-          <h2 id="story-tl-heading" className="story-tl-title">
-            From foundation
-            <span className="story-tl-title-accent">to today</span>
+    <section
+      ref={sectionRef}
+      id="history"
+      className="arc-tl"
+      aria-labelledby="arc-tl-heading"
+      style={{ height: sectionHeight }}
+    >
+      <div className="arc-tl-pin">
+        <header className="arc-tl-head">
+          <p className="arc-tl-kicker">Toyota Nepal · United Traders Syndicate · VOITH</p>
+          <h2 id="arc-tl-heading" className="arc-tl-title">
+            Our journey
+            <span className="arc-tl-title-accent"> so far</span>
           </h2>
-          <div className="story-tl-divider" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </div>
-          <p className="story-tl-intro">
-            Seventeen milestones from <strong>1960</strong> to <strong>2025</strong>
+          <p className="arc-tl-intro">
+            Seventeen milestones from <strong>1960</strong> to <strong>2025</strong> — scroll up
+            and down to scrub the dial through six decades.
           </p>
-          <nav className="story-tl-chips" aria-label="Timeline quick navigation">
-            {storyMilestones.map((m, i) => (
-              <button
-                key={`${m.chipLabel}-${i}`}
-                type="button"
-                onClick={() => scrollToMilestone(i)}
-                className={`story-tl-chip${activeIndex === i ? " story-tl-chip--active" : ""}`}
-              >
-                {m.chipLabel}
-              </button>
-            ))}
-          </nav>
         </header>
 
-        <div className="story-tl-track" ref={trackRef}>
-          <div className="story-tl-line story-tl-line--bg" aria-hidden="true" />
-          <div
-            className="story-tl-line story-tl-line--fill"
-            aria-hidden="true"
-            style={{ transform: `scaleY(${Math.max(0, Math.min(1, lineProgress))})` }}
-          />
+        <div className="arc-tl-stage">
+          <article className="arc-tl-card" aria-live="polite">
+            <p className="arc-tl-card-step">
+              {String(active + 1).padStart(2, "0")}
+              <span> / {String(items.length).padStart(2, "0")}</span>
+            </p>
+            <p className="arc-tl-card-year">{activeItem.year}</p>
+            <h3 className="arc-tl-card-topic">{activeItem.topic.replace(/[:.]$/, "")}</h3>
+            <p className="arc-tl-card-body">{activeItem.body}</p>
+            <p className="arc-tl-card-hint">Scroll · ↑ ↓ to step</p>
+          </article>
 
-          <ul className="story-tl-list">
-            {storyMilestones.map((m, i) => {
-              const isRight = i % 2 === 0;
-              const isActive = activeIndex === i;
-              const isItemVisible = visible[i];
+          <div className="arc-tl-wheel">
+            <svg
+              className="arc-tl-svg"
+              viewBox={`0 0 ${VBW} ${VBH}`}
+              preserveAspectRatio="xMidYMid meet"
+              role="presentation"
+            >
+              <path className="arc-tl-bg" d={arcPath} />
 
-              return (
-                <li
-                  key={`${m.chipLabel}-${i}`}
-                  ref={(el) => {
-                    itemRefs.current[i] = el;
-                  }}
-                  className={`story-tl-item${isRight ? " story-tl-item--right" : ""}`}
-                >
-                  <button
-                    type="button"
-                    aria-label={`Jump to ${m.topic} ${m.year}`}
-                    aria-current={isActive ? "step" : undefined}
-                    onClick={() => scrollToMilestone(i)}
-                    className={`story-tl-dot${isActive ? " story-tl-dot--active" : ""}`}
+              <g>
+                {ticks.map((tk) => (
+                  <line
+                    key={tk.key}
+                    className="arc-tl-tick"
+                    x1={tk.inner.x}
+                    y1={tk.inner.y}
+                    x2={tk.outer.x}
+                    y2={tk.outer.y}
+                  />
+                ))}
+              </g>
+
+              {/* Markers rotate continuously with scroll progress */}
+              <g
+                className="arc-tl-rot"
+                style={{
+                  transform: `translate(${CX}px, ${CY}px) rotate(${rotationDeg}deg) translate(${-CX}px, ${-CY}px)`,
+                }}
+              >
+                {items.map((m, i) => {
+                  const t = homeTheta(i);
+                  const inner = polar(t, R - 4);
+                  const outer = polar(t, R + 20);
+                  const dot = polar(t, R);
+                  const isActive = i === active;
+                  return (
+                    <g key={`mk-${i}`}>
+                      <line
+                        className={`arc-tl-notch${isActive ? " is-active" : ""}`}
+                        x1={inner.x}
+                        y1={inner.y}
+                        x2={outer.x}
+                        y2={outer.y}
+                      />
+                      <circle
+                        className={`arc-tl-marker${isActive ? " is-active" : ""}`}
+                        cx={dot.x}
+                        cy={dot.y}
+                        r={isActive ? 6 : 3.5}
+                      />
+                    </g>
+                  );
+                })}
+              </g>
+
+              {/* 3 o'clock pointer */}
+              <g className="arc-tl-focus">
+                <line x1={focus.x - 56} y1={focus.y} x2={focus.x - 22} y2={focus.y} />
+                <polygon
+                  points={`${focus.x - 14},${focus.y - 7} ${focus.x - 2},${focus.y} ${focus.x - 14},${focus.y + 7}`}
+                />
+              </g>
+
+              {/* Active handle ring at 3 o'clock */}
+              <circle className="arc-tl-handle-halo" cx={focus.x} cy={focus.y} r="22" />
+              <circle className="arc-tl-handle-ring" cx={focus.x} cy={focus.y} r="14" />
+              <circle className="arc-tl-handle" cx={focus.x} cy={focus.y} r="6" />
+            </svg>
+
+            <div className="arc-tl-years" aria-hidden="true">
+              {items.map((m, i) => {
+                const t = screenTheta(i);
+                const labelPoint = polar(t, R + 44);
+                const leftPct = (labelPoint.x / VBW) * 100;
+                const topPct = (labelPoint.y / VBH) * 100;
+                const isActive = i === active;
+                const dist = Math.abs(continuous - i);
+                const opacity = Math.max(0, 1 - dist * 0.22);
+                return (
+                  <span
+                    key={`yr-${i}`}
+                    className={`arc-tl-year-tag${isActive ? " is-active" : ""}`}
+                    style={{
+                      left: `${leftPct}%`,
+                      top: `${topPct}%`,
+                      opacity,
+                    }}
                   >
-                    {i + 1}
-                  </button>
-
-                  <div className="story-tl-item-content">
-                    <TimelineBlock
-                      milestone={m}
-                      isVisible={isItemVisible}
-                      isActive={isActive}
-                      onImageClick={() => setLightbox({ src: m.image, alt: m.topic })}
-                    />
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
-
-      {lightbox ? (
-        <div className="story-tl-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged milestone photo">
-          <button type="button" className="story-tl-lightbox-backdrop" aria-label="Close image" onClick={() => setLightbox(null)} />
-          <div className="story-tl-lightbox-panel">
-            <Image
-              src={lightbox.src}
-              alt={lightbox.alt}
-              width={1200}
-              height={800}
-              className="story-tl-lightbox-img"
-              onClick={(e) => e.stopPropagation()}
-            />
-            <p className="story-tl-lightbox-caption">{lightbox.alt}</p>
-            <button type="button" className="story-tl-lightbox-close" onClick={() => setLightbox(null)}>
-              Close <span>Esc</span>
-            </button>
+                    {m.year}
+                  </span>
+                );
+              })}
+            </div>
           </div>
         </div>
-      ) : null}
+
+      </div>
     </section>
   );
 }

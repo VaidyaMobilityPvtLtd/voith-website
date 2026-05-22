@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import NepalDialog from "./NepalDialog";
 
 type TopoLike = {
   objects: { countries: unknown };
@@ -29,6 +30,8 @@ const WORLD_DATA = "https://unpkg.com/world-atlas@2/countries-110m.json";
 // Nepal, India, China, Japan, Italy, Germany, S. Korea, Philippines, Australia
 const PARTNER_IDS = new Set(["524", "356", "156", "392", "380", "276", "410", "608", "036"]);
 
+const HOTSPOT_RADIUS = 22;
+
 function loadScript(src: string): Promise<void> {
   return new Promise((resolve, reject) => {
     if (document.querySelector(`script[src="${src}"]`)) return resolve();
@@ -42,6 +45,9 @@ function loadScript(src: string): Promise<void> {
 
 export default function WorldMap() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const hotspotRef = useRef<{ x: number; y: number } | null>(null);
+  const [hovering, setHovering] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -118,14 +124,26 @@ export default function WorldMap() {
         }
 
         const [npX, npY] = proj(84.1, 28.3);
+        hotspotRef.current = { x: npX, y: npY };
+
+        // Pulsing halo to draw the eye to Nepal
+        ctx.beginPath();
+        ctx.arc(npX, npY, 16, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(196,26,26,0.18)";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(npX, npY, 11, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(196,26,26,0.55)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
         ctx.beginPath();
         ctx.arc(npX, npY, 7, 0, Math.PI * 2);
         ctx.fillStyle = "#C41A1A";
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(npX, npY, 11, 0, Math.PI * 2);
-        ctx.strokeStyle = "rgba(196,26,26,0.4)";
-        ctx.lineWidth = 2;
+        ctx.arc(npX, npY, 7, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(255,255,255,0.85)";
+        ctx.lineWidth = 1.5;
         ctx.stroke();
       } catch {
         ctx.fillStyle = "rgba(255,255,255,0.06)";
@@ -141,5 +159,41 @@ export default function WorldMap() {
     };
   }, []);
 
-  return <canvas id="worldmap" ref={canvasRef} />;
+  function withinHotspot(e: React.MouseEvent<HTMLCanvasElement>) {
+    const hs = hotspotRef.current;
+    const canvas = canvasRef.current;
+    if (!hs || !canvas) return false;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+    const dx = x - hs.x;
+    const dy = y - hs.y;
+    return dx * dx + dy * dy <= HOTSPOT_RADIUS * HOTSPOT_RADIUS;
+  }
+
+  return (
+    <div className="wm-wrap">
+      <canvas
+        id="worldmap"
+        ref={canvasRef}
+        onMouseMove={(e) => setHovering(withinHotspot(e))}
+        onMouseLeave={() => setHovering(false)}
+        onClick={(e) => {
+          if (withinHotspot(e)) setDialogOpen(true);
+        }}
+        style={{ cursor: hovering ? "pointer" : "default" }}
+      />
+      <button
+        type="button"
+        className="wm-nepal-cta"
+        onClick={() => setDialogOpen(true)}
+      >
+        <span className="wm-nepal-dot" aria-hidden="true" />
+        Explore VOITH in Nepal
+      </button>
+      <NepalDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
+    </div>
+  );
 }

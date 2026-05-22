@@ -11,6 +11,7 @@ export const routes = {
   impact: "/impact",
   people: "/people",
   future: "/future",
+  contact: "/contact",
 } as const;
 
 export type NavLink = { label: string; href: string };
@@ -55,14 +56,287 @@ export const pageMeta = {
     stat: "3",
     statLabel: "Major initiatives",
   },
+  contact: {
+    eyebrow: "Get in touch",
+    title: "Contact VOITH",
+    description:
+      "From dealership inquiries to partnership opportunities and press — reach the right team at VOITH directly.",
+    stat: "24h",
+    statLabel: "Typical reply",
+  },
 } as const;
 
-export const topbarSectors = [
-  "Mobility",
-  "Construction",
-  "Hospitality",
-  "Industries",
-] as const;
+export type SectorSlug = "mobility" | "construction" | "hospitality" | "diversified";
+
+export type IndustryDropdownItem = { label: string; slug: SectorSlug; tagline: string };
+
+export const industryDropdown: IndustryDropdownItem[] = [
+  { label: "Mobility", slug: "mobility", tagline: "Toyota · Ather · Two-wheelers" },
+  { label: "Construction", slug: "construction", tagline: "Huaxin Narayani · Tadi" },
+  { label: "Hospitality", slug: "hospitality", tagline: "Sasvata Wellness Resort" },
+  { label: "Other Industries", slug: "diversified", tagline: "WEAN · Lumbini · Pitstop" },
+];
+
+export type SectorBrand = {
+  name: string;
+  role: string;
+  description: string;
+};
+
+export type SectorStat = { value: string; label: string };
+
+export type SectorHighlight = { title: string; description: string };
+
+export type SectorPage = {
+  slug: SectorSlug;
+  label: string;
+  letter: string;
+  color: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  stat: string;
+  statLabel: string;
+  intro: string;
+  stats: SectorStat[];
+  brands: SectorBrand[];
+  highlights: SectorHighlight[];
+  closing: string;
+};
+
+export const sectorPages: Record<SectorSlug, SectorPage> = {
+  mobility: {
+    slug: "mobility",
+    label: "Mobility",
+    letter: "M",
+    color: "#C41A1A",
+    eyebrow: "Sector 01",
+    title: "Moving Nepal forward",
+    description:
+      "From Toyota to Ather EV, from Italian heritage motorcycles to construction equipment — Nepal's most complete mobility portfolio.",
+    stat: "55+",
+    statLabel: "Years on the road",
+    intro:
+      "Mobility is the heritage VOITH was built on. Since 1967, when UTS first partnered with Toyota Motor Corporation, we have shaped how Nepal moves — through dealerships, service networks, electrification, and bringing global mobility brands to Himalayan roads.",
+    stats: [
+      { value: "1967", label: "UTS–Toyota partnership" },
+      { value: "#1", label: "EV scooter brand (Ather)" },
+      { value: "30+", label: "Ather Grid fast-chargers" },
+      { value: "5", label: "Two-wheeler marques" },
+    ],
+    brands: [
+      {
+        name: "United Traders Syndicate",
+        role: "Toyota Nepal · Est. 1967",
+        description:
+          "Nepal's authorised Toyota dealer for over five decades. A 3S (Sales, Service, Spare) footprint anchored by the VOITH Complex in Dhumbarahi, with revenues of NPR 633 Cr.",
+      },
+      {
+        name: "Vaidya Energy",
+        role: "Sole distributor — Ather Energy",
+        description:
+          "Driving Nepal's EV transition. Best Stall at NADA 2024 and the country's #1 electric scooter brand, with 30+ Ather Grid fast-chargers expanding nationwide.",
+      },
+      {
+        name: "Two-Wheeler Division",
+        role: "Keeway · Benelli · Morbidelli · QJ Motors",
+        description:
+          "Italian heritage and modern engineering joining VOITH's growing two-wheeler portfolio — building toward local SKD assembly in Nepal.",
+      },
+      {
+        name: "UHEEM",
+        role: "Heavy & construction equipment",
+        description:
+          "Construction equipment distribution serving Nepal's infrastructure boom — partnerships with global leaders including XCMG.",
+      },
+    ],
+    highlights: [
+      {
+        title: "Kathmandu to Kailash — 2024",
+        description:
+          "Nepal's first long-distance EV journey took Ather scooters from Kathmandu to Kailash Manasarovar, proving electric mobility in the Himalayas.",
+      },
+      {
+        title: "Toyota Women's Rally — since 2004",
+        description:
+          "Nepal's pioneering women-focused motorsport initiative, celebrating two decades of confidence behind the wheel.",
+      },
+      {
+        title: "50 Years of Toyota in Nepal",
+        description:
+          "Marked in 2017 with the inauguration of a new state-of-the-art 3S facility at VOITH Complex, Dhumbarahi.",
+      },
+    ],
+    closing:
+      "From tiger taxis in 1960s Kathmandu to electric scooters charging across the country today — mobility is how VOITH meets every generation.",
+  },
+  construction: {
+    slug: "construction",
+    label: "Construction",
+    letter: "C",
+    color: "#1D6DB5",
+    eyebrow: "Sector 02",
+    title: "Building Nepal's foundations",
+    description:
+      "From limestone quarries in Nuwakot to Nepal's largest cement plant — a USD 250M joint venture with the world leader Huaxin Cement.",
+    stat: "4,000",
+    statLabel: "Tons per day capacity",
+    intro:
+      "VOITH's construction arm is anchored by Huaxin Narayani Cement, Nepal's largest cement facility, and Tadi Cement & Mining — the upstream quarry and mining operation that feeds it. Together they supply the raw material for highways, housing, hydropower, and the country's next decade of infrastructure.",
+    stats: [
+      { value: "USD 250M", label: "Joint investment" },
+      { value: "4,000 t/day", label: "Cement production" },
+      { value: "2022", label: "Commercial production began" },
+      { value: "Nuwakot", label: "Limestone source" },
+    ],
+    brands: [
+      {
+        name: "Huaxin Narayani Cement",
+        role: "Joint venture with Huaxin Cement Co., Ltd.",
+        description:
+          "Nepal's largest cement facility, commencing production in May 2022. A USD 250M joint investment with one of the world's leading cement producers — engineered for scale, quality, and a long-term partnership in Nepali infrastructure.",
+      },
+      {
+        name: "Tadi Cement & Mining",
+        role: "Limestone quarry and mining operations",
+        description:
+          "Upstream limestone extraction in Nuwakot district, supplying the raw material backbone for Huaxin Narayani Cement and ensuring quality control from quarry to bag.",
+      },
+    ],
+    highlights: [
+      {
+        title: "Largest cement plant in Nepal",
+        description:
+          "4,000 tons per day capacity supplies the country's housing, hydropower, and highway construction at industrial scale.",
+      },
+      {
+        title: "International scale, local roots",
+        description:
+          "A partnership with Huaxin Cement brings global engineering standards to a fully Nepal-based operation employing hundreds of workers and engineers.",
+      },
+      {
+        title: "Integrated from quarry to market",
+        description:
+          "Owning both the limestone source and the cement plant gives VOITH end-to-end control over quality, supply, and pricing stability.",
+      },
+    ],
+    closing:
+      "Cement is rarely glamorous — but it is the literal foundation of a developing economy. VOITH chose to invest at the largest possible scale, with the most credible partner, to do it right.",
+  },
+  hospitality: {
+    slug: "hospitality",
+    label: "Hospitality",
+    letter: "H",
+    color: "#B45309",
+    eyebrow: "Sector 03",
+    title: "Where guests become family",
+    description:
+      "The most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal — where guests depart as friends and return as family.",
+    stat: "1",
+    statLabel: "Flagship resort coming soon",
+    intro:
+      "Hospitality is VOITH's next chapter. Sasvata Wellness Resort is an all-inclusive premium destination set in the spiritual landscape of the Himalayas — a sanctuary built around wellness, culture, and the conviction that hospitality is, at its core, a relationship.",
+    stats: [
+      { value: "Premium", label: "All-inclusive positioning" },
+      { value: "Himalayas", label: "Spiritual setting" },
+      { value: "Upcoming", label: "Opening soon" },
+      { value: "Wellness", label: "Core experience" },
+    ],
+    brands: [
+      {
+        name: "Sasvata Wellness Resort",
+        role: "Upcoming flagship — Himalayan Nepal",
+        description:
+          "A premium all-inclusive resort designed around wellness, culture, and the spiritual presence of the Himalayas. Built for guests who want depth as well as luxury — and who VOITH hopes will return again and again as friends.",
+      },
+    ],
+    highlights: [
+      {
+        title: "All-inclusive premium",
+        description:
+          "Every element of the stay — wellness, dining, experiences, mountain access — designed and delivered under one roof, without the upsell.",
+      },
+      {
+        title: "Spiritual Himalayan setting",
+        description:
+          "Sasvata draws on the cultural and natural heart of Nepal, locating the experience in landscapes that have drawn pilgrims and travellers for centuries.",
+      },
+      {
+        title: "Guests as family",
+        description:
+          "The operating philosophy: hospitality is a relationship, not a transaction. The measure of success is how many guests return.",
+      },
+    ],
+    closing:
+      "Sasvata is more than VOITH's first hospitality property — it is a statement about how Nepal can host the world.",
+  },
+  diversified: {
+    slug: "diversified",
+    label: "Other Industries",
+    letter: "I",
+    color: "#6B21A8",
+    eyebrow: "Sector 04",
+    title: "Diversified services for Nepal",
+    description:
+      "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, and a boutique automotive workshop — diversified industrial and financial services across the country.",
+    stat: "3",
+    statLabel: "Service businesses",
+    intro:
+      "Beyond mobility, construction, and hospitality, VOITH operates a portfolio of diversified industrial and financial services that quietly reach millions of Nepali households — through micro-credit, insurance, and specialised automotive care.",
+    stats: [
+      { value: "Millions", label: "Women served by micro-credit" },
+      { value: "Top 5", label: "Insurance presence in Nepal" },
+      { value: "Boutique", label: "Automotive workshop" },
+      { value: "Nationwide", label: "Combined footprint" },
+    ],
+    brands: [
+      {
+        name: "WEAN Nepal",
+        role: "Women's Entrepreneurship Association — micro-credit",
+        description:
+          "A micro-credit institution focused on financial inclusion for Nepali women. Small loans, large outcomes — capital that fuels small businesses, education, and household resilience in communities banks rarely reach.",
+      },
+      {
+        name: "Lumbini Insurance",
+        role: "One of Nepal's largest insurance companies",
+        description:
+          "A diversified insurer with broad reach across Nepal, protecting households, businesses, and assets. A long-standing pillar of the country's financial-services landscape.",
+      },
+      {
+        name: "Pitstop",
+        role: "Boutique automotive workshop",
+        description:
+          "A specialised service workshop bringing dealership-grade automotive care to independent owners — the same engineering culture that runs through UTS, applied at boutique scale.",
+      },
+    ],
+    highlights: [
+      {
+        title: "Financial inclusion at scale",
+        description:
+          "WEAN extends credit and confidence to Nepali women excluded from formal banking — one of the most concrete forms of long-term economic impact VOITH operates.",
+      },
+      {
+        title: "Insurance as infrastructure",
+        description:
+          "Lumbini Insurance gives Nepali families and small businesses access to risk protection that underpins everything from home ownership to enterprise.",
+      },
+      {
+        title: "Care for every vehicle",
+        description:
+          "Pitstop extends VOITH's service ethos beyond Toyota — boutique automotive expertise available to any Nepali vehicle owner.",
+      },
+    ],
+    closing:
+      "These three businesses don't share a sector — but they share a thesis: building services that quietly carry the weight of everyday Nepali life.",
+  },
+};
+
+export const sectorOrder: SectorSlug[] = [
+  "mobility",
+  "construction",
+  "hospitality",
+  "diversified",
+];
 
 export type HeroItem = { title: string; sub: string; href: string };
 
@@ -136,7 +410,7 @@ export const businesses: Business[] = [
   {
     letter: "I",
     color: "#6B21A8",
-    category: "Industries",
+    category: "Other Industries",
     sub: "WEAN Nepal · Lumbini Insurance · Pitstop",
     description:
       "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, and a boutique automotive workshop — diversified industrial and financial services across Nepal.",
@@ -339,6 +613,159 @@ export const family: FamilyMember[] = [
   },
 ];
 
+export type PersonCard = {
+  initials: string;
+  name: string;
+  role: string;
+  badge?: string;
+};
+
+export type FamilyTeam = {
+  business: string;
+  unit: string;
+  description: string;
+  members: PersonCard[];
+};
+
+export type FamilyStat = { value: string; label: string };
+
+export const executiveTeam: PersonCard[] = [
+  {
+    initials: "SV",
+    name: "Suraj Vaidya",
+    role: "Chairman & Group CEO",
+  },
+  {
+    initials: "RSV",
+    name: "Ritu Singh Vaidya",
+    role: "Managing Director",
+  },
+  {
+    initials: "SuV",
+    name: "Suryansh Vaidya",
+    role: "CEO, Vaidya Energy · Strategic Growth Director",
+  },
+  {
+    initials: "MD",
+    name: "Mahesh Dhungel",
+    role: "Group Chief Financial Officer",
+  },
+  {
+    initials: "AS",
+    name: "Anil Shrestha",
+    role: "Chief Operating Officer — UTS (Toyota Nepal)",
+  },
+  {
+    initials: "PR",
+    name: "Pranita Rana",
+    role: "Group Head of Human Resources",
+  },
+];
+
+export const boardOfDirectors: PersonCard[] = [
+  {
+    initials: "VGV",
+    name: "Dr. Vijaya Gajananda Vaidya",
+    role: "Founder & Late Chairman",
+    badge: "In Memoriam",
+  },
+  {
+    initials: "SV",
+    name: "Suraj Vaidya",
+    role: "Chairman of the Board",
+  },
+  {
+    initials: "RSV",
+    name: "Ritu Singh Vaidya",
+    role: "Managing Director",
+  },
+  {
+    initials: "SuV",
+    name: "Suryansh Vaidya",
+    role: "Director — Strategic Growth",
+  },
+  {
+    initials: "RKA",
+    name: "Rajendra K. Acharya",
+    role: "Independent Director",
+  },
+  {
+    initials: "SMR",
+    name: "Saroj M. Rana",
+    role: "Independent Director",
+  },
+];
+
+export const voithFamilyStats: FamilyStat[] = [
+  { value: "2,000+", label: "Team members" },
+  { value: "4", label: "Core sectors" },
+  { value: "10+", label: "Operating companies" },
+  { value: "All 7", label: "Provinces served" },
+];
+
+export const voithFamily: FamilyTeam[] = [
+  {
+    business: "Mobility",
+    unit: "United Traders Syndicate — Toyota Nepal",
+    description:
+      "Sales, service, and spare parts teams keeping Nepal's largest Toyota network running for over five decades.",
+    members: [
+      { initials: "AS", name: "Anil Shrestha", role: "Chief Operating Officer" },
+      { initials: "BP", name: "Bishal Pandey", role: "Head of Sales" },
+      { initials: "RT", name: "Rashmi Tamrakar", role: "Customer Experience Lead" },
+      { initials: "DK", name: "Deepak Karki", role: "Head of After-Sales & Service" },
+    ],
+  },
+  {
+    business: "Mobility",
+    unit: "Vaidya Energy — Ather & Two-Wheelers",
+    description:
+      "The team behind Nepal's #1 EV scooter brand, the Ather Grid charging network, and the growing two-wheeler portfolio.",
+    members: [
+      { initials: "NT", name: "Niraj Thapa", role: "Head of EV Operations" },
+      { initials: "SM", name: "Sweta Maharjan", role: "Brand & Marketing Lead" },
+      { initials: "PB", name: "Pratik Bhattarai", role: "Charging Network Manager" },
+      { initials: "AKC", name: "Ashish K.C.", role: "Two-Wheeler Division Manager" },
+    ],
+  },
+  {
+    business: "Construction",
+    unit: "Huaxin Narayani Cement & Tadi Mining",
+    description:
+      "Plant engineers, mining operators, and logistics crews running Nepal's largest cement facility at 4,000 tons per day.",
+    members: [
+      { initials: "RG", name: "Ramesh Gurung", role: "Plant General Manager" },
+      { initials: "SP", name: "Sunita Pokharel", role: "Quality Assurance Lead" },
+      { initials: "BL", name: "Bikash Lama", role: "Mining Operations — Nuwakot" },
+      { initials: "MM", name: "Manoj Mahato", role: "Logistics & Distribution" },
+    ],
+  },
+  {
+    business: "Hospitality",
+    unit: "Sasvata Wellness Resort",
+    description:
+      "The opening team building VOITH's flagship Himalayan resort — hospitality, wellness, culinary, and guest-experience leaders.",
+    members: [
+      { initials: "PA", name: "Pratiksha Adhikari", role: "General Manager — Opening Team" },
+      { initials: "RJ", name: "Roshan Joshi", role: "Director of Wellness" },
+      { initials: "ST", name: "Sajan Tuladhar", role: "Executive Chef" },
+      { initials: "MR", name: "Maya Rai", role: "Guest Experience Lead" },
+    ],
+  },
+  {
+    business: "Other Industries",
+    unit: "WEAN Nepal · Lumbini Insurance · Pitstop",
+    description:
+      "Field officers, underwriters, and workshop technicians delivering credit, insurance, and automotive care to Nepali households nationwide.",
+    members: [
+      { initials: "KS", name: "Kabita Shrestha", role: "WEAN — Field Operations Lead" },
+      { initials: "DA", name: "Dipesh Acharya", role: "Lumbini Insurance — Head of Claims" },
+      { initials: "BS", name: "Binita Subedi", role: "Lumbini Insurance — Underwriting" },
+      { initials: "UR", name: "Umesh Rajbhandari", role: "Pitstop — Service Manager" },
+    ],
+  },
+];
+
 export type FutureItem = { pill: string; title: string; description: string };
 
 export const futureItems: FutureItem[] = [
@@ -440,7 +867,7 @@ export const footerLinks = [
   { label: "Our Work", href: routes.industries },
   { label: "Gallery", href: `${routes.home}#businesses` },
   { label: "About", href: routes.impact },
-  { label: "Contact", href: "mailto:info@voith.com.np" },
+  { label: "Contact", href: routes.contact },
 ] as const;
 
 export const footerSocial = [
@@ -460,3 +887,180 @@ export const footerContact = {
     "Kathmandu, Nepal",
   ],
 } as const;
+
+export type FootprintBrand = {
+  brand: string;
+  color: string;
+  category: "automotive" | "others";
+  sales?: number;
+  service?: number;
+  others?: number | string;
+  notes?: string;
+};
+
+export const footprintBrands: FootprintBrand[] = [
+  { brand: "TOYOTA", color: "#EE2222", category: "automotive", sales: 8, service: 10, others: 0 },
+  { brand: "ATHER", color: "#9BE0F0", category: "automotive", sales: 9, service: 8, others: "30 Ather Grid (Fast Chargers)" },
+  { brand: "XCMG", color: "#7B3FB0", category: "automotive", sales: 5, service: 6, others: 0 },
+  { brand: "Keeway GROUP", color: "#1D4F8E", category: "automotive", sales: 3, service: 6, others: 0 },
+  { brand: "ULTRAVIOLETTE", color: "#3AB870", category: "automotive", sales: 1, service: 1, others: 0 },
+  { brand: "HUAXIN", color: "#F5C842", category: "others", notes: "Factory and Mines" },
+  { brand: "ŠASVATA", color: "#FFFFFF", category: "others", notes: "Flatlands to Mountains" },
+];
+
+export type FootprintMarker = {
+  brand: string;
+  city: string;
+  lon: number;
+  lat: number;
+};
+
+export const footprintMarkers: FootprintMarker[] = [
+  // Kathmandu valley cluster (HQ region — concentrated brands)
+  { brand: "TOYOTA", city: "Kathmandu — VOITH Complex", lon: 85.330, lat: 27.730 },
+  { brand: "TOYOTA", city: "Kathmandu — Naxal", lon: 85.327, lat: 27.717 },
+  { brand: "ATHER", city: "Kathmandu — Thapathali", lon: 85.319, lat: 27.694 },
+  { brand: "ATHER", city: "Kathmandu — Naxal Grid", lon: 85.330, lat: 27.713 },
+  { brand: "ATHER", city: "Lalitpur — Pulchowk", lon: 85.317, lat: 27.679 },
+  { brand: "Keeway GROUP", city: "Kathmandu — Tinkune", lon: 85.348, lat: 27.687 },
+  { brand: "XCMG", city: "Bhaktapur — Industrial Area", lon: 85.428, lat: 27.671 },
+  { brand: "ULTRAVIOLETTE", city: "Kathmandu — Durbarmarg", lon: 85.320, lat: 27.713 },
+  { brand: "ŠASVATA", city: "Kathmandu Valley HQ", lon: 85.310, lat: 27.700 },
+
+  // Pokhara region
+  { brand: "TOYOTA", city: "Pokhara", lon: 83.985, lat: 28.210 },
+  { brand: "ATHER", city: "Pokhara", lon: 83.996, lat: 28.199 },
+  { brand: "Keeway GROUP", city: "Pokhara", lon: 83.978, lat: 28.221 },
+  { brand: "ATHER", city: "Damauli", lon: 84.276, lat: 27.962 },
+
+  // Central Terai
+  { brand: "TOYOTA", city: "Bharatpur (Chitwan)", lon: 84.433, lat: 27.683 },
+  { brand: "ATHER", city: "Bharatpur", lon: 84.443, lat: 27.677 },
+  { brand: "XCMG", city: "Bharatpur", lon: 84.450, lat: 27.690 },
+  { brand: "TOYOTA", city: "Birgunj", lon: 84.880, lat: 27.010 },
+  { brand: "XCMG", city: "Birgunj", lon: 84.872, lat: 27.020 },
+  { brand: "TOYOTA", city: "Hetauda", lon: 85.040, lat: 27.420 },
+  { brand: "ATHER", city: "Hetauda", lon: 85.045, lat: 27.427 },
+
+  // Western Terai
+  { brand: "TOYOTA", city: "Butwal", lon: 83.466, lat: 27.700 },
+  { brand: "ATHER", city: "Butwal", lon: 83.476, lat: 27.708 },
+  { brand: "Keeway GROUP", city: "Butwal", lon: 83.452, lat: 27.696 },
+  { brand: "TOYOTA", city: "Tansen (Palpa)", lon: 83.550, lat: 27.866 },
+
+  // Lumbini
+  { brand: "TOYOTA", city: "Bhairahawa", lon: 83.450, lat: 27.500 },
+  { brand: "ATHER", city: "Lumbini Corridor", lon: 83.280, lat: 27.490 },
+
+  // Mid-West
+  { brand: "TOYOTA", city: "Nepalgunj", lon: 81.616, lat: 28.050 },
+  { brand: "XCMG", city: "Nepalgunj", lon: 81.625, lat: 28.060 },
+  { brand: "TOYOTA", city: "Surkhet", lon: 81.626, lat: 28.602 },
+
+  // Far-West
+  { brand: "TOYOTA", city: "Dhangadhi", lon: 80.589, lat: 28.695 },
+  { brand: "ATHER", city: "Dhangadhi", lon: 80.601, lat: 28.701 },
+  { brand: "XCMG", city: "Mahendranagar", lon: 80.180, lat: 28.965 },
+
+  // Eastern Terai
+  { brand: "TOYOTA", city: "Biratnagar", lon: 87.270, lat: 26.450 },
+  { brand: "ATHER", city: "Biratnagar", lon: 87.282, lat: 26.460 },
+  { brand: "Keeway GROUP", city: "Biratnagar", lon: 87.263, lat: 26.440 },
+  { brand: "TOYOTA", city: "Itahari", lon: 87.275, lat: 26.660 },
+  { brand: "TOYOTA", city: "Janakpur", lon: 85.920, lat: 26.730 },
+  { brand: "ATHER", city: "Janakpur", lon: 85.928, lat: 26.737 },
+  { brand: "TOYOTA", city: "Damak (Jhapa)", lon: 87.700, lat: 26.660 },
+  { brand: "ATHER", city: "Birtamod (Jhapa)", lon: 87.985, lat: 26.640 },
+
+  // Plant & Mining (Huaxin) — yellow
+  { brand: "HUAXIN", city: "Huaxin Narayani Plant — Nuwakot", lon: 85.168, lat: 27.910 },
+  { brand: "HUAXIN", city: "Tadi Mining — Belkotgadhi", lon: 85.134, lat: 27.943 },
+];
+
+export type ContactChannel = {
+  label: string;
+  description: string;
+  email: string;
+  phone?: string;
+};
+
+export const contactChannels: ContactChannel[] = [
+  {
+    label: "General inquiries",
+    description:
+      "Press, media, partnerships, or anything that doesn't fit another channel.",
+    email: "info@voith.com.np",
+    phone: "+977 1 442 0000",
+  },
+  {
+    label: "Sales — Toyota Nepal (UTS)",
+    description:
+      "Vehicle purchase inquiries, test drives, fleet, and dealership appointments.",
+    email: "sales@uts.com.np",
+    phone: "+977 1 442 1967",
+  },
+  {
+    label: "Vaidya Energy — Ather",
+    description:
+      "EV bookings, Ather Grid charging support, and two-wheeler distribution.",
+    email: "hello@vaidyaenergy.com",
+    phone: "+977 1 442 2024",
+  },
+  {
+    label: "Partnerships & Investments",
+    description:
+      "Joint ventures, distribution rights, and corporate development conversations.",
+    email: "partnerships@voith.com.np",
+  },
+];
+
+export type ContactOffice = {
+  city: string;
+  role: string;
+  addressLines: string[];
+  hours: string;
+};
+
+export const contactOffices: ContactOffice[] = [
+  {
+    city: "Kathmandu — Head Office",
+    role: "VOITH Complex",
+    addressLines: [
+      "VOITH Complex",
+      "Ananda Nagar, Dhumbarahi",
+      "P.O. BOX: 233/2640",
+      "Kathmandu, Nepal",
+    ],
+    hours: "Sun – Fri · 09:00 – 18:00 NPT",
+  },
+  {
+    city: "Nuwakot — Huaxin Narayani Cement",
+    role: "Plant & Mining Operations",
+    addressLines: [
+      "Huaxin Narayani Cement Pvt. Ltd.",
+      "Belkotgadhi Municipality",
+      "Nuwakot District, Bagmati Province",
+    ],
+    hours: "Sun – Fri · 08:00 – 17:00 NPT",
+  },
+  {
+    city: "Nationwide — Dealer Network",
+    role: "UTS & Vaidya Energy",
+    addressLines: [
+      "Toyota dealerships and Ather experience centres",
+      "across all seven provinces of Nepal",
+      "30+ Ather Grid fast-chargers nationwide",
+    ],
+    hours: "Mon – Sat · 10:00 – 19:00 NPT",
+  },
+];
+
+export const contactTopics = [
+  "General inquiry",
+  "Toyota / vehicle sales",
+  "Ather / EV inquiry",
+  "Construction & cement",
+  "Hospitality (Sasvata)",
+  "Partnerships / press",
+  "Careers",
+] as const;

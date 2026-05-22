@@ -1,7 +1,24 @@
-import { businesses, globalFeatures, milestones, pageMeta } from "@/data/content";
+import Link from "next/link";
+import {
+  businesses,
+  globalFeatures,
+  industryDropdown,
+  milestones,
+  pageMeta,
+  routes,
+  sectorPages,
+} from "@/data/content";
 import PageShell from "./PageShell";
 
 const meta = pageMeta.industries;
+
+const slugByCategory = industryDropdown.reduce<Record<string, string>>(
+  (acc, item) => {
+    acc[item.label] = item.slug;
+    return acc;
+  },
+  {},
+);
 
 export default function IndustriesPageView() {
   return (
@@ -16,26 +33,38 @@ export default function IndustriesPageView() {
       <section className="pg-sectors">
         <h2 className="pg-section-title">Four core sectors</h2>
         <div className="pg-sector-list">
-          {businesses.map((b, i) => (
-            <article
-              key={b.category}
-              className={`pg-sector-row${i % 2 === 1 ? " pg-sector-row--flip" : ""}`}
-            >
-              <div
-                className="pg-sector-mark"
-                style={{ background: b.color }}
-                aria-hidden="true"
+          {businesses.map((b, i) => {
+            const slug = slugByCategory[b.category];
+            const sectorTitle = slug ? sectorPages[slug as keyof typeof sectorPages]?.title : undefined;
+            return (
+              <article
+                key={b.category}
+                className={`pg-sector-row${i % 2 === 1 ? " pg-sector-row--flip" : ""}`}
               >
-                {b.letter}
-              </div>
-              <div className="pg-sector-copy">
-                <span className="pg-sector-num">0{i + 1}</span>
-                <h3>{b.category}</h3>
-                <p className="pg-sector-sub">{b.sub}</p>
-                <p>{b.description}</p>
-              </div>
-            </article>
-          ))}
+                <div
+                  className="pg-sector-mark"
+                  style={{ background: b.color }}
+                  aria-hidden="true"
+                >
+                  {b.letter}
+                </div>
+                <div className="pg-sector-copy">
+                  <span className="pg-sector-num">0{i + 1}</span>
+                  <h3>{b.category}</h3>
+                  <p className="pg-sector-sub">{b.sub}</p>
+                  <p>{b.description}</p>
+                  {slug ? (
+                    <Link
+                      href={`${routes.industries}/${slug}`}
+                      className="pg-sector-link"
+                    >
+                      {sectorTitle ? `Explore ${b.category}` : "Learn more"} →
+                    </Link>
+                  ) : null}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
