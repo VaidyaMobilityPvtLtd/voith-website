@@ -22,6 +22,7 @@ export default function ImpactPageView() {
         description={meta.description}
         stat={`${getYearsSinceFounding()}+`}
         statLabel={meta.statLabel}
+        heroImage={meta.heroImage}
       >
         <section className="pg-mvv">
           <article className="pg-mvv-card">

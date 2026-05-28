@@ -12,6 +12,7 @@ export default function FuturePageView() {
       description={meta.description}
       stat={meta.stat}
       statLabel={meta.statLabel}
+      heroImage={meta.heroImage}
     >
       <section className="pg-initiatives">
         {futureItems.map((item, i) => (

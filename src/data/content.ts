@@ -31,6 +31,7 @@ export const pageMeta = {
       "Mobility, construction, hospitality, and diversified services — VOITH's four sectors building Nepal's economy.",
     stat: "4",
     statLabel: "Core sectors",
+    heroImage: "/timeline/homepage.jpg",
   },
   impact: {
     eyebrow: "Community",
@@ -39,6 +40,7 @@ export const pageMeta = {
       "Partnerships, values, and milestones that reflect VOITH's commitment to Nepal's people and institutions.",
     stat: "60+",
     statLabel: "Years of contribution",
+    heroImage: "/timeline/home2.png",
   },
   people: {
     eyebrow: "Leadership",
@@ -47,6 +49,7 @@ export const pageMeta = {
       "The Vaidya family and leadership team guiding VOITH across generations of entrepreneurship in Nepal.",
     stat: "4",
     statLabel: "Generations leading",
+    heroImage: "/timeline/homepage.jpg",
   },
   future: {
     eyebrow: "Forward",
@@ -55,6 +58,7 @@ export const pageMeta = {
       "Hospitality, electric mobility, and local manufacturing — where VOITH is headed next.",
     stat: "3",
     statLabel: "Major initiatives",
+    heroImage: "/timeline/home2.png",
   },
   contact: {
     eyebrow: "Get in touch",
@@ -63,6 +67,7 @@ export const pageMeta = {
       "From dealership inquiries to partnership opportunities and press — reach the right team at VOITH directly.",
     stat: "24h",
     statLabel: "Typical reply",
+    heroImage: "/timeline/homepage.jpg",
   },
 } as const;
 
@@ -97,6 +102,7 @@ export type SectorPage = {
   description: string;
   stat: string;
   statLabel: string;
+  heroImage: string;
   intro: string;
   stats: SectorStat[];
   brands: SectorBrand[];
@@ -116,6 +122,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
       "From Toyota to Ather EV, from Italian heritage motorcycles to construction equipment — Nepal's most complete mobility portfolio.",
     stat: "55+",
     statLabel: "Years on the road",
+    heroImage: "/timeline/homepage.jpg",
     intro:
       "Mobility is the heritage VOITH was built on. Since 1967, when UTS first partnered with Toyota Motor Corporation, we have shaped how Nepal moves — through dealerships, service networks, electrification, and bringing global mobility brands to Himalayan roads.",
     stats: [
@@ -181,6 +188,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
       "From limestone quarries in Nuwakot to Nepal's largest cement plant — a USD 250M joint venture with the world leader Huaxin Cement.",
     stat: "4,000",
     statLabel: "Tons per day capacity",
+    heroImage: "/timeline/home2.png",
     intro:
       "VOITH's construction arm is anchored by Huaxin Narayani Cement, Nepal's largest cement facility, and Tadi Cement & Mining — the upstream quarry and mining operation that feeds it. Together they supply the raw material for highways, housing, hydropower, and the country's next decade of infrastructure.",
     stats: [
@@ -234,6 +242,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
       "The most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal — where guests depart as friends and return as family.",
     stat: "1",
     statLabel: "Flagship resort coming soon",
+    heroImage: "/timeline/homepage.jpg",
     intro:
       "Hospitality is VOITH's next chapter. Sasvata Wellness Resort is an all-inclusive premium destination set in the spiritual landscape of the Himalayas — a sanctuary built around wellness, culture, and the conviction that hospitality is, at its core, a relationship.",
     stats: [
@@ -281,6 +290,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
       "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, and a boutique automotive workshop — diversified industrial and financial services across the country.",
     stat: "3",
     statLabel: "Service businesses",
+    heroImage: "/timeline/home2.png",
     intro:
       "Beyond mobility, construction, and hospitality, VOITH operates a portfolio of diversified industrial and financial services that quietly reach millions of Nepali households — through micro-credit, insurance, and specialised automotive care.",
     stats: [
@@ -380,6 +390,7 @@ export type Business = {
   category: string;
   sub: string;
   description: string;
+  image: string;
 };
 
 export const businesses: Business[] = [
@@ -390,6 +401,7 @@ export const businesses: Business[] = [
     sub: "UTS · Vaidya Energy · 2-Wheeler · UHEEM",
     description:
       "From Toyota to Ather EV, from Italian motorcycles to construction equipment — Nepal's most complete mobility portfolio, serving every segment of the market.",
+    image: "/timeline/homepage.jpg",
   },
   {
     letter: "C",
@@ -398,6 +410,7 @@ export const businesses: Business[] = [
     sub: "Huaxin Narayani Cement · Tadi Cement & Mining",
     description:
       "From limestone quarries in Nuwakot to Nepal's largest cement plant — 4,000 tons per day, a USD 250M joint venture with world leader Huaxin Cement.",
+    image: "/sectors/construction.jpg",
   },
   {
     letter: "H",
@@ -406,6 +419,7 @@ export const businesses: Business[] = [
     sub: "Sasvata Wellness Resort",
     description:
       "The most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal — where guests depart as friends and return as family.",
+    image: "/sectors/hospitality.jpg",
   },
   {
     letter: "I",
@@ -414,6 +428,7 @@ export const businesses: Business[] = [
     sub: "WEAN Nepal · Lumbini Insurance · Pitstop",
     description:
       "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, and a boutique automotive workshop — diversified industrial and financial services across Nepal.",
+    image: "/sectors/other_industries.webp",
   },
 ];
 
@@ -618,6 +633,8 @@ export type PersonCard = {
   name: string;
   role: string;
   badge?: string;
+  image?: string;
+  bio?: string;
 };
 
 export type FamilyTeam = {
@@ -634,31 +651,22 @@ export const executiveTeam: PersonCard[] = [
     initials: "SV",
     name: "Suraj Vaidya",
     role: "Chairman & Group CEO",
+    image: "/SurajSir.JPG",
+    bio: "Promoter of economic growth. Former President of SAARC Chamber of Commerce & Industry and FNCCI. Advisor to the Prime Minister's Economic Council. Recipient of Jana Sewa Shree — one of Nepal's highest civilian honours. Honorary Consul General of the Philippines. Leads VOITH's group strategy across mobility, construction, hospitality and diversified services.",
   },
   {
     initials: "RSV",
     name: "Ritu Singh Vaidya",
     role: "Managing Director",
+    image: "/RituMam.JPG",
+    bio: "Miss India 1991 and First runner-up Miss World. President of NAIMA — Nepal Automotive Importers and Manufacturers Association. The only woman shark on Shark Tank Nepal. Past President of Young Presidents' Organisation (YPO). Drives operational excellence, brand and culture across VOITH's portfolio.",
   },
   {
     initials: "SuV",
     name: "Suryansh Vaidya",
     role: "CEO, Vaidya Energy · Strategic Growth Director",
-  },
-  {
-    initials: "MD",
-    name: "Mahesh Dhungel",
-    role: "Group Chief Financial Officer",
-  },
-  {
-    initials: "AS",
-    name: "Anil Shrestha",
-    role: "Chief Operating Officer — UTS (Toyota Nepal)",
-  },
-  {
-    initials: "PR",
-    name: "Pranita Rana",
-    role: "Group Head of Human Resources",
+    image: "/SuryanshSir.JPG",
+    bio: "Driving Nepal's EV transition as CEO of Vaidya Energy — sole authorised Ather Energy distributor. Ather won Best Stall at NADA 2024. Finalising new EV partnerships and expanding the two-wheeler portfolio. Honorary Consul General of the Philippines in Nepal. Leads strategic growth initiatives across the next-generation VOITH portfolio.",
   },
 ];
 

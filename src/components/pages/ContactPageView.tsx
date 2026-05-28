@@ -20,6 +20,7 @@ export default function ContactPageView() {
       description={meta.description}
       stat={meta.stat}
       statLabel={meta.statLabel}
+      heroImage={meta.heroImage}
     >
       <section className="contact-channels">
         <header className="contact-section-head">

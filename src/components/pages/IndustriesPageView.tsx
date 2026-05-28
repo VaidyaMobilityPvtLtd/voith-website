@@ -29,6 +29,7 @@ export default function IndustriesPageView() {
       description={meta.description}
       stat={meta.stat}
       statLabel={meta.statLabel}
+      heroImage={meta.heroImage}
     >
       <section className="pg-sectors">
         <h2 className="pg-section-title">Four core sectors</h2>

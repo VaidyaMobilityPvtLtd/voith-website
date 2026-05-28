@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { industryDropdown, navLinks, routes } from "@/data/content";
-import Logo from "@/public/voithlogo.png";
+import Logo from "../../public/voithlogo.png";
+
 
 function isActive(pathname: string, href: string) {
   if (href === routes.industries) {

@@ -10,7 +10,13 @@ export default function SectorPageView({ slug }: Props) {
   return (
     <div className="pg pg-sector" style={{ "--sector-color": data.color } as React.CSSProperties}>
       <header className="pg-hero sec-hero">
-        <div className="pg-hero-inner">
+        <div
+          className="pg-hero-bg"
+          style={{ backgroundImage: `url(${data.heroImage})` }}
+          aria-hidden="true"
+        />
+        <div className="pg-hero-shade" aria-hidden="true" />
+        <div className="pg-hero-content">
           <nav className="pg-crumb" aria-label="Breadcrumb">
             <Link href={routes.home}>Home</Link>
             <span aria-hidden="true">/</span>
@@ -21,13 +27,19 @@ export default function SectorPageView({ slug }: Props) {
           <p className="pg-eyebrow">{data.eyebrow}</p>
           <h1 className="pg-title">{data.title}</h1>
           <p className="pg-lead">{data.description}</p>
-        </div>
-        <div className="pg-hero-aside sec-hero-aside">
-          <div className="sec-mark" aria-hidden="true">
-            {data.letter}
+          <div className="pg-hero-badge">
+            <span className="pg-hero-badge-rule" aria-hidden="true" />
+            <span
+              className="pg-hero-badge-mark"
+              style={{ background: data.color }}
+              aria-hidden="true"
+            >
+              {data.letter}
+            </span>
+            <span className="pg-hero-badge-n">{data.stat}</span>
+            <span className="pg-hero-badge-l">{data.statLabel}</span>
+            <span className="pg-hero-badge-rule" aria-hidden="true" />
           </div>
-          <span className="pg-stat-n">{data.stat}</span>
-          <span className="pg-stat-l">{data.statLabel}</span>
         </div>
       </header>
 

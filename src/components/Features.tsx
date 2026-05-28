@@ -1,12 +1,16 @@
 import Image from "next/image";
 import { founderSpotlight } from "@/data/content";
-import founderPhoto from "@/public/dr-vaidya.png";
+import founderPhoto from "../../public/dr-vaidya2.jpg";
 
 export default function Features() {
   return (
     <section id="features">
       <div className="features-founder">
         <div className="founder-copy">
+          <span className="founder-eyebrow">
+            <span className="founder-eyebrow-dot" aria-hidden="true" />
+            Founder
+          </span>
           <h2 className="founder-name">{founderSpotlight.name}</h2>
           <div className="founder-rule" aria-hidden="true" />
           {founderSpotlight.paragraphs.map((paragraph) => (

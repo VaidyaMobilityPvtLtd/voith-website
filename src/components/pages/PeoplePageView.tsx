@@ -19,6 +19,7 @@ export default function PeoplePageView() {
       description={meta.description}
       stat={meta.stat}
       statLabel={meta.statLabel}
+      heroImage={meta.heroImage}
     >
       <PeopleTabs
         executiveTeam={executiveTeam}

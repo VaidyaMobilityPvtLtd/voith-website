@@ -9,6 +9,7 @@ type PageShellProps = {
   description: string;
   stat?: string;
   statLabel?: string;
+  heroImage: string;
   children: ReactNode;
 };
 
@@ -19,12 +20,19 @@ export default function PageShell({
   description,
   stat,
   statLabel,
+  heroImage,
   children,
 }: PageShellProps) {
   return (
     <div className={`pg pg-${theme}`}>
       <header className="pg-hero">
-        <div className="pg-hero-inner">
+        <div
+          className="pg-hero-bg"
+          style={{ backgroundImage: `url(${heroImage})` }}
+          aria-hidden="true"
+        />
+        <div className="pg-hero-shade" aria-hidden="true" />
+        <div className="pg-hero-content">
           <nav className="pg-crumb" aria-label="Breadcrumb">
             <Link href={routes.home}>Home</Link>
             <span aria-hidden="true">/</span>
@@ -33,13 +41,15 @@ export default function PageShell({
           <p className="pg-eyebrow">{eyebrow}</p>
           <h1 className="pg-title">{title}</h1>
           <p className="pg-lead">{description}</p>
+          {stat && statLabel ? (
+            <div className="pg-hero-badge">
+              <span className="pg-hero-badge-rule" aria-hidden="true" />
+              <span className="pg-hero-badge-n">{stat}</span>
+              <span className="pg-hero-badge-l">{statLabel}</span>
+              <span className="pg-hero-badge-rule" aria-hidden="true" />
+            </div>
+          ) : null}
         </div>
-        {stat && statLabel ? (
-          <div className="pg-hero-aside">
-            <span className="pg-stat-n">{stat}</span>
-            <span className="pg-stat-l">{statLabel}</span>
-          </div>
-        ) : null}
       </header>
       <div className="pg-body">{children}</div>
     </div>

@@ -1,6 +1,6 @@
+import BrandStatement from "@/components/BrandStatement";
 import Businesses from "@/components/Businesses";
 import Features from "@/components/Features";
-import Family from "@/components/Family";
 import FutureSection from "@/components/FutureSection";
 import Global from "@/components/Global";
 import Hero from "@/components/Hero";
@@ -15,13 +15,13 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <BrandStatement />
       <Features />
+      <Philosophy />
       <Businesses />
       <Global />
       <Milestones />
       <History />
-      <Philosophy />
-      <Family />
       <FutureSection />
       <Testimonials />
     </>

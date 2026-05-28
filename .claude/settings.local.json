@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npx tsc *)",
       "Bash(npx next *)",
-      "PowerShell(npx tsc --noEmit -p .)"
+      "PowerShell(npx tsc --noEmit -p .)",
+      "Bash(dir *)",
+      "Bash(mv \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\src\\\\public\\\\RituMam.JPG\" \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\public\\\\RituMam.JPG\")",
+      "Bash(mv \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\src\\\\public\\\\SurajSir.JPG\" \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\public\\\\SurajSir.JPG\")",
+      "Bash(mv \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\src\\\\public\\\\SuryanshSir.JPG\" \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\public\\\\SuryanshSir.JPG\")"
     ]
   }
 }

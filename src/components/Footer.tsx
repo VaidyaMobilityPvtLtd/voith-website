@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { footerContact, footerLinks, footerSocial, routes } from "@/data/content";
-import Logo from "@/public/voithlogo.png";
+import Logo from "../../public/voithlogo.png";
 
 export default function Footer() {
   const year = new Date().getFullYear();
