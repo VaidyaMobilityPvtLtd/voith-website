@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
 const ibmPlex = IBM_Plex_Sans({
@@ -10,14 +10,6 @@ const ibmPlex = IBM_Plex_Sans({
   variable: "--font-ibm-plex",
 });
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-cormorant",
-});
-
 export const metadata: Metadata = {
   title: "VOITH — Vaidya's Organization of Industries & Trading Houses",
   description:
@@ -26,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${ibmPlex.variable} ${cormorant.variable}`}>
+    <html lang="en" className={ibmPlex.variable}>
       <body className={ibmPlex.className}>{children}</body>
     </html>
   );
