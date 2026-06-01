@@ -25,21 +25,15 @@ export default function Testimonials() {
   return (
     <section id="impact">
       <div className="test-wrap">
-        <div className="test-head-block">
-          <Reveal className="test-eyebrow-wrap">
-            <span className="test-eyebrow">
-              <span className="test-eyebrow-dot" aria-hidden="true" />
-              Voices
-            </span>
-            <h2 className="test-title">What People Say</h2>
-          </Reveal>
-        </div>
+        <Reveal className="test-head">
+          <span className="test-eyebrow">
+            <span className="test-eyebrow-dot" aria-hidden="true" />
+            Voices
+          </span>
+          <h2 className="test-title">What People Say</h2>
+        </Reveal>
 
         <Reveal className="test-carousel" delay={2}>
-          <span className="test-quote-mark" aria-hidden="true">
-            &ldquo;
-          </span>
-
           <div
             className="test-track"
             role="region"
@@ -56,11 +50,8 @@ export default function Testimonials() {
                   <p>{t.quote}</p>
                 </blockquote>
                 <footer className="test-cite">
-                  <span className="test-cite-rule" aria-hidden="true" />
-                  <div className="test-cite-meta">
-                    <strong>{t.author}</strong>
-                    <span>{t.role}</span>
-                  </div>
+                  <strong>{t.author}</strong>
+                  <span>{t.role}</span>
                 </footer>
               </article>
             ))}
@@ -97,7 +88,9 @@ export default function Testimonials() {
               <span aria-hidden="true">→</span>
             </button>
             <span className="test-count" aria-hidden="true">
-              {String(active + 1).padStart(2, "0")}
+              <span className="test-count-current">
+                {String(active + 1).padStart(2, "0")}
+              </span>
               <span className="test-count-sep">/</span>
               {String(count).padStart(2, "0")}
             </span>

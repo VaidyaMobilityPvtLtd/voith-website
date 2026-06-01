@@ -1,5 +1,11 @@
 export const VOITH_FOUNDED_YEAR = 1964;
 
+/** Full legal / brand name (VOITH). */
+export const companyFullName =
+  "Vaidya's Organization of Industry & Trading Houses" as const;
+
+export const companyTagline = "Serving · Caring · Growing Together" as const;
+
 /** Full calendar years since founding; increments each January 1. */
 export function getYearsSinceFounding(): number {
   return new Date().getFullYear() - VOITH_FOUNDED_YEAR;
@@ -382,6 +388,10 @@ export const founderSpotlight = {
     "He also actively contributed to social sectors such as the environment, education, health, and shelter for vulnerable groups. His diverse business interests spanned construction, tourism, aviation, fertilizers, heavy equipment, and more.",
     "Starting with a modest investment, he established partnerships with Korea and Japan, eventually becoming an authorized dealer for Toyota Motors in 1968 and founding Vaidya's Organization in 1981.",
   ],
+  yatraPdf: {
+    href: "/vijay-yatra.pdf",
+    label: "Read Vijay Yatra",
+  },
 } as const;
 
 export type Business = {
@@ -871,12 +881,11 @@ export const globalFeatures = [
   },
 ] as const;
 
-export const footerLinks = [
-  { label: "Our Work", href: routes.industries },
-  { label: "Gallery", href: `${routes.home}#businesses` },
-  { label: "About", href: routes.impact },
+/** Same destinations as the main nav, plus Contact. */
+export const footerLinks: NavLink[] = [
+  ...navLinks,
   { label: "Contact", href: routes.contact },
-] as const;
+];
 
 export const footerSocial = [
   { label: "Facebook", href: "https://www.facebook.com/" },

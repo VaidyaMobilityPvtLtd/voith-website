@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { footerContact, footerLinks, footerSocial, routes } from "@/data/content";
+import {
+  companyFullName,
+  footerContact,
+  footerLinks,
+  footerSocial,
+  routes,
+} from "@/data/content";
 import Logo from "../../public/voithlogo.png";
 
 export default function Footer() {
@@ -45,15 +51,18 @@ export default function Footer() {
           </address>
         </div>
 
-        <Link href={routes.home} className="foot-logo" aria-label="VOITH home">
-          <Image src={Logo} alt="VOITH" width={120} height={120} />
-        </Link>
+        <div className="foot-brand">
+          <Link href={routes.home} className="foot-logo" aria-label="VOITH home">
+            <Image src={Logo} alt="VOITH" width={160} height={160} />
+          </Link>
+          <p className="foot-full-name">{companyFullName}</p>
+        </div>
       </div>
 
       <hr className="foot-rule" />
 
       <p className="foot-copy">
-        © {year} VOITH Organization. All rights reserved.
+        © {year} {companyFullName}. All rights reserved.
       </p>
     </footer>
   );

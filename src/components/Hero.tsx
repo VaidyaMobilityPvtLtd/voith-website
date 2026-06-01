@@ -36,8 +36,11 @@ export default function Hero() {
       <div className="hero-main">
         <div className="hl">
           <div className="hl-eyebrow">Nepal&apos;s Leading Business Group</div>
-          <h1>VOITH Builds Nepal&apos;s Industries Across Four Sectors</h1>
-          <div className="hl-badge">★&nbsp;Vaidya&apos;s Organization · Founded 1964</div>
+          <h1>
+            <span className="hl-accent">VOITH</span> Builds Nepal&apos;s Industries Across Four
+            Sectors
+          </h1>
+          <div className="hl-badge">★&nbsp;Founded 1964</div>
           <p>
             From Toyota to Ather Energy to cement production — VOITH has been
             pioneering Nepal&apos;s industrial and economic growth for over six decades.

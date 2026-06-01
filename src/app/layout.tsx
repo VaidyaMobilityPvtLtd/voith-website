@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
+import { companyFullName } from "@/data/content";
 import "./globals.css";
 
 const ibmPlex = IBM_Plex_Sans({
@@ -11,7 +12,7 @@ const ibmPlex = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "VOITH — Vaidya's Organization of Industries & Trading Houses",
+  title: `VOITH — ${companyFullName}`,
   description:
     "From Toyota to Ather Energy to cement — VOITH has been pioneering Nepal's industrial and economic growth for over six decades.",
 };

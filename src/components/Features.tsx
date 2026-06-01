@@ -16,6 +16,17 @@ export default function Features() {
           {founderSpotlight.paragraphs.map((paragraph) => (
             <p key={paragraph.slice(0, 32)}>{paragraph}</p>
           ))}
+          <a
+            className="founder-pdf"
+            href={founderSpotlight.yatraPdf.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {founderSpotlight.yatraPdf.label}
+            <span className="founder-pdf-icon" aria-hidden="true">
+              ↗
+            </span>
+          </a>
         </div>
         <div className="founder-photo">
           <Image
