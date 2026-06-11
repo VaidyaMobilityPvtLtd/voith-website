@@ -27,8 +27,19 @@ declare global {
 const TOPO_LIB = "https://unpkg.com/topojson-client@3/dist/topojson-client.min.js";
 const WORLD_DATA = "https://unpkg.com/world-atlas@2/countries-110m.json";
 
-// Nepal, India, China, Japan, Italy, Germany, S. Korea, Philippines, Australia
-const PARTNER_IDS = new Set(["524", "356", "156", "392", "380", "276", "410", "608", "036"]);
+// Partner countries — by ISO 3166-1 numeric code. Nepal 524, Japan 392,
+// India 356, China 156, Germany 276, Thailand 764, UAE/Dubai 784, USA 840,
+// Indonesia 360. (Singapore is too small for the 110m polygon set — drawn
+// explicitly via PARTNER_POINTS below.)
+const PARTNER_IDS = new Set([
+  "524", "392", "356", "156", "276", "764", "784", "840", "360",
+]);
+
+// Partner locations too small to exist in the 110m polygon set — drawn as
+// explicit dots so they still register. [lon, lat]
+const PARTNER_POINTS: Array<[number, number]> = [
+  [103.82, 1.35], // Singapore
+];
 
 const HOTSPOT_RADIUS = 22;
 
@@ -121,6 +132,15 @@ export default function WorldMap() {
             ctx.arc(x, y, RADIUS, 0, Math.PI * 2);
             ctx.fill();
           }
+        }
+
+        // Micro-states that don't appear in the polygon fill above.
+        ctx.fillStyle = "#C41A1A";
+        for (const [lon, lat] of PARTNER_POINTS) {
+          const [px, py] = proj(lon, lat);
+          ctx.beginPath();
+          ctx.arc(px, py, RADIUS, 0, Math.PI * 2);
+          ctx.fill();
         }
 
         const [npX, npY] = proj(84.1, 28.3);

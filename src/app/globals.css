@@ -179,14 +179,14 @@ a {
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 540px;
+  min-width: 400px;
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.22);
   padding: 14px;
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   align-items: stretch;
   gap: 12px;
@@ -211,33 +211,6 @@ a {
   visibility: visible;
   pointer-events: auto;
   transform: translateY(0);
-}
-.nav-dd-overview {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 18px;
-  border-radius: 10px;
-  background: linear-gradient(160deg, #1a1a22 0%, #2a1010 100%);
-  color: #fff;
-  min-height: 0;
-  height: 100%;
-  align-self: stretch;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-.nav-dd-overview:hover {
-  background: linear-gradient(160deg, #22222c 0%, #341414 100%);
-}
-.nav-dd-overview-label {
-  font-family: var(--fd);
-  font-size: 16px;
-  font-weight: 600;
-}
-.nav-dd-overview-sub {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  margin-top: 6px;
 }
 .nav-dd-list {
   list-style: none;
@@ -4201,7 +4174,7 @@ main {
   .sec-highlight-grid,
   .sec-other-grid { grid-template-columns: 1fr; }
   .brand-overview-grid { grid-template-columns: 1fr; gap: 28px; }
-  .nav-dd { min-width: 460px; left: auto; right: 0; }
+  .nav-dd { min-width: 400px; left: auto; right: 0; }
   .people-grid { grid-template-columns: repeat(2, 1fr); }
   .lead-team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .contact-office-grid { grid-template-columns: repeat(2, 1fr); }
@@ -4328,7 +4301,6 @@ main {
     padding: 8px 0;
     background: transparent;
   }
-  .nav-dd-overview { padding: 12px 14px; }
   .people-card { grid-template-columns: 108px 1fr; }
   .people-card-photo { min-height: 108px; font-size: 22px; }
   .people-card-body { padding: 18px 20px; }

@@ -66,18 +66,6 @@ export default function Nav() {
                     className={`nav-dd${openDropdown ? " is-open" : ""}`}
                     role="menu"
                   >
-                    <Link
-                      href={routes.industries}
-                      className="nav-dd-overview"
-                      role="menuitem"
-                    >
-                      <span className="nav-dd-overview-label">
-                        All Industries
-                      </span>
-                      <span className="nav-dd-overview-sub">
-                        VOITH's four core sectors
-                      </span>
-                    </Link>
                     <ul className="nav-dd-list">
                       {industryDropdown.map((item) => (
                         <li key={item.slug}>
