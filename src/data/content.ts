@@ -18,6 +18,8 @@ export const routes = {
   people: "/people",
   future: "/future",
   contact: "/contact",
+  whyChooseUs: "/why-choose-us",
+  legal: "/legal",
 } as const;
 
 export type NavLink = { label: string; href: string };
@@ -88,10 +90,76 @@ export const industryDropdown: IndustryDropdownItem[] = [
   { label: "Other Industries", slug: "diversified", tagline: "WEAN · Lumbini · Pitstop" },
 ];
 
-export type SectorBrand = {
+/** A physical location — showroom, service centre, charging station, dealer. */
+export type BrandLocation = {
+  name: string;
+  /** Short type label, e.g. "Showroom & Service Center", "Charging Station". */
+  kind?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  hours?: string;
+};
+
+/** A named group of models or products, e.g. "Trail Series". */
+export type BrandLineupGroup = { category: string; items: string[] };
+
+/** Optional rich content rendered on a brand's child page. */
+export type BrandDetail = {
+  /** Founding / launch line, e.g. "Established · August 2021". */
+  established?: string;
+  /** Origin / manufacturer line, e.g. "Toyota Motor Corporation — Japan". */
+  origin?: string;
+  /** Overview paragraphs (longer than `description`). */
+  intro?: string[];
+  /** Heading above the lineup grid, e.g. "Models available in Nepal". */
+  lineupLabel?: string;
+  lineup?: BrandLineupGroup[];
+  /** Flat list of services offered (used instead of / alongside lineup). */
+  services?: string[];
+  /** Heading above the locations list. */
+  locationsLabel?: string;
+  locations?: BrandLocation[];
+};
+
+/**
+ * A child brand under an operating company — e.g. Toyota or Morbidelli under
+ * United Traders Syndicate. Rendered at
+ * /industries/[slug]/[company]/[brand] with its own detailed page.
+ */
+export type ChildBrand = {
+  /** URL segment under /industries/[slug]/[company]/[brand]. */
+  slug: string;
+  /** Short initials shown inside the blob mark. */
+  mark: string;
   name: string;
   role: string;
   description: string;
+  /** Optional expanded content shown on the brand page. */
+  detail?: BrandDetail;
+  /** Marks an announced-but-not-yet-live brand. */
+  comingSoon?: boolean;
+};
+
+/**
+ * An operating company under a VOITH sector — e.g. United Traders Syndicate.
+ * Rendered at /industries/[slug]/[company]. May own child brands; a company
+ * with no children renders its own `detail` directly (a leaf node).
+ */
+export type SectorBrand = {
+  /** URL segment under /industries/[slug]/[company]. */
+  slug: string;
+  /** Short initials shown inside the blob mark. */
+  mark: string;
+  name: string;
+  role: string;
+  description: string;
+  /** Optional expanded content shown on the company page. */
+  detail?: BrandDetail;
+  /** Child brands distributed/operated by this company. */
+  children?: ChildBrand[];
+  /** Marks an announced-but-not-yet-live company. */
+  comingSoon?: boolean;
 };
 
 export type SectorStat = { value: string; label: string };
@@ -139,28 +207,409 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
     ],
     brands: [
       {
+        slug: "uheem",
+        mark: "UH",
+        name: "UHEEM",
+        role: "Heavy & construction equipment · Est. 2018",
+        description:
+          "United Heavy Equipment and Earth Movers — VOITH's heavy-equipment company and the sole authorised distributor of XCMG construction machinery in Nepal.",
+        detail: {
+          established: "Established · April 2018",
+          origin: "Sole distributor — XCMG, China",
+          intro: [
+            "United Heavy Equipment and Earth Movers (UHEEM) is VOITH's specialised heavy-equipment and construction-machinery company. Established in April 2018, it strengthens the group's presence in Nepal's heavy-equipment and infrastructure-development sector.",
+            "UHEEM is the sole authorised distributor of XCMG construction machinery in Nepal, focusing on distribution, sales, and after-sales support — backed by reliable spare-parts availability and professional service across the country.",
+          ],
+          locationsLabel: "Offices",
+          locations: [
+            {
+              name: "UHEEM — Kathmandu",
+              kind: "Head Office",
+              address: "Anandanagar, Dhumbarahi, Kathmandu 44600, Nepal",
+              phone: "+977 985-1217690 · 01-4008813",
+              email: "customercare@uheem.com.np",
+            },
+            {
+              name: "UHEEM — Laxminiya",
+              kind: "Branch",
+              address: "Laxminiya Gaunpalika-07, on the Janakpur highway",
+              phone: "9851114569 · 01-4542901",
+              email: "info@uheem.com.np",
+            },
+          ],
+        },
+        children: [
+          {
+            slug: "xcmg",
+            mark: "XC",
+            name: "XCMG",
+            role: "Construction & industrial machinery — China",
+            description:
+              "One of the world's leading construction-equipment manufacturers, distributed exclusively in Nepal by UHEEM.",
+            detail: {
+              origin: "XCMG — China",
+              intro: [
+                "XCMG is one of the world's leading manufacturers of construction equipment and industrial machinery. Founded in China, it is globally recognised for advanced engineering across earth-moving, lifting, road-building, and concrete machinery.",
+                "In Nepal, XCMG is distributed exclusively by UHEEM, bringing world-class construction machinery and dependable after-sales support to the country's infrastructure projects.",
+              ],
+              lineupLabel: "XCMG products available",
+              lineup: [
+                {
+                  category: "Construction machinery",
+                  items: [
+                    "Earth Moving Machinery",
+                    "Road Building Machinery",
+                    "Hoisting Machinery",
+                    "Underground Mining Machinery",
+                    "Drilling Machinery",
+                    "Concrete Machinery",
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        slug: "united-traders-syndicate",
+        mark: "UTS",
         name: "United Traders Syndicate",
         role: "Toyota Nepal · Est. 1967",
         description:
-          "Nepal's authorised Toyota dealer for over five decades. A 3S (Sales, Service, Spare) footprint anchored by the VOITH Complex in Dhumbarahi, with revenues of NPR 633 Cr.",
+          "VOITH's flagship automotive company and Nepal's authorised Toyota distributor since 1967 — now expanding into premium two-wheelers with Keeway, Benelli, and Morbidelli.",
+        detail: {
+          established: "UTS–Toyota partnership · December 1967",
+          origin: "Authorised distributor — Toyota Motor Corporation, Japan",
+          intro: [
+            "United Traders Syndicate (UTS) is VOITH's flagship automotive company and the authorised distributor in Nepal for Toyota, established in December 1967. Founded by the late Dr. V. G. Vaidya and today led by Mr. Suraj Vaidya (President) and Mrs. Ritu Singh Vaidya (Managing Director), UTS has played a pioneering role in shaping Nepal's automotive industry for over five decades.",
+            "Beyond Toyota, UTS has expanded into the two-wheeler segment — recently partnering with the Keeway Group, Benelli, and the Italian luxury marque Morbidelli — building toward a complete on-road mobility portfolio backed by a nationwide sales, service, and spare-parts network.",
+          ],
+        },
+        children: [
+          {
+            slug: "toyota",
+            mark: "TO",
+            name: "Toyota",
+            role: "Toyota Motor Corporation — Japan",
+            description:
+              "Nepal's most trusted automotive brand — from electrified hybrids to rugged SUVs — distributed by UTS since 1967.",
+            detail: {
+              established: "In Nepal since 1967",
+              origin: "Toyota Motor Corporation — Japan",
+              intro: [
+                "Toyota, manufactured by Toyota Motor Corporation of Japan, has earned the trust of Nepali customers through its commitment to quality, durability, reliability, and customer satisfaction. Introduced to Nepal by United Traders Syndicate in 1967, it remains one of the country's most trusted automotive brands.",
+                "Supported by an extensive nationwide network, Toyota delivers world-class mobility solutions, genuine spare parts, and professional after-sales services — from electrified hybrids to rugged SUVs and commercial vehicles.",
+              ],
+              lineupLabel: "Toyota models available in Nepal",
+              lineup: [
+                {
+                  category: "Electrified — Hybrid",
+                  items: [
+                    "Corolla Cross Hybrid",
+                    "Camry Hybrid",
+                    "Yaris Cross Hybrid",
+                    "RAV4 Core Hybrid",
+                  ],
+                },
+                {
+                  category: "SUV",
+                  items: [
+                    "Fortuner",
+                    "Land Cruiser 70",
+                    "Land Cruiser 250",
+                    "Land Cruiser",
+                    "Yaris Cross",
+                    "RAV4",
+                  ],
+                },
+                { category: "Pickup & Bus", items: ["Hilux", "Hiace", "Ace"] },
+                { category: "Sedan", items: ["Camry"] },
+              ],
+              locationsLabel: "Dealer network — Sales · Service · Spares",
+              locations: [
+                {
+                  name: "Biratnagar — AB Group",
+                  kind: "Sales · Service · Spares",
+                  address: "Biratnagar-3, Airport Road, Biratnagar 56613",
+                  phone: "9852033953 · 021-461846 · 021-460965",
+                  email: "abgroupbrt@gmail.com",
+                },
+                {
+                  name: "Butwal — Autoways",
+                  kind: "Sales · Service · Spares",
+                  address: "Kalikanagar, Butwal 32907",
+                  phone: "9857030854 · 071-419017 · 071-419026",
+                  email: "autowaysbtl@gmail.com",
+                },
+                {
+                  name: "Bharatpur — Autoways",
+                  kind: "Sales · Service · Spares",
+                  address: "Balmandir Chowk, Bharatpur 44207",
+                  phone: "9855063549 · 056-525935 · 056-532292",
+                  email: "autowaysngt@gmail.com",
+                },
+                {
+                  name: "Pokhara — Autoways",
+                  kind: "Sales · Service · Spares",
+                  address: "Nayabazar Rd, Pokhara 33700",
+                  phone: "9856037046 · 061-540356 · 061-540349",
+                  email: "info@autoways.com.np",
+                },
+              ],
+            },
+          },
+          {
+            slug: "morbidelli",
+            mark: "MB",
+            name: "Morbidelli",
+            role: "Italian luxury motorcycles — Recently partnered",
+            description:
+              "The Italian motorcycle marque, introduced to Nepal in November 2025 — Trail, Street Fighter, and Cruiser series for the luxury segment.",
+            detail: {
+              established: "Introduced in Nepal · November 2025",
+              origin: "Morbidelli — Italy",
+              intro: [
+                "Morbidelli is the Italian motorcycle marque introduced to Nepal in November 2025 through VOITH's United Traders Syndicate, marking the group's entry into the country's growing luxury motorcycle segment.",
+                "With a strong Italian design heritage and performance-driven engineering, Morbidelli offers a versatile lineup built for adventure, urban performance, and cruising — bringing globally recognised mobility solutions to Nepali riders.",
+              ],
+              lineupLabel: "Morbidelli models available in Nepal",
+              lineup: [
+                { category: "Trail Series", items: ["T1002VX", "T502X", "T352X"] },
+                { category: "Street Fighter Series", items: ["F352"] },
+                { category: "Cruiser Series", items: ["C252V"] },
+              ],
+              locationsLabel: "Morbidelli showrooms & service centers",
+              locations: [
+                {
+                  name: "Morbidelli Service Center — Tinkune",
+                  kind: "Service Center",
+                  address: "Tinkune, Kathmandu, Bagmati Province 44600",
+                  phone: "977-9851404606",
+                  email: "sadvisor@morbidelli.com.np",
+                  hours: "Mon–Fri 10:00 AM – 6:00 PM · Sun open (Sat off)",
+                },
+                {
+                  name: "Morbidelli Showroom & Service Center — Bhaktapur",
+                  kind: "Showroom & Service Center",
+                  address: "Gatthaghar Road, Madhyapur Thimi, Bagmati Province 44600",
+                  phone: "977-9802324632",
+                  hours: "Mon–Fri 9:30 AM – 6:30 PM · Sun open (Sat off)",
+                },
+                {
+                  name: "Morbidelli Showroom — Naxal",
+                  kind: "Showroom",
+                  address: "Naxal, Kathmandu, Bagmati Province 44600",
+                  phone: "977-9802324632",
+                  hours: "Mon–Fri 10:00 AM – 6:00 PM · Sun open (Sat off)",
+                },
+              ],
+            },
+          },
+          {
+            slug: "keeway",
+            mark: "KW",
+            name: "Keeway",
+            role: "European-styled motorcycles — Recently partnered",
+            description:
+              "Contemporary European-styled motorcycles and scooters from the Keeway Group, joining UTS's growing two-wheeler lineup.",
+            detail: {
+              origin: "Keeway Group",
+              intro: [
+                "Keeway is an international motorcycle and scooter brand known for its contemporary European styling and accessible performance. Part of the Qianjiang group, Keeway offers a broad range of two-wheelers spanning commuter, cruiser, and lifestyle segments.",
+                "In Nepal, Keeway joins VOITH's growing two-wheeler portfolio under United Traders Syndicate, backed by the group's nationwide sales and after-sales network.",
+              ],
+            },
+          },
+          {
+            slug: "benelli",
+            mark: "BN",
+            name: "Benelli",
+            role: "Italian heritage motorcycles — Recently partnered",
+            description:
+              "One of the world's oldest motorcycle makers, founded in Pesaro, Italy, in 1911 — now part of VOITH's two-wheeler portfolio.",
+            detail: {
+              origin: "Benelli — Italy (est. 1911)",
+              intro: [
+                "Benelli is one of the world's oldest motorcycle manufacturers, founded in Pesaro, Italy, in 1911. Renowned for its racing heritage and distinctive design, the brand today combines Italian styling with modern engineering across a versatile motorcycle range.",
+                "Benelli enters Nepal under VOITH's United Traders Syndicate as part of the group's expanding two-wheeler portfolio, supported by a nationwide service network.",
+              ],
+            },
+          },
+        ],
       },
       {
+        slug: "trayana",
+        mark: "TR",
+        name: "Trayana",
+        role: "New venture — Coming soon",
+        description:
+          "A new addition to VOITH's mobility portfolio. Details will be announced soon.",
+        comingSoon: true,
+      },
+      {
+        slug: "vaidya-energy",
+        mark: "VE",
         name: "Vaidya Energy",
-        role: "Sole distributor — Ather Energy",
+        role: "EV & mobility division · Est. 2023",
         description:
-          "Driving Nepal's EV transition. Best Stall at NADA 2024 and the country's #1 electric scooter brand, with 30+ Ather Grid fast-chargers expanding nationwide.",
-      },
-      {
-        name: "Two-Wheeler Division",
-        role: "Keeway · Benelli · Morbidelli · QJ Motors",
-        description:
-          "Italian heritage and modern engineering joining VOITH's growing two-wheeler portfolio — building toward local SKD assembly in Nepal.",
-      },
-      {
-        name: "UHEEM",
-        role: "Heavy & construction equipment",
-        description:
-          "Construction equipment distribution serving Nepal's infrastructure boom — partnerships with global leaders including XCMG.",
+          "VOITH's EV and mobility division, driving Nepal's electric transition — home to Ather Energy and Ultraviolette, with a growing Ather Grid charging network.",
+        detail: {
+          established: "EV division launched · 2023",
+          origin: "VOITH EV & mobility division",
+          intro: [
+            "Vaidya Energy is VOITH's EV and mobility division, driving Nepal's transition to electric mobility. As the authorised distributor for its partner brands, it oversees sales, distribution, service management, charging infrastructure, and after-sales support across the country.",
+            "Its portfolio pairs Ather Energy — Nepal's #1 electric scooter brand and Best Stall winner at NADA 2024 — with Ultraviolette's high-performance electric motorcycles, supported by a growing nationwide network of experience centres and Ather Grid fast-chargers.",
+          ],
+        },
+        children: [
+          {
+            slug: "ather",
+            mark: "AT",
+            name: "Ather Energy",
+            role: "Electric scooters — India",
+            description:
+              "Nepal's #1 electric scooter brand — connected, performance-oriented EVs backed by the Ather Grid charging network.",
+            detail: {
+              established: "Ather in Nepal · November 2023",
+              origin: "Ather Energy — India",
+              intro: [
+                "Ather Energy is an advanced electric scooter brand from India, known for its connected mobility technology, smart features, and performance-oriented design. In Nepal, Ather was officially introduced in November 2023 under the VOITH Organization group through its EV and mobility division, Vaidya Energy.",
+                "In October 2024 the brand opened its first experience center in Kathmandu, marking its official entry into Nepal's electric-mobility market. Vaidya Energy serves as the authorised distributor — overseeing sales, distribution, service management, charging infrastructure, and after-sales support nationwide.",
+              ],
+              lineupLabel: "Ather models available in Nepal",
+              lineup: [
+                {
+                  category: "Electric scooters",
+                  items: ["Ather 450S", "Ather 450X", "Ather Rizta"],
+                },
+              ],
+              locationsLabel: "Service, experience & charging network",
+              locations: [
+                {
+                  name: "Ather Energy Service Center — Tinkune",
+                  kind: "Service Center",
+                  address: "Tinkune, Kathmandu",
+                  phone: "9851356195",
+                  hours: "10:00 AM – 6:00 PM",
+                },
+                {
+                  name: "Ather Energy Service Center — Sallaghari",
+                  kind: "Service Center",
+                  address: "Sallaghari, Bhaktapur",
+                  phone: "9851356195",
+                  hours: "10:00 AM – 6:00 PM",
+                },
+                {
+                  name: "Ather Space Service Center — Satdobato",
+                  kind: "Service Center",
+                  address: "Satdobato, opposite Patan Industrial Estate",
+                  phone: "9851356195",
+                  hours: "10:00 AM – 6:00 PM",
+                },
+                {
+                  name: "Ather Energy Service Center — Chitwan",
+                  kind: "Service Center",
+                  address: "Astha Chowk, Chitwan",
+                  phone: "9869308240",
+                  hours: "10:00 AM – 6:00 PM",
+                },
+                {
+                  name: "Ather Energy Service Center — Pokhara",
+                  kind: "Service Center",
+                  address: "Near Pokhara Industrial Estate",
+                  phone: "9856007979",
+                  hours: "10:00 AM – 6:00 PM",
+                },
+                {
+                  name: "Ather Energy Service Center — Butwal",
+                  kind: "Service Center",
+                  address: "Kalikanagar, Butwal",
+                  phone: "9851402391",
+                  hours: "10:00 AM – 6:00 PM",
+                },
+                {
+                  name: "Ather Energy Service Center — Itahari",
+                  kind: "Service Center",
+                  address: "Kheti Khola, Paschim Line, Itahari",
+                  phone: "9851406109",
+                  hours: "10:00 AM – 6:00 PM",
+                },
+                {
+                  name: "Ather Energy Service Center — Janakpur",
+                  kind: "Service Center",
+                  address: "Mills Area, Janakpur-11, Madhesh Pradesh",
+                  phone: "985-4086430",
+                  hours: "10:00 AM – 6:00 PM",
+                },
+                {
+                  name: "Ather Service Center — Birtamod",
+                  kind: "Service Center",
+                  address: "Ram Chowk, Birtamod",
+                  phone: "984-0068644",
+                  hours: "10:00 AM – 6:00 PM",
+                },
+                {
+                  name: "Ather Space Experience Center — Naxal",
+                  kind: "Experience Center",
+                  address: "Naxal, Kathmandu",
+                  phone: "9851354103",
+                  hours: "Open 24 / 7",
+                },
+                {
+                  name: "Ather Space Experience Center — Jhamsikhel",
+                  kind: "Experience Center",
+                  address: "Square Hotel, Jhamsikhel",
+                  phone: "9851354103",
+                  hours: "Open 24 / 7",
+                },
+                {
+                  name: "AirCharge Charging Station — Satdobato",
+                  kind: "Charging Station",
+                  address: "Satdobato, Lalitpur",
+                  phone: "9851354103",
+                  hours: "Open 24 / 7",
+                },
+                {
+                  name: "Charging Station — Kalanki",
+                  kind: "Charging Station",
+                  address: "Bhat-Bhateni, Kalanki",
+                  phone: "9851354103",
+                  hours: "7:00 AM – 8:00 PM",
+                },
+              ],
+            },
+          },
+          {
+            slug: "ultraviolette",
+            mark: "UV",
+            name: "Ultraviolette",
+            role: "Electric motorcycles — India",
+            description:
+              "High-performance electric motorcycles from India — the flagship F77, launched through the UV Space Pod in Naxal.",
+            detail: {
+              established: "Launched in Nepal · January 2026",
+              origin: "Ultraviolette — India",
+              intro: [
+                "Ultraviolette is a high-performance electric motorcycle brand from India, recognised for its performance-focused mobility technology, next-generation design, and advanced engineering. In Nepal, Ultraviolette launched in January 2026 under the VOITH Organization group through its EV and mobility division, Vaidya Energy.",
+                "The brand's first experience centre — the UV Space Pod — was inaugurated in Naxal, Kathmandu, marking its entry into Nepal's premium electric-motorcycle category. Its fully electric platform delivers zero-emission performance, contributing to cleaner, more eco-friendly mobility in Nepal.",
+              ],
+              lineupLabel: "Models available in Nepal",
+              lineup: [
+                { category: "Electric motorcycle", items: ["Ultraviolette F77"] },
+              ],
+              locationsLabel: "Experience centre",
+              locations: [
+                {
+                  name: "UV Space Pod — Naxal",
+                  kind: "Experience Centre",
+                  address: "Narayanchaur, Naxal, Kathmandu 44600, Nepal",
+                  phone: "9851404609",
+                  email: "ultraviolettenepal@gmail.com",
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
     highlights: [
@@ -205,12 +654,16 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
     ],
     brands: [
       {
+        slug: "huaxin-narayani-cement",
+        mark: "HN",
         name: "Huaxin Narayani Cement",
         role: "Joint venture with Huaxin Cement Co., Ltd.",
         description:
           "Nepal's largest cement facility, commencing production in May 2022. A USD 250M joint investment with one of the world's leading cement producers — engineered for scale, quality, and a long-term partnership in Nepali infrastructure.",
       },
       {
+        slug: "tadi-cement-mining",
+        mark: "TM",
         name: "Tadi Cement & Mining",
         role: "Limestone quarry and mining operations",
         description:
@@ -259,6 +712,8 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
     ],
     brands: [
       {
+        slug: "sasvata-wellness-resort",
+        mark: "SW",
         name: "Sasvata Wellness Resort",
         role: "Upcoming flagship — Himalayan Nepal",
         description:
@@ -307,22 +762,55 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
     ],
     brands: [
       {
+        slug: "wean-nepal",
+        mark: "WN",
         name: "WEAN Nepal",
         role: "Women's Entrepreneurship Association — micro-credit",
         description:
           "A micro-credit institution focused on financial inclusion for Nepali women. Small loans, large outcomes — capital that fuels small businesses, education, and household resilience in communities banks rarely reach.",
       },
       {
+        slug: "lumbini-insurance",
+        mark: "LI",
         name: "Lumbini Insurance",
         role: "One of Nepal's largest insurance companies",
         description:
           "A diversified insurer with broad reach across Nepal, protecting households, businesses, and assets. A long-standing pillar of the country's financial-services landscape.",
       },
       {
+        slug: "pitstop",
+        mark: "PS",
         name: "Pitstop",
         role: "Boutique automotive workshop",
         description:
           "A specialised service workshop bringing dealership-grade automotive care to independent owners — the same engineering culture that runs through UTS, applied at boutique scale.",
+        detail: {
+          established: "Established · August 2021",
+          origin: "Pitstop Incorporated — Kathmandu, Nepal",
+          intro: [
+            "Pitstop Incorporated is a specialised automotive care and service provider under the VOITH Organization group. Established in August 2021, it was created to strengthen VOITH's presence in Nepal's automotive after-sales and service sector.",
+            "Operating a modern boutique workshop equipped with advanced automotive care and restoration facilities, Pitstop focuses on excellence, accuracy, and customer delight — delivering responsive after-sales support and maintaining high standards of automotive care across its operations.",
+          ],
+          services: [
+            "Vehicle servicing and maintenance",
+            "Detailing and coating services",
+            "Paint Protection Film (PPF) application",
+            "Vinyl wrapping",
+            "Denting, painting, and restoration",
+            "Modification and fabrication",
+            "Universal automotive accessories",
+          ],
+          locationsLabel: "Workshop",
+          locations: [
+            {
+              name: "Pitstop Incorporated — Dhumbarahi",
+              kind: "Boutique Workshop",
+              address: "Anandanagar, Dhumbarahi, Kathmandu 44600, Nepal",
+              phone: "+977 981-6050907",
+              email: "pitstopnepal@gmail.com",
+            },
+          ],
+        },
       },
     ],
     highlights: [
@@ -353,6 +841,45 @@ export const sectorOrder: SectorSlug[] = [
   "hospitality",
   "diversified",
 ];
+
+/** Find an operating company within a sector by its slug. */
+export function getSectorBrand(
+  slug: SectorSlug,
+  companySlug: string,
+): SectorBrand | undefined {
+  return sectorPages[slug].brands.find((b) => b.slug === companySlug);
+}
+
+/** Find a child brand within a company by its slug. */
+export function getChildBrand(
+  slug: SectorSlug,
+  companySlug: string,
+  childSlug: string,
+): ChildBrand | undefined {
+  return getSectorBrand(slug, companySlug)?.children?.find(
+    (c) => c.slug === childSlug,
+  );
+}
+
+/** Every sector + company slug pair, for /industries/[slug]/[company]. */
+export function allCompanyParams(): Array<{ slug: SectorSlug; company: string }> {
+  return sectorOrder.flatMap((slug) =>
+    sectorPages[slug].brands.map((b) => ({ slug, company: b.slug })),
+  );
+}
+
+/** Every sector + company + child-brand triple, for the brand detail route. */
+export function allChildBrandParams(): Array<{
+  slug: SectorSlug;
+  company: string;
+  brand: string;
+}> {
+  return sectorOrder.flatMap((slug) =>
+    sectorPages[slug].brands.flatMap((b) =>
+      (b.children ?? []).map((c) => ({ slug, company: b.slug, brand: c.slug })),
+    ),
+  );
+}
 
 export type HeroItem = { title: string; sub: string; href: string };
 
@@ -887,6 +1414,53 @@ export const footerLinks: NavLink[] = [
   { label: "Contact", href: routes.contact },
 ];
 
+export type FooterColumn = { heading: string; links: NavLink[] };
+
+/**
+ * Grouped footer navigation. Every href resolves to a real page or to an
+ * on-page section anchor that exists in the codebase (e.g. #history, #global).
+ */
+export const footerColumns: FooterColumn[] = [
+  {
+    heading: "Explore",
+    links: [
+      { label: "Industries", href: routes.industries },
+      { label: "Impact", href: routes.impact },
+      { label: "People", href: routes.people },
+      { label: "Future", href: routes.future },
+      { label: "Contact", href: routes.contact },
+    ],
+  },
+  {
+    heading: "Industries",
+    links: [
+      { label: "Mobility", href: `${routes.industries}/mobility` },
+      { label: "Construction", href: `${routes.industries}/construction` },
+      { label: "Hospitality", href: `${routes.industries}/hospitality` },
+      { label: "Other Industries", href: `${routes.industries}/diversified` },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "Why Choose Us", href: routes.whyChooseUs },
+      { label: "Our Story", href: `${routes.home}#history` },
+      { label: "Global Reach", href: `${routes.home}#global` },
+      { label: "Philosophy", href: `${routes.home}#philosophy` },
+      { label: "Milestones", href: `${routes.home}#milestones` },
+    ],
+  },
+  {
+    heading: "Legal",
+    links: [
+      { label: "Privacy Policy", href: `${routes.legal}#privacy` },
+      { label: "Terms of Use", href: `${routes.legal}#terms` },
+      { label: "Cookie Policy", href: `${routes.legal}#cookies` },
+      { label: "Disclaimer", href: `${routes.legal}#disclaimer` },
+    ],
+  },
+];
+
 export const footerSocial = [
   { label: "Facebook", href: "https://www.facebook.com/" },
   { label: "Instagram", href: "https://www.instagram.com/" },
@@ -1081,3 +1655,104 @@ export const contactTopics = [
   "Partnerships / press",
   "Careers",
 ] as const;
+
+/* ── Why Choose Us page ── */
+
+export type WhyReason = {
+  stat: string;
+  title: string;
+  description: string;
+};
+
+export const whyReasons: WhyReason[] = [
+  {
+    stat: "60+",
+    title: "Six decades of trust",
+    description:
+      "Founded in 1964, VOITH has served Nepal across four generations — building a reputation for reliability that few institutions in the country can match.",
+  },
+  {
+    stat: "4",
+    title: "Four core sectors",
+    description:
+      "Mobility, construction, hospitality, and diversified services. A diversified portfolio that lets us weather change and invest for the long term.",
+  },
+  {
+    stat: "15+",
+    title: "World-class partners",
+    description:
+      "Toyota, Ather, Huaxin, Keeway, Benelli, XCMG and more — we bring global engineering and standards directly to Nepali customers.",
+  },
+  {
+    stat: "2,000+",
+    title: "People behind the promise",
+    description:
+      "Sales, service, plant, and field teams across all seven provinces — the everyday reason customers come back to VOITH.",
+  },
+  {
+    stat: "#1",
+    title: "Category leadership",
+    description:
+      "From Nepal's authorised Toyota dealer to the country's #1 electric scooter brand and its largest cement plant — we lead where we operate.",
+  },
+  {
+    stat: "All 7",
+    title: "Nationwide reach",
+    description:
+      "Dealerships, service centres, and 30+ Ather Grid fast-chargers spanning East to West Nepal, with the network still expanding.",
+  },
+];
+
+export const whyChooseUsClosing =
+  "Serving · Caring · Growing Together — the same maxim that guided a single Toyota dealership in 1964 now shapes every business VOITH operates.";
+
+/* ── Legal page ── */
+
+export type LegalSection = {
+  id: string;
+  title: string;
+  paragraphs: string[];
+};
+
+export const legalUpdated = "Last updated: 1 January 2026";
+
+export const legalSections: LegalSection[] = [
+  {
+    id: "privacy",
+    title: "Privacy Policy",
+    paragraphs: [
+      "This Privacy Policy explains how Vaidya's Organization of Industry & Trading Houses (\"VOITH\", \"we\", \"us\") collects, uses, and protects information you share with us through this website.",
+      "We collect only the information you choose to provide — such as your name, email address, phone number, and message when you use our contact or inquiry forms. We use this information solely to respond to your request, provide the services you ask for, and improve our communication with you.",
+      "We do not sell or rent your personal information. We may share it with the relevant VOITH business unit or an authorised brand partner strictly to fulfil your request, and only to the extent required to do so.",
+      "You may ask us to access, correct, or delete the personal information we hold about you at any time by writing to info@voith.com.np.",
+    ],
+  },
+  {
+    id: "terms",
+    title: "Terms of Use",
+    paragraphs: [
+      "By accessing this website you agree to use it for lawful purposes only and in a way that does not infringe the rights of, or restrict the use of this site by, any third party.",
+      "The content on this website — including text, images, logos, and brand names — is provided for general information about VOITH and its businesses. Product details, figures, and availability may change without notice and do not constitute a binding offer.",
+      "Trademarks and brand names referenced on this site (including those of our partners) remain the property of their respective owners and are used here for identification purposes only.",
+      "VOITH reserves the right to modify or withdraw any part of this website at any time without liability.",
+    ],
+  },
+  {
+    id: "cookies",
+    title: "Cookie Policy",
+    paragraphs: [
+      "This website may use cookies and similar technologies to keep the site functioning, remember your preferences, and understand how visitors use our pages so we can improve them.",
+      "Essential cookies are required for the site to work and cannot be switched off. Any analytics or preference cookies are used only in aggregate and never to identify you personally.",
+      "You can control or delete cookies through your browser settings at any time. Disabling certain cookies may affect how parts of the site behave.",
+    ],
+  },
+  {
+    id: "disclaimer",
+    title: "Disclaimer",
+    paragraphs: [
+      "The information on this website is provided in good faith and for general guidance only. While we make every effort to keep it accurate and current, we make no warranty as to its completeness or fitness for any particular purpose.",
+      "Figures such as revenues, capacities, dates, and rankings are indicative and may be rounded or subject to revision. For confirmed, up-to-date details about any product, service, or business, please contact the relevant VOITH team directly.",
+      "VOITH is not responsible for the content of any external website linked from this site.",
+    ],
+  },
+];

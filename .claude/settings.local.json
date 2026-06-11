@@ -7,7 +7,9 @@
       "Bash(dir *)",
       "Bash(mv \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\src\\\\public\\\\RituMam.JPG\" \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\public\\\\RituMam.JPG\")",
       "Bash(mv \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\src\\\\public\\\\SurajSir.JPG\" \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\public\\\\SurajSir.JPG\")",
-      "Bash(mv \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\src\\\\public\\\\SuryanshSir.JPG\" \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\public\\\\SuryanshSir.JPG\")"
+      "Bash(mv \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\src\\\\public\\\\SuryanshSir.JPG\" \"C:\\\\Users\\\\bikalpa\\\\Desktop\\\\voith-page\\\\public\\\\SuryanshSir.JPG\")",
+      "mcp__ide__getDiagnostics",
+      "Bash(node *)"
     ]
   }
 }

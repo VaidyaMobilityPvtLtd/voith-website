@@ -64,15 +64,38 @@ export default function SectorPageView({ slug }: Props) {
 
         <section className="sec-brands">
           <h2 className="pg-section-title">Inside the sector</h2>
-          <div className="sec-brand-grid">
-            {data.brands.map((b, i) => (
-              <article key={b.name} className="sec-brand-card">
-                <span className="sec-brand-num">0{i + 1}</span>
-                <h3>{b.name}</h3>
-                <p className="sec-brand-role">{b.role}</p>
-                <p className="sec-brand-desc">{b.description}</p>
-              </article>
-            ))}
+          <div className="sec-brand-rows">
+            {data.brands.map((b, i) => {
+              const href = `${routes.industries}/${slug}/${b.slug}`;
+              return (
+                <article
+                  key={b.slug}
+                  className={`sec-brand-row${i % 2 === 1 ? " sec-brand-row--flip" : ""}`}
+                >
+                  <Link
+                    href={href}
+                    className="sec-brand-figure"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                  >
+                    <span className="sec-brand-blob">
+                      <span className="sec-brand-blob-mark">{b.mark}</span>
+                    </span>
+                  </Link>
+                  <div className="sec-brand-copy">
+                    <span className="sec-brand-num">
+                      0{i + 1} · {data.label}
+                    </span>
+                    <h3>{b.name}</h3>
+                    <p className="sec-brand-role">{b.role}</p>
+                    <p className="sec-brand-desc">{b.description}</p>
+                    <Link href={href} className="sec-brand-cta">
+                      Read more <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 
