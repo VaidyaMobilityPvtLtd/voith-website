@@ -1,4 +1,7 @@
 import type { BrandDetail } from "@/data/content";
+import Reveal from "../Reveal";
+
+const stagger = (i: number) => (((i % 3) + 1) as 1 | 2 | 3);
 
 /**
  * Renders the rich detail sections (overview prose, lineup, services,
@@ -16,10 +19,14 @@ export default function BrandDetailSections({
     <>
       {!skipIntro && detail.intro && detail.intro.length > 0 ? (
         <section className="brand-detail">
-          <p className="sec-eyebrow-line">In Nepal</p>
+          <Reveal as="p" className="sec-eyebrow-line">
+            In Nepal
+          </Reveal>
           <div className="brand-detail-prose">
             {detail.intro.map((p, i) => (
-              <p key={i}>{p}</p>
+              <Reveal as="p" key={i} delay={1}>
+                {p}
+              </Reveal>
             ))}
           </div>
         </section>
@@ -27,19 +34,23 @@ export default function BrandDetailSections({
 
       {detail.lineup && detail.lineup.length > 0 ? (
         <section className="brand-lineup">
-          <h2 className="pg-section-title">
+          <Reveal as="h2" className="pg-section-title">
             {detail.lineupLabel ?? "Available in Nepal"}
-          </h2>
+          </Reveal>
           <div className="brand-lineup-grid">
-            {detail.lineup.map((group) => (
-              <div key={group.category} className="brand-lineup-group">
+            {detail.lineup.map((group, i) => (
+              <Reveal
+                key={group.category}
+                delay={stagger(i)}
+                className="brand-lineup-group"
+              >
                 <h3 className="brand-lineup-cat">{group.category}</h3>
                 <ul className="brand-lineup-items">
                   {group.items.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-              </div>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -47,13 +58,20 @@ export default function BrandDetailSections({
 
       {detail.services && detail.services.length > 0 ? (
         <section className="brand-services">
-          <h2 className="pg-section-title">Services offered</h2>
+          <Reveal as="h2" className="pg-section-title">
+            Services offered
+          </Reveal>
           <ul className="brand-services-grid">
-            {detail.services.map((s) => (
-              <li key={s} className="brand-service-item">
+            {detail.services.map((s, i) => (
+              <Reveal
+                as="li"
+                key={s}
+                delay={stagger(i)}
+                className="brand-service-item"
+              >
                 <span className="brand-service-dot" aria-hidden="true" />
                 {s}
-              </li>
+              </Reveal>
             ))}
           </ul>
         </section>
@@ -61,12 +79,16 @@ export default function BrandDetailSections({
 
       {detail.locations && detail.locations.length > 0 ? (
         <section className="brand-locations">
-          <h2 className="pg-section-title">
+          <Reveal as="h2" className="pg-section-title">
             {detail.locationsLabel ?? "Find us"}
-          </h2>
+          </Reveal>
           <div className="brand-loc-grid">
-            {detail.locations.map((loc) => (
-              <div key={loc.name} className="brand-loc-card">
+            {detail.locations.map((loc, i) => (
+              <Reveal
+                key={loc.name}
+                delay={stagger(i)}
+                className="brand-loc-card"
+              >
                 {loc.kind ? (
                   <span className="brand-loc-kind">{loc.kind}</span>
                 ) : null}
@@ -106,7 +128,7 @@ export default function BrandDetailSections({
                     </div>
                   ) : null}
                 </dl>
-              </div>
+              </Reveal>
             ))}
           </div>
         </section>

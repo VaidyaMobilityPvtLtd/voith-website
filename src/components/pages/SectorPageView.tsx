@@ -1,11 +1,20 @@
 import Link from "next/link";
-import { routes, sectorOrder, sectorPages, type SectorSlug } from "@/data/content";
+import {
+  routes,
+  sectorOrder,
+  sectorPages,
+  sectorPlaceholderImages,
+  type SectorSlug,
+} from "@/data/content";
+import CardMedia from "../CardMedia";
+import Reveal from "../Reveal";
 
 type Props = { slug: SectorSlug };
 
 export default function SectorPageView({ slug }: Props) {
   const data = sectorPages[slug];
   const otherSectors = sectorOrder.filter((s) => s !== slug);
+  const fallbackImage = sectorPlaceholderImages[slug];
 
   return (
     <div className="pg pg-sector" style={{ "--sector-color": data.color } as React.CSSProperties}>
@@ -63,12 +72,15 @@ export default function SectorPageView({ slug }: Props) {
         </section>
 
         <section className="sec-brands">
-          <h2 className="pg-section-title">Inside the sector</h2>
+          <Reveal as="h2" className="pg-section-title">
+            Inside the sector
+          </Reveal>
           <div className="sec-brand-rows">
             {data.brands.map((b, i) => {
               const href = `${routes.industries}/${slug}/${b.slug}`;
               return (
-                <article
+                <Reveal
+                  as="article"
                   key={b.slug}
                   className={`sec-brand-row${i % 2 === 1 ? " sec-brand-row--flip" : ""}`}
                 >
@@ -77,6 +89,9 @@ export default function SectorPageView({ slug }: Props) {
                     className="sec-brand-figure"
                     tabIndex={-1}
                     aria-hidden="true"
+                    style={{
+                      backgroundImage: `url(${b.image ?? fallbackImage})`,
+                    }}
                   >
                     <span className="sec-brand-blob">
                       <span className="sec-brand-blob-mark">{b.mark}</span>
@@ -93,26 +108,34 @@ export default function SectorPageView({ slug }: Props) {
                       Read more <span aria-hidden="true">→</span>
                     </Link>
                   </div>
-                </article>
+                </Reveal>
               );
             })}
           </div>
         </section>
 
         <section className="sec-highlights">
-          <h2 className="pg-section-title pg-section-title--light">Highlights</h2>
+          <Reveal as="h2" className="pg-section-title pg-section-title--light">
+            Highlights
+          </Reveal>
           <div className="sec-highlight-grid">
-            {data.highlights.map((h) => (
-              <div key={h.title} className="sec-highlight-card">
+            {data.highlights.map((h, i) => (
+              <Reveal
+                key={h.title}
+                delay={((i % 3) + 1) as 1 | 2 | 3}
+                className="sec-highlight-card"
+              >
                 <h3>{h.title}</h3>
                 <p>{h.description}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </section>
 
         <section className="sec-closing">
-          <p className="sec-closing-quote">{data.closing}</p>
+          <Reveal as="p" className="sec-closing-quote">
+            {data.closing}
+          </Reveal>
           <div className="sec-closing-actions">
             <Link href={routes.industries} className="sec-cta sec-cta--solid">
               ← All Industries
@@ -124,31 +147,39 @@ export default function SectorPageView({ slug }: Props) {
         </section>
 
         <section className="sec-other">
-          <h2 className="pg-section-title">Other VOITH sectors</h2>
+          <Reveal as="h2" className="pg-section-title">
+            Other VOITH sectors
+          </Reveal>
           <div className="sec-other-grid">
-            {otherSectors.map((s) => {
+            {otherSectors.map((s, i) => {
               const o = sectorPages[s];
               return (
-                <Link
+                <Reveal
                   key={s}
-                  href={`${routes.industries}/${s}`}
-                  className="sec-other-card"
+                  delay={((i % 3) + 1) as 1 | 2 | 3}
+                  className="sec-other-reveal"
                 >
-                  <span
-                    className="sec-other-mark"
-                    style={{ background: o.color }}
-                    aria-hidden="true"
+                  <Link
+                    href={`${routes.industries}/${s}`}
+                    className="sec-other-card"
+                    style={{ "--sector-color": o.color } as React.CSSProperties}
                   >
-                    {o.letter}
-                  </span>
-                  <div>
-                    <h3>{o.label}</h3>
-                    <p>{o.description}</p>
-                  </div>
-                  <span className="sec-other-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </Link>
+                    <CardMedia
+                      image={sectorPlaceholderImages[s]}
+                      mark={o.letter}
+                      name={o.label}
+                      color={o.color}
+                      className="sec-other-media"
+                    />
+                    <div className="sec-other-body">
+                      <h3>{o.label}</h3>
+                      <p>{o.description}</p>
+                      <span className="sec-other-arrow" aria-hidden="true">
+                        →
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
               );
             })}
           </div>

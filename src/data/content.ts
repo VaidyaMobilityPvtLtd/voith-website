@@ -81,6 +81,17 @@ export const pageMeta = {
 
 export type SectorSlug = "mobility" | "construction" | "hospitality" | "diversified";
 
+/**
+ * Placeholder card/hero imagery reused from the sector library until
+ * brand-specific photography lands. Repeats across sectors are intentional.
+ */
+export const sectorPlaceholderImages: Record<SectorSlug, string> = {
+  mobility: "/sectors/other_industries.webp",
+  construction: "/sectors/construction.jpg",
+  hospitality: "/sectors/hospitality.jpg",
+  diversified: "/sectors/other_industries.webp",
+};
+
 export type IndustryDropdownItem = { label: string; slug: SectorSlug; tagline: string };
 
 export const industryDropdown: IndustryDropdownItem[] = [
@@ -135,6 +146,8 @@ export type ChildBrand = {
   name: string;
   role: string;
   description: string;
+  /** Optional card/hero image. Falls back to a branded placeholder. */
+  image?: string;
   /** Optional expanded content shown on the brand page. */
   detail?: BrandDetail;
   /** Marks an announced-but-not-yet-live brand. */
@@ -154,6 +167,8 @@ export type SectorBrand = {
   name: string;
   role: string;
   description: string;
+  /** Optional card/hero image. Falls back to a branded placeholder. */
+  image?: string;
   /** Optional expanded content shown on the company page. */
   detail?: BrandDetail;
   /** Child brands distributed/operated by this company. */

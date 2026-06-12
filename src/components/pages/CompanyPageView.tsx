@@ -1,6 +1,14 @@
 import Link from "next/link";
-import { routes, sectorPages, type SectorSlug } from "@/data/content";
+import {
+  routes,
+  sectorPages,
+  sectorPlaceholderImages,
+  type SectorSlug,
+} from "@/data/content";
 import BrandDetailSections from "./BrandDetailSections";
+import BrandChildrenCarousel from "../BrandChildrenCarousel";
+import CardMedia from "../CardMedia";
+import Reveal from "../Reveal";
 
 type Props = { slug: SectorSlug; companySlug: string };
 
@@ -8,6 +16,8 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
   const data = sectorPages[slug];
   const company = data.brands.find((b) => b.slug === companySlug);
   if (!company) return null;
+
+  const fallbackImage = sectorPlaceholderImages[slug];
 
   const siblings = data.brands.filter((b) => b.slug !== companySlug);
   const children = company.children ?? [];
@@ -20,7 +30,13 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
       style={{ "--sector-color": data.color } as React.CSSProperties}
     >
       <header className="pg-hero brand-hero">
-        <div className="brand-hero-bg" aria-hidden="true" />
+        <div
+          className="brand-hero-bg"
+          aria-hidden="true"
+          style={{
+            backgroundImage: `url(${company.image ?? fallbackImage})`,
+          }}
+        />
         <div className="pg-hero-content">
           <nav className="pg-crumb" aria-label="Breadcrumb">
             <Link href={routes.home}>Home</Link>
@@ -31,23 +47,35 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
             <span aria-hidden="true">/</span>
             <span>{company.name}</span>
           </nav>
-          <span className="brand-hero-mark" aria-hidden="true">
+          <Reveal className="brand-hero-mark" aria-hidden="true">
             {company.mark}
-          </span>
-          <h1 className="pg-title">{company.name}</h1>
-          <p className="brand-hero-role">{company.role}</p>
+          </Reveal>
+          <Reveal as="h1" className="pg-title" delay={1}>
+            {company.name}
+          </Reveal>
+          <Reveal as="p" className="brand-hero-role" delay={2}>
+            {company.role}
+          </Reveal>
         </div>
       </header>
 
       <div className="pg-body">
         <section className="brand-overview">
-          <div className="brand-overview-grid">
+          <Reveal className="brand-overview-grid">
             <div>
               <p className="sec-eyebrow-line">{data.label} · Company</p>
               <h2 className="pg-section-title">About {company.name}</h2>
             </div>
             <p className="brand-overview-body">{company.description}</p>
-          </div>
+          </Reveal>
+          <Reveal className="brand-feature" delay={1}>
+            <CardMedia
+              image={company.image ?? fallbackImage}
+              mark={company.mark}
+              name={company.name}
+              color={data.color}
+              className="brand-feature-media"
+            />
           <div className="brand-context">
             <p className="brand-context-label">Part of VOITH {data.label}</p>
             <p className="brand-context-text">{data.description}</p>
@@ -74,6 +102,7 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
               Explore the {data.label} sector →
             </Link>
           </div>
+          </Reveal>
         </section>
 
         {company.comingSoon ? (
@@ -96,48 +125,31 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
           <>
             {detail?.intro && detail.intro.length > 0 ? (
               <section className="brand-detail">
-                <p className="sec-eyebrow-line">Overview</p>
+                <Reveal as="p" className="sec-eyebrow-line">
+                  Overview
+                </Reveal>
                 <div className="brand-detail-prose">
                   {detail.intro.map((p, i) => (
-                    <p key={i}>{p}</p>
+                    <Reveal as="p" key={i} delay={1}>
+                      {p}
+                    </Reveal>
                   ))}
                 </div>
               </section>
             ) : null}
 
             {children.length > 0 ? (
-              <section className="brand-children">
-                <h2 className="pg-section-title">
-                  {children.length === 1
+              <BrandChildrenCarousel
+                title={
+                  children.length === 1
                     ? "Brand under " + company.name
-                    : "Brands under " + company.name}
-                </h2>
-                <div className="brand-children-grid">
-                  {children.map((c) => (
-                    <Link
-                      key={c.slug}
-                      href={`${companyBase}/${c.slug}`}
-                      className="brand-child-card"
-                    >
-                      <span
-                        className="brand-child-mark"
-                        style={{ background: data.color }}
-                        aria-hidden="true"
-                      >
-                        {c.mark}
-                      </span>
-                      <div className="brand-child-body">
-                        <h3>{c.name}</h3>
-                        <p className="brand-child-role">{c.role}</p>
-                        <p className="brand-child-desc">{c.description}</p>
-                        <span className="brand-child-cta">
-                          Read more <span aria-hidden="true">→</span>
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
+                    : "Brands under " + company.name
+                }
+                children={children}
+                companyBase={companyBase}
+                color={data.color}
+                fallbackImage={fallbackImage}
+              />
             ) : null}
 
             {detail ? <BrandDetailSections detail={detail} skipIntro /> : null}
@@ -146,36 +158,45 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
 
         {siblings.length > 0 ? (
           <section className="sec-other">
-            <h2 className="pg-section-title">More in {data.label}</h2>
+            <Reveal as="h2" className="pg-section-title">
+              More in {data.label}
+            </Reveal>
             <div className="sec-other-grid">
-              {siblings.map((b) => (
-                <Link
+              {siblings.map((b, i) => (
+                <Reveal
                   key={b.slug}
-                  href={`${routes.industries}/${slug}/${b.slug}`}
-                  className="sec-other-card"
+                  delay={((i % 3) + 1) as 1 | 2 | 3}
+                  className="sec-other-reveal"
                 >
-                  <span
-                    className="sec-other-mark"
-                    style={{ background: data.color }}
-                    aria-hidden="true"
+                  <Link
+                    href={`${routes.industries}/${slug}/${b.slug}`}
+                    className="sec-other-card"
                   >
-                    {b.mark}
-                  </span>
-                  <div>
-                    <h3>{b.name}</h3>
-                    <p>{b.role}</p>
-                  </div>
-                  <span className="sec-other-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </Link>
+                    <CardMedia
+                      image={b.image ?? fallbackImage}
+                      mark={b.mark}
+                      name={b.name}
+                      color={data.color}
+                      className="sec-other-media"
+                    />
+                    <div className="sec-other-body">
+                      <h3>{b.name}</h3>
+                      <p>{b.role}</p>
+                      <span className="sec-other-arrow" aria-hidden="true">
+                        →
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
               ))}
             </div>
           </section>
         ) : null}
 
         <section className="sec-closing">
-          <p className="sec-closing-quote">{data.closing}</p>
+          <Reveal as="p" className="sec-closing-quote">
+            {data.closing}
+          </Reveal>
           <div className="sec-closing-actions">
             <Link
               href={`${routes.industries}/${slug}`}
