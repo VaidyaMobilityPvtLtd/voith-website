@@ -4525,6 +4525,10 @@ main {
   user-select: none;
   text-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
+.sec-brand-blob-mark--sm {
+  font-size: clamp(48px, 7vw, 72px);
+  letter-spacing: 0.02em;
+}
 .sec-brand-copy {
   padding: 56px 60px;
   display: flex;
@@ -4761,6 +4765,13 @@ main {
   font-size: 28px;
   font-weight: 800;
   margin-bottom: 20px;
+}
+.brand-hero-mark--wide {
+  width: auto;
+  min-width: 72px;
+  padding: 0 16px;
+  font-size: 15px;
+  letter-spacing: 0.06em;
 }
 .brand-hero-role {
   margin-top: 14px;

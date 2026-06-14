@@ -223,11 +223,12 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
     brands: [
       {
         slug: "uheem",
-        mark: "UH",
-        name: "UHEEM",
-        role: "Heavy & construction equipment · Est. 2018",
+        mark: "UHEEM",
+        name: "United Heavy Equipment and Earth Movers",
+        role: "UHEEM · Heavy & construction equipment · Est. 2018",
+        image: "/brands/uheem.png",
         description:
-          "United Heavy Equipment and Earth Movers — VOITH's heavy-equipment company and the sole authorised distributor of XCMG construction machinery in Nepal.",
+          "VOITH's heavy-equipment company and the sole authorised distributor of XCMG construction machinery in Nepal.",
         detail: {
           established: "Established · April 2018",
           origin: "Sole distributor — XCMG, China",
@@ -259,6 +260,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
             mark: "XC",
             name: "XCMG",
             role: "Construction & industrial machinery — China",
+            image: "/brands/xcmg.png",
             description:
               "One of the world's leading construction-equipment manufacturers, distributed exclusively in Nepal by UHEEM.",
             detail: {
@@ -290,6 +292,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         mark: "UTS",
         name: "United Traders Syndicate",
         role: "Toyota Nepal · Est. 1967",
+        image: "/brands/uts.png",
         description:
           "VOITH's flagship automotive company and Nepal's authorised Toyota distributor since 1967 — now expanding into premium two-wheelers with Keeway, Benelli, and Morbidelli.",
         detail: {
@@ -306,6 +309,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
             mark: "TO",
             name: "Toyota",
             role: "Toyota Motor Corporation — Japan",
+            image: "/brands/toyota.png",
             description:
               "Nepal's most trusted automotive brand — from electrified hybrids to rugged SUVs — distributed by UTS since 1967.",
             detail: {
@@ -378,6 +382,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
             mark: "MB",
             name: "Morbidelli",
             role: "Italian luxury motorcycles — Recently partnered",
+            image: "/brands/morbidelli.png",
             description:
               "The Italian motorcycle marque, introduced to Nepal in November 2025 — Trail, Street Fighter, and Cruiser series for the luxury segment.",
             detail: {
@@ -425,6 +430,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
             mark: "KW",
             name: "Keeway",
             role: "European-styled motorcycles — Recently partnered",
+            image: "/brands/keeway.png",
             description:
               "Contemporary European-styled motorcycles and scooters from the Keeway Group, joining UTS's growing two-wheeler lineup.",
             detail: {
@@ -440,6 +446,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
             mark: "BN",
             name: "Benelli",
             role: "Italian heritage motorcycles — Recently partnered",
+            image: "/brands/benelli.png",
             description:
               "One of the world's oldest motorcycle makers, founded in Pesaro, Italy, in 1911 — now part of VOITH's two-wheeler portfolio.",
             detail: {
@@ -466,6 +473,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         mark: "VE",
         name: "Vaidya Energy",
         role: "EV & mobility division · Est. 2023",
+        image: "/brands/vaidya-energy.png",
         description:
           "VOITH's EV and mobility division, driving Nepal's electric transition — home to Ather Energy and Ultraviolette, with a growing Ather Grid charging network.",
         detail: {
@@ -660,46 +668,80 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
     statLabel: "Tons per day capacity",
     heroImage: "/timeline/home2.png",
     intro:
-      "VOITH's construction arm is anchored by Huaxin Narayani Cement, Nepal's largest cement facility, and Tadi Cement & Mining — the upstream quarry and mining operation that feeds it. Together they supply the raw material for highways, housing, hydropower, and the country's next decade of infrastructure.",
+      "Nepal's construction sector contributes about 10–11% of GDP and uses roughly 35% of the national budget, employing millions as the country advances rapid infrastructure development. VOITH's construction arm is anchored by Huaxin Cement Narayani — Nepal's largest cement facility — and the Tadi group: Tadi Cement & Lime Industries and Tadi Mining & Construction, supplying limestone and minerals from Nuwakot for highways, housing, hydropower, and the next decade of build-out.",
     stats: [
-      { value: "USD 250M", label: "Joint investment" },
-      { value: "4,000 t/day", label: "Cement production" },
-      { value: "2022", label: "Commercial production began" },
-      { value: "Nuwakot", label: "Limestone source" },
+      { value: "USD 250M", label: "Total investment" },
+      { value: "4,000 t/day", label: "Current capacity" },
+      { value: "~1,000", label: "Direct employees" },
+      { value: "May 2022", label: "Production began" },
     ],
     brands: [
       {
         slug: "huaxin-narayani-cement",
         mark: "HN",
-        name: "Huaxin Narayani Cement",
-        role: "Joint venture with Huaxin Cement Co., Ltd.",
+        name: "Huaxin Cement Narayani",
+        role: "Joint venture with Huaxin Cement Co., Ltd. · Est. 2022",
+        image: "/brands/huaxin-cement-narayani.png",
         description:
-          "Nepal's largest cement facility, commencing production in May 2022. A USD 250M joint investment with one of the world's leading cement producers — engineered for scale, quality, and a long-term partnership in Nepali infrastructure.",
+          "VOITH's cement venture with one of the world's top cement companies — a USD 250M state-of-the-art plant between Kathmandu and Pokhara, producing 4,000 tons per day with plans to expand to 6,000.",
+        detail: {
+          established: "Production commenced · May 2022",
+          origin: "Joint venture — Huaxin Cement Co., Ltd., China",
+          intro: [
+            "VOITH has ventured into cement production with the world's top cement company — Huaxin Cement Co. Ltd. The total investment in the project in Nepal is USD 250 million. Production commenced in May 2022.",
+            "The state-of-the-art plant has been designed with sustainability and growth in mind, and has drastically improved the quality of life in the geographic region around it.",
+            "The plant is located between two populous cities, Kathmandu and Pokhara, and has a production capacity of 4,000 tons a day — with plans to expand to 6,000 tons in the future. It directly employs around 1,000 personnel.",
+          ],
+        },
       },
       {
-        slug: "tadi-cement-mining",
-        mark: "TM",
-        name: "Tadi Cement & Mining",
-        role: "Limestone quarry and mining operations",
+        slug: "tadi-cement-lime-industries",
+        mark: "TC",
+        name: "Tadi Cement & Lime Industries",
+        role: "Limestone mining & supply · Est. 2019",
         description:
-          "Upstream limestone extraction in Nuwakot district, supplying the raw material backbone for Huaxin Narayani Cement and ensuring quality control from quarry to bag.",
+          "TCLI is a limestone mining and supplier company established in 2019. The quarry at Suryagadhi Rural Municipality-05, Nuwakot spans 1.66 hectares, producing 200 tons per day across 270 working days per annum.",
+        detail: {
+          established: "Established · 2019 A.D.",
+          origin: "Limestone quarry — Suryagadhi, Nuwakot",
+          intro: [
+            "Tadi Cement & Lime Industries (TCLI) is a limestone mining and supplier company established in 2019 A.D. The mine is located in Suryagadhi Rural Municipality-05, Nuwakot with a 1.66 ha. quarry area.",
+            "Limestone production at the quarry site is 200 tons per day for 270 working days per annum — supplying the raw material backbone for Huaxin Cement Narayani and Nepal's growing infrastructure pipeline.",
+          ],
+        },
+      },
+      {
+        slug: "tadi-mining-construction",
+        mark: "TM",
+        name: "Tadi Mining & Construction",
+        role: "Mineral mining & treatment · Est. 2019",
+        description:
+          "TMCC is a sister company of TCLI, established in 2019. It focuses on the mining, purification, and treatment of natural minerals such as limestone, sandstone, and marbles.",
+        detail: {
+          established: "Established · 2019 A.D.",
+          origin: "Sister company — Tadi Cement & Lime Industries",
+          intro: [
+            "Tadi Mining & Construction (TMCC) is a sister company of TCLI established in 2019 A.D.",
+            "TMCC focuses on the mining, purification, and treatment of natural minerals such as limestone, sandstone, and marbles — extending VOITH's upstream control from raw extraction through processed material ready for construction.",
+          ],
+        },
       },
     ],
     highlights: [
       {
         title: "Largest cement plant in Nepal",
         description:
-          "4,000 tons per day capacity supplies the country's housing, hydropower, and highway construction at industrial scale.",
+          "4,000 tons per day today, with a planned expansion to 6,000 tons — supplying housing, hydropower, and highway construction at industrial scale.",
       },
       {
-        title: "International scale, local roots",
+        title: "Between Kathmandu and Pokhara",
         description:
-          "A partnership with Huaxin Cement brings global engineering standards to a fully Nepal-based operation employing hundreds of workers and engineers.",
+          "Strategically located between Nepal's two most populous cities, the plant directly employs around 1,000 personnel and has transformed quality of life in the surrounding region.",
       },
       {
-        title: "Integrated from quarry to market",
+        title: "Sustainability at scale",
         description:
-          "Owning both the limestone source and the cement plant gives VOITH end-to-end control over quality, supply, and pricing stability.",
+          "A USD 250M partnership with Huaxin Cement Co. Ltd. brings global engineering standards to a state-of-the-art facility designed for long-term growth and environmental responsibility.",
       },
     ],
     closing:
@@ -731,6 +773,7 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         mark: "SW",
         name: "Sasvata Wellness Resort",
         role: "Upcoming flagship — Himalayan Nepal",
+        image: "/brands/sasvata-wellness-resort.png",
         description:
           "A premium all-inclusive resort designed around wellness, culture, and the spiritual presence of the Himalayas. Built for guests who want depth as well as luxury — and who VOITH hopes will return again and again as friends.",
       },
@@ -910,8 +953,8 @@ export const heroItems: HeroItem[] = [
     href: routes.industries,
   },
   {
-    title: "Huaxin Narayani Cement",
-    sub: "4,000 tons/day · USD 250M investment",
+    title: "Huaxin Cement Narayani",
+    sub: "4,000 t/day · ~1,000 employees · USD 250M",
     href: routes.industries,
   },
 ];
@@ -959,7 +1002,7 @@ export const businesses: Business[] = [
     letter: "C",
     color: "#1D6DB5",
     category: "Construction",
-    sub: "Huaxin Narayani Cement · Tadi Cement & Mining",
+    sub: "Huaxin Narayani · TCLI · TMCC",
     description:
       "From limestone quarries in Nuwakot to Nepal's largest cement plant — 4,000 tons per day, a USD 250M joint venture with world leader Huaxin Cement.",
     image: "/sectors/construction.jpg",
@@ -1007,9 +1050,9 @@ export const milestones: Milestone[] = [
   },
   {
     date: "May 2022",
-    title: "Huaxin Narayani Cement Begins",
+    title: "Huaxin Cement Narayani Begins",
     description:
-      "Nepal's largest cement facility commences production — 4,000 tons per day with USD 250M joint investment with Huaxin Cement Co. Ltd.",
+      "VOITH ventures into cement with Huaxin Cement Co. Ltd. — USD 250M investment, production from May 2022 at 4,000 tons per day between Kathmandu and Pokhara, employing around 1,000 personnel.",
   },
 ];
 
@@ -1019,128 +1062,211 @@ export type StoryMilestone = {
   topic: string;
   body: string;
   image: string;
+  /** CSS object-position / background-position for image framing in timeline cards */
+  imagePosition?: string;
 };
 
-/** VOITH Profile / Our Story — seventeen milestones (1960–2025). */
+/** VOITH Profile 2026 — Our History timeline (Canva pages 8–9, 1960–2025). */
 export const storyMilestones: StoryMilestone[] = [
   {
     year: "1960",
     chipLabel: "1960",
-    topic: "Tiger Taxi in Nepal :",
+    topic: "Tiger Taxi in Nepal",
     body: "In the late 1960s, Kathmandu embraced modern mobility with the iconic “tiger taxis.” As private ownership grew, drivers shifted to new vehicles, and Toyota emerged as the trusted brand, shaping Nepal’s automotive legacy.",
-    image: "/timeline/homepage.jpg",
+    image: "/timeline/1960-tiger-taxi.png",
+    imagePosition: "center 62%",
   },
   {
     year: "1967",
     chipLabel: "1967",
-    topic: "The UTS–Toyota partnership,",
-    body: "The beginning of an enduring UTS–Toyota partnership, symbolized by a historic handshake and later honored through cultural exchange, reflecting a legacy of trust, respect, and long-term collaboration.",
-    image: "/timeline/home2.png",
+    topic: "Ties that Bind",
+    body: "The beginning of an enduring UTS–Toyota partnership, symbolized by a historic handshake and later honored through cultural exchange — a legacy of trust, respect, and long-term collaboration.",
+    image: "/timeline/1967-ties-that-bind.png",
+    imagePosition: "center 30%",
   },
   {
     year: "1970",
     chipLabel: "1970",
-    topic: "Little Things We Do:",
+    topic: "Little Things We Do",
     body: "At VOITH, sustainability is a collective commitment. Every month, team members come together to clean, green, and protect public spaces, contributing to a cleaner and more sustainable Nepal.",
-    image: "/timeline/homepage.jpg",
+    image: "/timeline/1970-little-things.png",
+    imagePosition: "center 45%",
   },
   {
     year: "1975",
     chipLabel: "1975",
-    topic: "King Birendra Coronation:",
+    topic: "King Birendra Coronation",
     body: "During the coronation of King Birendra, Toyota Nepal (United Traders Syndicate) proudly supplied VIP vehicles for the royal ceremony, showcasing Toyota’s reliability and prestige at a historic national event.",
-    image: "/timeline/home2.png",
+    image: "/timeline/1975-coronation.png",
+    imagePosition: "center 50%",
   },
   {
     year: "1978",
     chipLabel: "1978",
-    topic: "Kathmandu to Calcutta:",
-    body: "United Traders Syndicate organized a historic Kathmandu–Calcutta motor rally with the Toyota Celica, symbolizing cross-border friendship, regional connectivity, and confidence in reliable mobility—led personally by the Chairman.",
-    image: "/timeline/homepage.jpg",
+    topic: "Kathmandu to Calcutta",
+    body: "United Traders Syndicate organized a historic Kathmandu–Calcutta motor rally with the Toyota Celica, symbolizing cross-border friendship, regional connectivity, and confidence in reliable mobility — led personally by the Chairman.",
+    image: "/timeline/1978-kathmandu-calcutta.png",
+    imagePosition: "center 45%",
   },
   {
     year: "1979",
     chipLabel: "1979",
-    topic: "Red Cross Ambulance :",
+    topic: "Red Cross Ambulance",
     body: "United Traders Syndicate donated two fully equipped Toyota ambulances to the Nepal Red Cross Society and Pariwar Niyojan Nepal, reinforcing its commitment to accessible and timely healthcare for communities across Nepal.",
-    image: "/timeline/home2.png",
+    image: "/timeline/1979-red-cross.png",
+    imagePosition: "center 22%",
   },
   {
     year: "1987",
     chipLabel: "1987",
-    topic: "Hockey Game:",
+    topic: "Hockey Game",
     body: "United Traders Syndicate organized friendly hockey and basketball matches to promote youth engagement, healthy lifestyles, and teamwork, fostering unity and sportsmanship among young people.",
-    image: "/timeline/homepage.jpg",
+    image: "/timeline/1987-hockey.png",
+    imagePosition: "center 45%",
+  },
+  {
+    year: "1991",
+    chipLabel: "1991",
+    topic: "Mahindra MOU Signed",
+    body: "United Traders Syndicate signed an official memorandum of understanding with Mahindra, expanding VOITH’s mobility portfolio and strengthening its role in Nepal’s automotive market.",
+    image: "/timeline/1991-mahindra.png",
+    imagePosition: "center center",
   },
   {
     year: "2000",
     chipLabel: "2000",
-    topic: "Dr. Shoichiro Toyoda’s landmark visit to Nepal,",
+    topic: "Dr. Shoichiro Toyoda’s Landmark Visit to Nepal",
     body: "United Traders Syndicate was honored to host Dr. Shoichiro Toyoda in Nepal, marking a historic visit that celebrated cultural exchange, leadership ties, and a shared commitment to sustainability.",
-    image: "/timeline/home2.png",
+    image: "/timeline/2000-toyoda-visit.png",
+    imagePosition: "center 30%",
   },
   {
-    year: "Since 2004",
+    year: "2003",
+    chipLabel: "2003",
+    topic: "Guranse Tea Factory Established",
+    body: "VOITH established the Guranse Tea factory, supporting Nepal’s tea industry and creating opportunities for rural communities in the eastern hills.",
+    image: "/timeline/2003-guranse-tea.png",
+    imagePosition: "center 40%",
+  },
+  {
+    year: "2004",
     chipLabel: "2004 · Rally",
-    topic: "Toyota Women’s Rally",
-    body: "Launched in 2004, the Toyota Women’s Rally is Nepal’s pioneering women-focused motorsport initiative, celebrating women’s confidence, skill, and independence. It has grown into a powerful symbol of empowerment and inclusion, inspiring women from diverse backgrounds to take the driver’s seat—on the road and in life.",
-    image: "/timeline/homepage.jpg",
+    topic: "Women’s Rally",
+    body: "Launched in 2004, the Toyota Women’s Rally is Nepal’s pioneering women-focused motorsport initiative, celebrating women’s confidence, skill, and independence — a powerful symbol of empowerment on the road and in life.",
+    image: "/timeline/2004-womens-rally.png",
+    imagePosition: "center 35%",
   },
   {
-    year: "Since 2004",
+    year: "2004",
     chipLabel: "2004 · Art",
-    topic: "Dream car Art Contest:",
+    topic: "Dream Car Art Contest",
     body: "Launched in 2004, the Toyota Dream Car Art Contest inspires children to imagine the future of mobility through creativity and art, encouraging young minds to dream big and think beyond boundaries.",
-    image: "/timeline/home2.png",
+    image: "/timeline/2004-dream-car.png",
+    imagePosition: "center center",
   },
   {
-    year: "Since 2005",
-    chipLabel: "2005 · Sports",
-    topic: "VOITH’s Legacy in Uplifting Sports:",
+    year: "2005",
+    chipLabel: "2005",
+    topic: "VOITH’s Legacy in Uplifting Sports",
     body: "VOITH has played a pioneering role in strengthening Nepal’s sports ecosystem, driven by a deep belief in the power of sports to inspire excellence and uplift communities. Under the leadership of Chairman Vaidya, a former college cricket captain, VOITH has consistently supported athletes, infrastructure, and major sporting events across decades.",
-    image: "/timeline/homepage.jpg",
+    image: "/timeline/2005-sports-legacy.png",
+    imagePosition: "center 25%",
+  },
+  {
+    year: "2006",
+    chipLabel: "2006",
+    topic: "Subaru Official MOU Signed",
+    body: "VOITH signed an official memorandum of understanding with Subaru, adding another trusted global automotive brand to its portfolio in Nepal.",
+    image: "/timeline/2006-subaru-mou.png",
+    imagePosition: "center center",
+  },
+  {
+    year: "2007",
+    chipLabel: "2007",
+    topic: "ViZu Poultry",
+    body: "ViZu poultry was established as part of VOITH’s diversified ventures, reflecting the group’s investment in agriculture and food security for Nepal.",
+    image: "/timeline/2007-vizu-poultry.png",
+    imagePosition: "center 35%",
   },
   {
     year: "2017",
     chipLabel: "2017",
-    topic: "50 Years of Toyota in Nepal :",
-    body: "Marking 50 years in Nepal, UTS celebrated this milestone with the inauguration of Toyota’s new state-of-the-art 3S (Sales, Service, Spare) facility at the newly constructed VOITH Complex, Dhumbarahi, Kathmandu, reaffirming Toyota’s long-standing commitment to quality, innovation, and customer trust in Nepal.",
-    image: "/timeline/home2.png",
+    topic: "50 Years in Nepal",
+    body: "Marking 50 years in Nepal, UTS celebrated this milestone with the inauguration of Toyota’s new state-of-the-art 3S (Sales, Service, Spare) facility at the newly constructed VOITH Complex, Dhumbarahi, Kathmandu — reaffirming Toyota’s long-standing commitment to quality, innovation, and customer trust.",
+    image: "/timeline/2017-50-years.png",
+    imagePosition: "center 30%",
   },
   {
     year: "2019",
-    chipLabel: "2019",
-    topic: "“Rush to Mustang”",
-    body: "In 2019, UTS organized the “Rush to Mustang” rally, where a convoy of Toyota Rush SUVs conquered rugged terrains from Kathmandu to Mustang, showcasing the vehicle’s off-road capability and reliability. The successful journey and strong public response led to immediate bookings, reinforcing Toyota Rush as a trusted adventure SUV in Nepal.",
-    image: "/timeline/homepage.jpg",
+    chipLabel: "2019 · Rally",
+    topic: "Rush to Mustang",
+    body: "UTS organized the “Rush to Mustang” rally, where a convoy of Toyota Rush SUVs conquered rugged terrain from Kathmandu to Mustang, showcasing off-road capability and reliability — and driving strong public response and bookings.",
+    image: "/timeline/2019-rush-mustang.png",
+    imagePosition: "center 45%",
+  },
+  {
+    year: "2019",
+    chipLabel: "2019 · UHEEM",
+    topic: "UHEEM Brand Officially Launched in Nepal",
+    body: "The UHEEM brand was officially launched in Nepal, bringing XCMG heavy equipment and construction machinery to the country’s growing infrastructure sector.",
+    image: "/timeline/2019-uheem-launch.png",
+    imagePosition: "center 45%",
   },
   {
     year: "2021",
-    chipLabel: "2021 · N8W",
-    topic: "Toyota Nepal × Nepal8thWonder Pvt. Ltd.",
-    body: "Toyota Nepal, in partnership with Nepal8thWonder Pvt. Ltd., launched Toyota Travel to promote Nepal’s travel and tourism through cinematic road journeys. The initiative showcases the country’s diverse landscapes—from Bardiya to Mustang, Rasuwa, and Manang—highlighting adventure, culture, and connection experienced behind the wheel of a Toyota.",
-    image: "/timeline/home2.png",
+    chipLabel: "2021",
+    topic: "Football Sponsorship",
+    body: "Toyota Nepal’s football sponsorship underscored the company’s dedication to supporting local sports initiatives and promoting healthy, active lifestyles.",
+    image: "/timeline/2021-football.png",
+    imagePosition: "center 30%",
   },
   {
-    year: "2021",
-    chipLabel: "2021 · MMC",
-    topic: "Football Sponsorship:",
-    body: "The collaboration underscored Toyota’s dedication to supporting local sports initiatives and promoting healthy lifestyles.",
-    image: "/timeline/homepage.jpg",
+    year: "2022",
+    chipLabel: "2022",
+    topic: "Huaxin Cement Narayani Started",
+    body: "VOITH ventured into cement production with Huaxin Cement Co. Ltd. — a USD 250M state-of-the-art plant between Kathmandu and Pokhara. Production commenced in May 2022 at 4,000 tons per day, with plans to expand to 6,000 tons, directly employing around 1,000 personnel.",
+    image: "/timeline/2022-huaxin-cement.png",
+    imagePosition: "center 45%",
+  },
+  {
+    year: "2023",
+    chipLabel: "2023",
+    topic: "Launch of Ather",
+    body: "Vaidya Energy launched Ather Energy as the sole authorised distributor in Nepal, marking VOITH’s entry into the country’s electric two-wheeler market.",
+    image: "/timeline/2023-ather-launch.png",
+    imagePosition: "center 25%",
   },
   {
     year: "2024",
     chipLabel: "2024",
-    topic: "Toyota Start Your Impossible :",
+    topic: "Start Your Impossible",
     body: "This collaboration marked a milestone, making Nabita the first Nepali athlete to join Toyota’s Global Team Toyota Athletes (GTTA), a program celebrating over 200 athletes worldwide who excel in sports and community impact.",
-    image: "/timeline/home2.png",
+    image: "/timeline/2024-start-impossible.png",
+    imagePosition: "center 35%",
+  },
+  {
+    year: "2024",
+    chipLabel: "Aug 2024",
+    topic: "Ather Won Best Stall at NADA Auto Show",
+    body: "Vaidya Energy’s Ather EV took Best Stall at Nepal’s premier auto show — cementing its position as Nepal’s No. 1 electric scooter brand.",
+    image: "/timeline/2024-ather-nada.png",
+    imagePosition: "center 40%",
   },
   {
     year: "2025",
     chipLabel: "2025",
-    topic: "Kathmandu to Kailash Manasarovar:",
-    body: "From Kathmandu to Kailash Mansarovar, 19 Toyota vehicles and 62 passionate explorers embarked on a spiritual journey like no other. More than just a route, this was a celebration of purpose, exploration, and the joy of the drive. Driving a Toyota is not just about reaching the destination — it’s about the thrill of the journey, the courage to push boundaries, and the spirit to lead with purpose.\n\nThrough this expedition, we reignited our love for adventure and created memories that go beyond the road.",
-    image: "/timeline/homepage.jpg",
+    topic: "Kathmandu to Kailash Manasarovar",
+    body: "From Kathmandu to Kailash Mansarovar, 19 Toyota vehicles and 62 passionate explorers embarked on a spiritual journey — a celebration of purpose, exploration, and the joy of the drive.",
+    image: "/timeline/2025-kailash.png",
+    imagePosition: "center 55%",
+  },
+  {
+    year: "2025",
+    chipLabel: "Dec 2025",
+    topic: "Benelli and Morbidelli Signed",
+    body: "In December 2025, Italian heritage motorcycle brands Benelli and Morbidelli officially entered Nepal under VOITH’s expanding two-wheeler division — building toward local assembly.",
+    image: "/timeline/2025-benelli-morbidelli.png",
+    imagePosition: "center center",
   },
 ];
 
@@ -1290,9 +1416,9 @@ export const voithFamily: FamilyTeam[] = [
   },
   {
     business: "Construction",
-    unit: "Huaxin Narayani Cement & Tadi Mining",
+    unit: "Huaxin Cement Narayani · TCLI · TMCC",
     description:
-      "Plant engineers, mining operators, and logistics crews running Nepal's largest cement facility at 4,000 tons per day.",
+      "Plant engineers, mining operators, and logistics crews running Huaxin Cement Narayani — around 1,000 personnel at 4,000 tons per day between Kathmandu and Pokhara.",
     members: [
       { initials: "RG", name: "Ramesh Gurung", role: "Plant General Manager" },
       { initials: "SP", name: "Sunita Pokharel", role: "Quality Assurance Lead" },
@@ -1579,8 +1705,8 @@ export const footprintMarkers: FootprintMarker[] = [
   { brand: "ATHER", city: "Birtamod (Jhapa)", lon: 87.985, lat: 26.640 },
 
   // Plant & Mining (Huaxin) — yellow
-  { brand: "HUAXIN", city: "Huaxin Narayani Plant — Nuwakot", lon: 85.168, lat: 27.910 },
-  { brand: "HUAXIN", city: "Tadi Mining — Belkotgadhi", lon: 85.134, lat: 27.943 },
+  { brand: "HUAXIN", city: "Huaxin Cement Narayani — Nuwakot", lon: 85.168, lat: 27.910 },
+  { brand: "HUAXIN", city: "TCLI Quarry — Suryagadhi, Nuwakot", lon: 85.134, lat: 27.943 },
 ];
 
 export type ContactChannel = {
@@ -1640,11 +1766,11 @@ export const contactOffices: ContactOffice[] = [
     hours: "Sun – Fri · 09:00 – 18:00 NPT",
   },
   {
-    city: "Nuwakot — Huaxin Narayani Cement",
-    role: "Plant & Mining Operations",
+    city: "Nuwakot — Quarry & Plant",
+    role: "TCLI · TMCC · Huaxin Cement Narayani",
     addressLines: [
-      "Huaxin Narayani Cement Pvt. Ltd.",
-      "Belkotgadhi Municipality",
+      "Tadi Cement & Lime Industries",
+      "Suryagadhi Rural Municipality-05",
       "Nuwakot District, Bagmati Province",
     ],
     hours: "Sun – Fri · 08:00 – 17:00 NPT",

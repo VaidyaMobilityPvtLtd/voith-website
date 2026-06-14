@@ -94,7 +94,11 @@ export default function SectorPageView({ slug }: Props) {
                     }}
                   >
                     <span className="sec-brand-blob">
-                      <span className="sec-brand-blob-mark">{b.mark}</span>
+                      <span
+                        className={`sec-brand-blob-mark${b.mark.length > 3 ? " sec-brand-blob-mark--sm" : ""}`}
+                      >
+                        {b.mark}
+                      </span>
                     </span>
                   </Link>
                   <div className="sec-brand-copy">

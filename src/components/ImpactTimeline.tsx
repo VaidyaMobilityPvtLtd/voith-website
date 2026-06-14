@@ -11,6 +11,7 @@ export default function ImpactTimeline() {
   const last = items.length - 1;
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
   const colRefs = useRef<Array<HTMLDivElement | null>>([]);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -125,17 +126,32 @@ export default function ImpactTimeline() {
     };
   }, [dragging]);
 
-  // ── Vertical wheel → horizontal scroll (releases at the edges) ─────
+  // ── Vertical wheel → horizontal scroll (only while timeline is in view) ──
   useEffect(() => {
     const vp = viewportRef.current;
-    if (!vp) return;
+    const section = sectionRef.current;
+    if (!vp || !section) return;
+
+    const isEngaged = () => {
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const visible = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+      // Ignore wheel until the timeline has scrolled into view (not just peeking at the bottom).
+      if (rect.top > vh * 0.42) return false;
+      if (visible < Math.min(rect.height * 0.38, vh * 0.34)) return false;
+      return true;
+    };
+
     const onWheel = (e: WheelEvent) => {
-      if (e.deltaX !== 0 || e.deltaY === 0) return; // trackpads scroll natively
+      if (!isEngaged()) return;
+      // Trackpads with horizontal delta scroll natively.
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (e.deltaY === 0) return;
       const max = vp.scrollWidth - vp.clientWidth;
       const room = e.deltaY > 0 ? vp.scrollLeft < max - 1 : vp.scrollLeft > 1;
       if (!room) return; // at an edge → let the page scroll
       e.preventDefault();
-      vp.scrollLeft += e.deltaY;
+      vp.scrollLeft += e.deltaY * 0.85;
     };
     vp.addEventListener("wheel", onWheel, { passive: false });
     return () => vp.removeEventListener("wheel", onWheel);
@@ -176,7 +192,7 @@ export default function ImpactTimeline() {
   const activeItem = openIdx != null ? items[openIdx] : null;
 
   return (
-    <section className="imp-tl" aria-labelledby="imp-tl-heading">
+    <section ref={sectionRef} className="imp-tl" aria-labelledby="imp-tl-heading">
       <div className="imp-tl-shell">
         <header className="imp-tl-head">
           <p className="imp-tl-kicker">Six decades of impact</p>
@@ -218,7 +234,13 @@ export default function ImpactTimeline() {
                   >
                     <article className="imp-tl-card">
                       <div className="imp-tl-card-media">
-                        <img src={m.image} alt="" loading="lazy" draggable={false} />
+                        <img
+                          src={m.image}
+                          alt=""
+                          loading="lazy"
+                          draggable={false}
+                          style={m.imagePosition ? { objectPosition: m.imagePosition } : undefined}
+                        />
                         <span className="imp-tl-chip">{m.chipLabel}</span>
                       </div>
                       <div className="imp-tl-card-text">
@@ -300,7 +322,12 @@ export default function ImpactTimeline() {
             </button>
             <div
               className="imp-tl-dialog-media"
-              style={{ backgroundImage: `url(${activeItem.image})` }}
+              style={{
+                backgroundImage: `url(${activeItem.image})`,
+                ...(activeItem.imagePosition
+                  ? { backgroundPosition: activeItem.imagePosition }
+                  : {}),
+              }}
               aria-hidden="true"
             />
             <div className="imp-tl-dialog-body">

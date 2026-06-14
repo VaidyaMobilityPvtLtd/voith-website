@@ -47,7 +47,10 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
             <span aria-hidden="true">/</span>
             <span>{company.name}</span>
           </nav>
-          <Reveal className="brand-hero-mark" aria-hidden="true">
+          <Reveal
+            className={`brand-hero-mark${company.mark.length > 3 ? " brand-hero-mark--wide" : ""}`}
+            aria-hidden="true"
+          >
             {company.mark}
           </Reveal>
           <Reveal as="h1" className="pg-title" delay={1}>

@@ -11,7 +11,7 @@ const CY = VBH / 2;      // vertically centered → 3 o'clock is at (CX-R, CY)
 const R = 470;
 const THETA_MAX = 1.05;  // ~60° above and below 3 o'clock
 const TICK_COUNT = 80;
-const SCROLL_PER_STEP_VH = 26; // viewport-heights of scroll consumed per milestone
+const SCROLL_PER_STEP_VH = 14; // viewport-heights of scroll consumed per milestone
 
 type Point = { x: number; y: number };
 
@@ -60,11 +60,14 @@ export default function InteractiveTimeline() {
       rafRef.current = null;
       const sec = sectionRef.current;
       if (!sec) return;
-      const total = sec.offsetHeight - window.innerHeight;
-      if (total <= 0) return;
-      const scrolled = -sec.getBoundingClientRect().top;
-      const p = Math.max(0, Math.min(1, scrolled / total));
-      setProgress((prev) => (Math.abs(prev - p) < 0.0005 ? prev : p));
+      const vh = window.innerHeight;
+      const scrollable = sec.offsetHeight - vh;
+      if (scrollable <= 0) return;
+      // Only advance once the section has pinned (top reached viewport top).
+      const start = sec.offsetTop;
+      const p = (window.scrollY - start) / scrollable;
+      const clamped = Math.max(0, Math.min(1, p));
+      setProgress((prev) => (Math.abs(prev - clamped) < 0.0005 ? prev : clamped));
     };
     const onScroll = () => {
       if (rafRef.current != null) return;
@@ -134,7 +137,7 @@ export default function InteractiveTimeline() {
             <span className="arc-tl-title-accent"> so far</span>
           </h2>
           <p className="arc-tl-intro">
-            Seventeen milestones from <strong>1960</strong> to <strong>2025</strong> — scroll up
+            {items.length} milestones from <strong>1960</strong> to <strong>2025</strong> — scroll up
             and down to scrub the dial through six decades.
           </p>
         </header>
