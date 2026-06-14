@@ -33,7 +33,6 @@ export default function Nav() {
     closeTimer.current = setTimeout(() => setOpenDropdown(false), 120);
   };
 
-  
   return (
     <nav id="nav">
       <div className="nav-l">

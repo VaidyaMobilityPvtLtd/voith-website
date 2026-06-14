@@ -5,12 +5,15 @@ import {
   voithFamily,
   voithFamilyStats,
 } from "@/data/content";
+import { getEmployees } from "@/lib/employees";
 import PageShell from "./PageShell";
 import PeopleTabs from "./PeopleTabs";
 
 const meta = pageMeta.people;
 
-export default function PeoplePageView() {
+export default async function PeoplePageView() {
+  const employees = await getEmployees();
+
   return (
     <PageShell
       theme="people"
@@ -26,6 +29,7 @@ export default function PeoplePageView() {
         boardOfDirectors={boardOfDirectors}
         voithFamily={voithFamily}
         voithFamilyStats={voithFamilyStats}
+        employees={employees}
       />
     </PageShell>
   );

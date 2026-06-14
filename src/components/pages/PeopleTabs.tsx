@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { FamilyStat, FamilyTeam, PersonCard } from "@/data/content";
+import type { Employee } from "@/lib/employees";
 
 type TabKey = "exec" | "board" | "family";
 
@@ -19,6 +20,7 @@ type Props = {
   boardOfDirectors: PersonCard[];
   voithFamily: FamilyTeam[];
   voithFamilyStats: FamilyStat[];
+  employees: Employee[];
 };
 
 export default function PeopleTabs({
@@ -26,6 +28,7 @@ export default function PeopleTabs({
   boardOfDirectors,
   voithFamily,
   voithFamilyStats,
+  employees,
 }: Props) {
   const [active, setActive] = useState<TabKey>("exec");
   const [openPerson, setOpenPerson] = useState<PersonCard | null>(null);
@@ -71,13 +74,16 @@ export default function PeopleTabs({
         {active === "board" && (
           <PeopleGrid people={boardOfDirectors} onOpen={setOpenPerson} />
         )}
-        {active === "family" && (
-          <FamilyView
-            teams={voithFamily}
-            stats={voithFamilyStats}
-            onOpen={setOpenPerson}
-          />
-        )}
+        {active === "family" &&
+          (employees.length > 0 ? (
+            <FamilyDirectory employees={employees} />
+          ) : (
+            <FamilyView
+              teams={voithFamily}
+              stats={voithFamilyStats}
+              onOpen={setOpenPerson}
+            />
+          ))}
       </section>
 
       {openPerson ? (
@@ -259,6 +265,118 @@ function FamilyView({
           </section>
         ))}
       </div>
+    </div>
+  );
+}
+
+function initials(name: string): string {
+  const cleaned = name.replace(/^(mr|mrs|ms|miss|dr|er|prof)\.?\s+/i, "");
+  const parts = cleaned.split(/\s+/).filter(Boolean);
+  return ((parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "")).toUpperCase() || "?";
+}
+
+function EmpPhoto({ src, name }: { src: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  if (!src || failed) {
+    return <span className="emp-photo-initials">{initials(name)}</span>;
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      draggable={false}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
+/** Live, searchable directory of the full VOITH workforce. */
+function FamilyDirectory({ employees }: { employees: Employee[] }) {
+  const [q, setQ] = useState("");
+  const [dept, setDept] = useState("");
+
+  const departments = useMemo(
+    () =>
+      Array.from(
+        new Set(employees.map((e) => e.department).filter(Boolean)),
+      ).sort((a, b) => a.localeCompare(b)),
+    [employees],
+  );
+
+  const filtered = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    return employees.filter((e) => {
+      if (dept && e.department !== dept) return false;
+      if (!needle) return true;
+      return (
+        e.name.toLowerCase().includes(needle) ||
+        e.designation.toLowerCase().includes(needle) ||
+        e.department.toLowerCase().includes(needle)
+      );
+    });
+  }, [employees, q, dept]);
+
+  return (
+    <div className="family-view">
+      <p className="family-lead">
+        From the showroom floor to the cement plant, from the Ather Grid to the
+        wellness deck — the {employees.length} people who carry the VOITH name
+        across Nepal.
+      </p>
+
+      <div className="emp-toolbar">
+        <input
+          type="search"
+          className="emp-search"
+          placeholder="Search by name or role…"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          aria-label="Search the VOITH family"
+        />
+        <select
+          className="emp-filter"
+          value={dept}
+          onChange={(e) => setDept(e.target.value)}
+          aria-label="Filter by department"
+        >
+          <option value="">All departments</option>
+          {departments.map((d) => (
+            <option key={d} value={d}>
+              {d}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <p className="emp-count">
+        Showing {filtered.length} of {employees.length}
+      </p>
+
+      {filtered.length === 0 ? (
+        <p className="emp-empty">No team members match your search.</p>
+      ) : (
+        <div className="emp-grid">
+          {filtered.map((e) => (
+            <article className="emp-card" key={e.id}>
+              <div className="emp-photo">
+                <EmpPhoto src={e.photo} name={e.name} />
+              </div>
+              <div className="emp-body">
+                <h4 className="emp-name">{e.name}</h4>
+                {e.designation ? (
+                  <p className="emp-role">{e.designation}</p>
+                ) : null}
+                {e.department ? (
+                  <span className="emp-dept">{e.department}</span>
+                ) : null}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

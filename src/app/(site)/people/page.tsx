@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   description: pageMeta.people.description,
 };
 
+// Refresh the page (and the fetched employee directory) at most once a day.
+export const revalidate = 86_400;
+
 export default function PeoplePage() {
   return <PeoplePageView />;
 }
