@@ -293,6 +293,7 @@ function EmpPhoto({ src, name }: { src: string; name: string }) {
   );
 }
 
+
 /** Live, searchable directory of the full VOITH workforce. */
 function FamilyDirectory({ employees }: { employees: Employee[] }) {
   const [q, setQ] = useState("");
