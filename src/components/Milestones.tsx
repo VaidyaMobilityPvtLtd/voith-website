@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Reveal from "./Reveal";
 import { milestones } from "@/data/content";
 
@@ -16,11 +17,15 @@ export default function Milestones() {
       </div>
       <Reveal className="mile-r">
         {milestones.map((m) => (
-          <div className="ms-item" key={m.title}>
+          <div className="ms-item" key={m.slug}>
             <div className="ms-date">{m.date}</div>
-            <div className="ms-title">{m.title}</div>
+            <Link href={`/milestones/${m.slug}`} className="ms-title-link">
+              <div className="ms-title">{m.title}</div>
+            </Link>
             <p className="ms-desc">{m.description}</p>
-            <span className="ms-more">Read more →</span>
+            <Link href={`/milestones/${m.slug}`} className="ms-more">
+              Read more →
+            </Link>
           </div>
         ))}
       </Reveal>

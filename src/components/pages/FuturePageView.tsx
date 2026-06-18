@@ -1,4 +1,5 @@
 import { futureItems, pageMeta } from "@/data/content";
+import Reveal from "../Reveal";
 import PageShell from "./PageShell";
 
 const meta = pageMeta.future;
@@ -15,16 +16,44 @@ export default function FuturePageView() {
       heroImage={meta.heroImage}
     >
       <section className="pg-initiatives">
-        {futureItems.map((item, i) => (
-          <article className="pg-initiative" key={item.title}>
-            <span className="pg-initiative-index">{String(i + 1).padStart(2, "0")}</span>
-            <div className="pg-initiative-body">
-              <span className="pg-initiative-pill">{item.pill}</span>
-              <h2>{item.title}</h2>
-              <p>{item.description}</p>
-            </div>
-          </article>
-        ))}
+        <Reveal className="pg-init-intro">
+          <span className="pg-init-eyebrow">What&apos;s next</span>
+          <h2 className="pg-init-heading">Initiatives in motion</h2>
+        </Reveal>
+
+        <div className="pg-init-rows">
+          {futureItems.map((item, i) => {
+            const [category, status] = item.pill.split(" — ");
+            return (
+              <Reveal
+                as="article"
+                key={item.title}
+                className={`pg-init-row${i % 2 === 1 ? " pg-init-row--flip" : ""}`}
+              >
+                <div className="pg-init-figure">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={item.image} alt={item.title} loading="lazy" />
+                  <span className="pg-init-index" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <div className="pg-init-copy">
+                  <div className="pg-init-tags">
+                    <span className="pg-init-cat">{category}</span>
+                    {status ? (
+                      <span className="pg-init-status">
+                        <span className="pg-init-status-dot" aria-hidden="true" />
+                        {status}
+                      </span>
+                    ) : null}
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
       </section>
 
       <aside className="pg-future-cta">

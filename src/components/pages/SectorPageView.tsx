@@ -102,9 +102,14 @@ export default function SectorPageView({ slug }: Props) {
                     </span>
                   </Link>
                   <div className="sec-brand-copy">
-                    <span className="sec-brand-num">
-                      0{i + 1} · {data.label}
-                    </span>
+                    <div className="sec-brand-toprow">
+                      <span className="sec-brand-num">
+                        0{i + 1} · {data.label}
+                      </span>
+                      {b.status ? (
+                        <span className="sec-brand-status">{b.status}</span>
+                      ) : null}
+                    </div>
                     <h3>{b.name}</h3>
                     <p className="sec-brand-role">{b.role}</p>
                     <p className="sec-brand-desc">{b.description}</p>

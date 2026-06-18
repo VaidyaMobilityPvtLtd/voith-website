@@ -110,7 +110,7 @@ export default function IndustriesPageView() {
                             <div className="ind-company-body">
                               <h4 className="ind-company-name">
                                 {c.name}
-                                {c.comingSoon ? (
+                                {c.comingSoon || c.status ? (
                                   <span className="ind-soon">Soon</span>
                                 ) : null}
                               </h4>

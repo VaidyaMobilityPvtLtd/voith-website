@@ -19,7 +19,7 @@ export const employeeCompanyOrder = [
   "Philippines Consulate",
   "Huaxin Cement Narayani",
   "Tadi Cement & Lime Industries",
-  "Sasvata Wellness Resort",
+  "VOITH Hospitality",
   "VOITH Group",
   "Other",
 ] as const;
@@ -46,7 +46,9 @@ export function resolveEmployeeCompany(department: string): EmployeeCompany {
   if (d.includes("consulate") || d.includes("philippines")) {
     return "Philippines Consulate";
   }
-  if (d.includes("sasvata")) return "Sasvata Wellness Resort";
+  if (d.includes("sasvata") || d.includes("hospitality")) {
+    return "VOITH Hospitality";
+  }
   if (d.includes("tadi") || d.includes("accounts tadi")) {
     return "Tadi Cement & Lime Industries";
   }

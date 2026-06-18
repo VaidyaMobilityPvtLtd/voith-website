@@ -62,6 +62,11 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
           <Reveal as="p" className="brand-hero-role" delay={2}>
             {company.role}
           </Reveal>
+          {company.status ? (
+            <Reveal delay={3}>
+              <span className="brand-hero-status">{company.status}</span>
+            </Reveal>
+          ) : null}
         </div>
       </header>
 

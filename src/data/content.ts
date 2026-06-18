@@ -97,7 +97,7 @@ export type IndustryDropdownItem = { label: string; slug: SectorSlug; tagline: s
 export const industryDropdown: IndustryDropdownItem[] = [
   { label: "Mobility", slug: "mobility", tagline: "UTS · Trayana · Vaidya Energy · UHEEM" },
   { label: "Construction", slug: "construction", tagline: "Huaxin Narayani · Tadi" },
-  { label: "Hospitality", slug: "hospitality", tagline: "Sasvata Wellness Resort" },
+  { label: "Hospitality", slug: "hospitality", tagline: "Sasvata · Himalayan Sasvata · Golden Thread" },
   { label: "Other Industries", slug: "diversified", tagline: "WEAN · Lumbini · Pitstop · Philippines Consulate" },
 ];
 
@@ -183,6 +183,12 @@ export type SectorBrand = {
   children?: ChildBrand[];
   /** Marks an announced-but-not-yet-live company. */
   comingSoon?: boolean;
+  /**
+   * Short status badge shown on cards and the company hero without hiding the
+   * detail content — e.g. "Coming Soon", "Opening 13 Oct 2026". Use instead of
+   * `comingSoon` when there IS content to show alongside the badge.
+   */
+  status?: string;
 };
 
 export type SectorStat = { value: string; label: string };
@@ -1077,90 +1083,197 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
     letter: "H",
     color: "#B45309",
     eyebrow: "Sector 03",
-    title: "Where guests become family",
+    title: "A tribute to Nepal's timeless diversity",
     description:
-      "The most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal — where guests depart as friends and return as family.",
-    stat: "1",
-    statLabel: "Flagship resort coming soon",
+      "VOITH Hospitality transforms Nepal's natural and cultural diversity into world-class travel experiences — three flagship destinations reaching from the jungles of Chitwan to the gateway of Everest.",
+    stat: "3",
+    statLabel: "Flagship projects in development",
     heroImage: "/timeline/homepage.jpg",
     intro:
-      "Hospitality is VOITH's next chapter. Sasvata Wellness Resort is an all-inclusive premium destination set in the spiritual landscape of the Himalayas — a sanctuary built around wellness, culture, and the conviction that hospitality is, at its core, a relationship.",
+      "Established in 2023 and led by VOITH Chairman Mr. Suraj Vaidya and Director Ms. Savanna Vaidya Basnyat, VOITH Hospitality is a tribute to Nepal's promising and enduring hospitality sector. Nepal rises from roughly 60 metres above sea level in the southern plains to 8,848 metres at the summit of Everest — a vertical masterpiece of landscapes, climates, cultures, and biodiversity. VOITH Hospitality is dedicated to celebrating that diversity and sharing it with the world through distinctive destinations that meet international standards of hospitality.",
     stats: [
-      { value: "Premium", label: "All-inclusive positioning" },
-      { value: "Himalayas", label: "Spiritual setting" },
-      { value: "Upcoming", label: "Opening soon" },
-      { value: "Wellness", label: "Core experience" },
+      { value: "2023", label: "VOITH Hospitality founded" },
+      { value: "3", label: "Flagship destinations" },
+      { value: "Boutique", label: "Curated & immersive" },
+      { value: "Nature", label: "& culture at the core" },
     ],
     brands: [
       {
-        slug: "sasvata-wellness-resort",
+        slug: "sasvata-wildlife-resort",
         mark: "SW",
-        name: "Sasvata Wellness Resort",
-        role: "Upcoming flagship — Himalayan Nepal",
+        name: "Sasvata Wildlife Resort",
+        role: "The Postcard on the Rapti River · Meghauli, Chitwan",
+        status: "Opening 13 Oct 2026",
         image: "/brands/sasvata-wellness-resort.png",
         description:
-          "The most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal — where guests depart as friends and return as family. A VOITH hospitality flagship built around wellness, culture, and Himalayan depth.",
+          "A boutique luxury wildlife retreat on ten bighas of riverfront land adjoining the Rapti River and the buffer zone of Chitwan National Park — operated in partnership with The Postcard Hotel and opening 13 October 2026.",
         detail: {
-          established: "Upcoming · VOITH hospitality flagship",
-          origin: "Spiritual Himalayas — Nepal",
+          established: "Opening · 13 October 2026",
+          origin: "Meghauli, Chitwan — in partnership with The Postcard Hotel",
           intro: [
-            "Sasvata Wellness Resort is VOITH's first hospitality property — the most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal.",
-            "Designed around wellness, culture, and the conviction that hospitality is a relationship rather than a transaction, Sasvata offers an all-inclusive premium experience where every element of the stay — wellness, dining, mountain access, and cultural immersion — is delivered under one roof.",
-            "The operating philosophy is simple: guests depart as friends and return as family. Success is measured not by occupancy alone, but by how many guests come back — and how deeply they connect with Nepal's spiritual landscape.",
-            "Sasvata represents VOITH's expansion beyond mobility and construction into experiential hospitality — hosting the world in the Himalayas with the same long-term commitment that has defined the group for over six decades.",
+            "The Postcard on the Rapti River by Sasvata Wildlife Resort is a tribute to coexistence — a boutique nature-based tourism masterpiece designed to draw global attention to Nepal's extraordinary biodiversity and wildlife heritage.",
+            "For Director Savanna Vaidya Basnyat, the project began with a simple belief: that meaningful encounters with nature have the power to restore perspective, inspire stewardship, and remind us of our place within a larger living ecosystem.",
+            "Situated across ten bighas of riverfront land adjoining the Rapti River and the buffer zone of Chitwan National Park, the resort is more than a place to stay — it is a platform for conservation storytelling, immersive travel, and meaningful engagement with nature.",
+            "In December 2023, Sasvata partnered with The Postcard Hotel, one of South Asia's leading boutique luxury hospitality brands. Scheduled to open on 13 October 2026, the resort will feature 22 thoughtfully designed keys and a collection of holistic, immersive experiences inspired by the natural and cultural richness of Nepal.",
           ],
           stats: [
-            { value: "Premium", label: "All-inclusive positioning" },
-            { value: "Himalayas", label: "Spiritual setting" },
-            { value: "Wellness", label: "Core experience" },
-            { value: "Upcoming", label: "Opening soon" },
+            { value: "22", label: "Thoughtfully designed keys" },
+            { value: "10 bighas", label: "Rapti riverfront land" },
+            { value: "Oct 2026", label: "Scheduled opening" },
+            { value: "Chitwan", label: "National Park buffer zone" },
           ],
           highlights: [
             {
-              title: "All-inclusive premium",
+              title: "Storytelling — conservation through stories",
               description:
-                "Every element of the stay — wellness programmes, dining, experiences, and mountain access — designed and delivered under one roof, without the upsell.",
+                "Immersive narratives inspired by Nepal's wildlife, culture, folklore, and the enduring relationship between people and nature.",
             },
             {
-              title: "Spiritual Himalayan setting",
+              title: "Healing Forest — food, wellness & reconnection",
               description:
-                "Located in landscapes that have drawn pilgrims and travellers for centuries — connecting guests with the cultural and natural heart of Nepal.",
+                "A sanctuary designed around nourishment, mindfulness, nature-inspired wellness, and the restorative power of the forest.",
             },
             {
-              title: "Guests as family",
+              title: "Immersive experiences — explore, learn, discover",
               description:
-                "Hospitality is a relationship, not a transaction. The measure of success is how many guests return — and how deeply they connect with the Sasvata experience.",
+                "Curated wildlife encounters, cultural journeys, river adventures, and hands-on experiences that deepen connections with Nepal's biodiversity.",
             },
           ],
           services: [
-            "Wellness & spa programmes",
-            "All-inclusive dining & culinary experiences",
-            "Cultural immersion & guided mountain access",
-            "Premium accommodation & concierge service",
-            "Retreat & corporate hospitality packages",
+            "Boutique luxury accommodation — 22 keys",
+            "Guided wildlife encounters & safaris",
+            "Rapti River adventures",
+            "Healing-forest wellness & cuisine",
+            "Conservation storytelling & cultural journeys",
+          ],
+          locationsLabel: "Location",
+          locations: [
+            {
+              name: "The Postcard on the Rapti River",
+              kind: "Sasvata Wildlife Resort",
+              address:
+                "Meghauli, Chitwan — adjoining the Rapti River and the buffer zone of Chitwan National Park",
+            },
+          ],
+        },
+      },
+      {
+        slug: "himalayan-sasvata",
+        mark: "HS",
+        name: "Himalayan Sasvata",
+        role: "Your First Everest Home · Phakding, Everest Region",
+        status: "Coming Soon",
+        image: "/timeline/2025-kailash.png",
+        description:
+          "A mountain lodge and experiential hospitality destination in Phakding — positioned as the first Himalayan home for trekkers beginning their journey to Everest.",
+        detail: {
+          established: "In development · Phakding, Everest Region",
+          origin: "Gateway to the Everest region — Khumbu",
+          intro: [
+            "Everest is not simply a destination — it is one of humanity's great journeys. For most trekkers and expedition members, the first impression of that journey is Phakding.",
+            "Himalayan Sasvata was conceived with a simple belief: the first night in the mountains should be both a thank you and a promise — a thank you to guests who have travelled across the world, and a promise that the adventure ahead will be worthy of their dreams.",
+            "Located in Phakding, the gateway to the Everest region, Himalayan Sasvata seeks to redefine the first impression of the Everest journey through thoughtful hospitality, authentic cultural experiences, and a deep respect for the mountain communities that make these adventures possible.",
+            "The vision is deeply personal to VOITH Chairman Suraj Vaidya — rooted in family heritage and inspired by his mother, Mrs. Aung Phuti Sherpa, whose origins trace back to the mountains and communities that have shaped the history of Everest.",
+          ],
+          stats: [
+            { value: "Phakding", label: "Gateway to Everest" },
+            { value: "Khumbu", label: "Sherpa heartland" },
+            { value: "Soon", label: "In development" },
+          ],
+          highlights: [
+            {
+              title: "Storytelling",
+              description:
+                "Through Sherpa narratives, Everest history, expedition tales, and local traditions, guests are invited to understand the mountain beyond its peaks.",
+            },
+            {
+              title: "Sherpa culture",
+              description:
+                "Celebrating Sherpa heritage through local cuisine, traditions, craftsmanship, spirituality, and meaningful cultural exchanges.",
+            },
+            {
+              title: "Mountain adventure culture",
+              description:
+                "Through interactions with guides, mountaineers, and adventurers, guests gain insight into the skills, preparation, teamwork, and spirit that define life in the high Himalaya.",
+            },
+          ],
+          services: [
+            "Mountain lodge accommodation",
+            "Sherpa cultural experiences & cuisine",
+            "Pre-trek hospitality & acclimatisation",
+            "Expedition & guide connections",
+          ],
+          locationsLabel: "Location",
+          locations: [
+            {
+              name: "Himalayan Sasvata",
+              kind: "Mountain lodge",
+              address: "Phakding, Everest Region (Khumbu), Nepal",
+            },
+          ],
+        },
+      },
+      {
+        slug: "golden-thread",
+        mark: "GT",
+        name: "Golden Thread Travel Platform",
+        role: "Connecting travellers with authentic Nepal",
+        status: "Coming Soon",
+        image: "/timeline/homepage.jpg",
+        description:
+          "A travel platform dedicated to connecting travellers with authentic Nepali experiences, destinations, stories, and journeys across the country.",
+        detail: {
+          established: "In development · VOITH Hospitality platform",
+          origin: "Nationwide — across Nepal",
+          intro: [
+            "Golden Thread is VOITH Hospitality's travel platform — dedicated to connecting travellers with authentic Nepali experiences, destinations, stories, and journeys across the country.",
+            "Where Sasvata Wildlife Resort and Himalayan Sasvata anchor VOITH's hospitality in place, Golden Thread weaves them — and the wider wonders of Nepal — into connected journeys, so guests can experience the country's dramatic diversity as a single, seamless thread.",
+            "From the grasslands of the Terai to the foot of Everest, Golden Thread is designed to make Nepal's natural, cultural, and adventure heritage discoverable, bookable, and unforgettable.",
+          ],
+          stats: [
+            { value: "Nationwide", label: "Across Nepal" },
+            { value: "Connected", label: "Curated journeys" },
+            { value: "Soon", label: "In development" },
+          ],
+          highlights: [
+            {
+              title: "Curated destinations",
+              description:
+                "Boutique, hand-picked places to stay and experiences worth travelling for — the best of Nepal, thoughtfully assembled.",
+            },
+            {
+              title: "Connected experiences",
+              description:
+                "An ecosystem that links VOITH's destinations and Nepal's wider wonders into seamless, meaningful journeys.",
+            },
+            {
+              title: "Authentic stories",
+              description:
+                "Real Nepali experiences, destinations, and stories — connecting travellers with the people and places that make the country extraordinary.",
+            },
           ],
         },
       },
     ],
     highlights: [
       {
-        title: "All-inclusive premium",
+        title: "Boutique — curated destinations",
         description:
-          "Every element of the stay — wellness, dining, experiences, mountain access — designed and delivered under one roof, without the upsell.",
+          "Distinctive, design-led destinations created to celebrate Nepal's natural, cultural, and adventure heritage at international standards of hospitality.",
       },
       {
-        title: "Spiritual Himalayan setting",
+        title: "Diversity — nature & culture",
         description:
-          "Sasvata draws on the cultural and natural heart of Nepal, locating the experience in landscapes that have drawn pilgrims and travellers for centuries.",
+          "From the Terai grasslands of Chitwan to the high Himalaya of the Everest region, VOITH Hospitality celebrates the full span of Nepal's biodiversity and living culture.",
       },
       {
-        title: "Guests as family",
+        title: "Ecosystem — connected experiences",
         description:
-          "The operating philosophy: hospitality is a relationship, not a transaction. The measure of success is how many guests return.",
+          "Resorts, lodges, and the Golden Thread platform woven together so travellers can experience Nepal's diversity as one seamless journey.",
       },
     ],
     closing:
-      "Sasvata is more than VOITH's first hospitality property — it is a statement about how Nepal can host the world.",
+      "Together, these initiatives reflect a single vision: to celebrate Nepal's unparalleled diversity and share it with the world through meaningful hospitality experiences that inspire discovery, connection, and lasting memories.",
   },
   diversified: {
     slug: "diversified",
@@ -1530,9 +1643,9 @@ export const businesses: Business[] = [
     letter: "H",
     color: "#B45309",
     category: "Hospitality",
-    sub: "Sasvata Wellness Resort",
+    sub: "Sasvata Wildlife Resort · Himalayan Sasvata · Golden Thread",
     description:
-      "The most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal — where guests depart as friends and return as family.",
+      "VOITH Hospitality — a tribute to Nepal's timeless diversity. Three flagship destinations from the jungles of Chitwan to the gateway of Everest, turning natural and cultural heritage into world-class travel experiences.",
     image: "/sectors/hospitality.jpg",
   },
   {
@@ -1546,34 +1659,70 @@ export const businesses: Business[] = [
   },
 ];
 
-export type Milestone = { date: string; title: string; description: string };
+export type Milestone = {
+  /** URL segment for the detail page at /milestones/[slug]. */
+  slug: string;
+  date: string;
+  title: string;
+  description: string;
+  /** Short category label shown above the title on the detail hero. */
+  category: string;
+  /** Hero / card image for the detail page. */
+  heroImage: string;
+};
 
 export const milestones: Milestone[] = [
   {
+    slug: "benelli-morbidelli-signed",
     date: "December 2025",
     title: "Benelli & Morbidelli Signed",
+    category: "Mobility · Two-Wheelers",
+    heroImage: "/brands/benelli.png",
     description:
       "Italian heritage motorcycle brands officially enter Nepal under VOITH's expanding two-wheeler division — building toward local assembly.",
   },
   {
+    slug: "ather-best-stall-nada",
     date: "August 2024",
     title: "Ather Wins Best Stall at NADA",
+    category: "Electric Mobility",
+    heroImage: "/timeline/2024-ather-nada.png",
     description:
       "Vaidya Energy's Ather EV takes Best Stall at Nepal's premier auto show — cementing its position as Nepal's No. 1 electric scooter brand.",
   },
   {
+    slug: "kathmandu-to-kailash",
     date: "2024",
     title: "Kathmandu to Kailash — EV Journey",
+    category: "Electric Mobility",
+    heroImage: "/timeline/2025-kailash.png",
     description:
       "Nepal's first long-distance EV journey from Kathmandu to Kailash Manasarovar, showcasing the capability of electric mobility in the Himalayas.",
   },
   {
+    slug: "sasvata-postcard-mou",
+    date: "December 2023",
+    title: "Sasvata Signs MOU with The Postcard Hotel",
+    category: "Hospitality · Partnership",
+    heroImage: "/brands/sasvata-wellness-resort.png",
+    description:
+      "Sasvata Wildlife Resort partners with The Postcard Hotel — one of Asia's leading luxury boutique brands — to position Nepal as a global leader in boutique, nature-based travel on the doorstep of Chitwan National Park.",
+  },
+  {
+    slug: "huaxin-cement-narayani",
     date: "May 2022",
     title: "Huaxin Cement Narayani Begins",
+    category: "Construction · Cement",
+    heroImage: "/timeline/2022-huaxin-cement.png",
     description:
       "VOITH ventures into cement with Huaxin Cement Co. Ltd. — USD 250M investment, production from May 2022 at 4,000 tons per day between Kathmandu and Pokhara, employing around 1,000 personnel.",
   },
 ];
+
+/** Look up a single milestone by its URL slug. */
+export function getMilestone(slug: string): Milestone | undefined {
+  return milestones.find((m) => m.slug === slug);
+}
 
 export type StoryMilestone = {
   year: string;
@@ -1955,9 +2104,9 @@ export const voithFamily: FamilyTeam[] = [
   },
   {
     business: "Hospitality",
-    unit: "Sasvata Wellness Resort",
+    unit: "VOITH Hospitality — Sasvata",
     description:
-      "The opening team building VOITH's flagship Himalayan resort — hospitality, wellness, culinary, and guest-experience leaders.",
+      "The opening team behind VOITH Hospitality — building Sasvata Wildlife Resort in Chitwan and Himalayan Sasvata in the Everest region with hospitality, wellness, culinary, and guest-experience leaders.",
     members: [
       { initials: "PA", name: "Pratiksha Adhikari", role: "General Manager — Opening Team" },
       { initials: "RJ", name: "Roshan Joshi", role: "Director of Wellness" },
@@ -1979,26 +2128,34 @@ export const voithFamily: FamilyTeam[] = [
   },
 ];
 
-export type FutureItem = { pill: string; title: string; description: string };
+export type FutureItem = {
+  pill: string;
+  title: string;
+  description: string;
+  image: string;
+};
 
 export const futureItems: FutureItem[] = [
   {
-    pill: "Hospitality — Upcoming",
-    title: "Sasvata Wellness Resort",
+    pill: "Hospitality — Opening Oct 2026",
+    title: "Sasvata Wildlife Resort",
     description:
-      "The most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal — where guests depart as friends and return as family.",
+      "The Postcard on the Rapti River — a boutique luxury wildlife retreat adjoining Chitwan National Park, opening 13 October 2026 in partnership with The Postcard Hotel.",
+    image: "/brands/sasvata-wellness-resort.png",
   },
   {
     pill: "Electric Vehicles — 2026",
     title: "EV Portfolio Expansion",
     description:
       "New international EV distribution agreements in the final stages of completion — extending VOITH's commitment to clean mobility across Nepal.",
+    image: "/brands/vaidya-energy.png",
   },
   {
     pill: "Manufacturing — In Progress",
     title: "Nepal Motorcycle Assembly",
     description:
       "Not just selling motorcycles — but building them in Nepal. Local SKD assembly of Keeway, Benelli, Morbidelli, and QJ Motors to create technical expertise and economic value.",
+    image: "/brands/benelli.png",
   },
 ];
 
