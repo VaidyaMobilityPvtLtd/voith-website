@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import type { FamilyStat, FamilyTeam, PersonCard } from "@/data/content";
-import type { Employee } from "@/lib/employees";
+import type { Employee } from "@/lib/employee-shared";
+import { employeeCompanyOrder } from "@/lib/employee-shared";
 
 type TabKey = "exec" | "board" | "family";
 
@@ -66,7 +67,9 @@ export default function PeopleTabs({
       </div>
 
       <section className="people-section">
-        <h2 className="people-section-title">{current.label}</h2>
+        {!(active === "family" && employees.length > 0) ? (
+          <h2 className="people-section-title">{current.label}</h2>
+        ) : null}
 
         {active === "exec" && (
           <PeopleGrid people={executiveTeam} onOpen={setOpenPerson} />
@@ -293,89 +296,156 @@ function EmpPhoto({ src, name }: { src: string; name: string }) {
   );
 }
 
-
-/** Live, searchable directory of the full VOITH workforce. */
+/** Live employee directory — filter by company, then departments (Toyota style). */
 function FamilyDirectory({ employees }: { employees: Employee[] }) {
-  const [q, setQ] = useState("");
-  const [dept, setDept] = useState("");
+  const [company, setCompany] = useState<string>("all");
+  const [openDepts, setOpenDepts] = useState<Set<string>>(new Set());
 
-  const departments = useMemo(
+  const companies = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const e of employees) {
+      counts.set(e.company, (counts.get(e.company) ?? 0) + 1);
+    }
+    return employeeCompanyOrder.filter((c) => counts.has(c));
+  }, [employees]);
+
+  const scoped = useMemo(
     () =>
-      Array.from(
-        new Set(employees.map((e) => e.department).filter(Boolean)),
-      ).sort((a, b) => a.localeCompare(b)),
-    [employees],
+      company === "all"
+        ? employees
+        : employees.filter((e) => e.company === company),
+    [employees, company],
   );
 
-  const filtered = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    return employees.filter((e) => {
-      if (dept && e.department !== dept) return false;
-      if (!needle) return true;
-      return (
-        e.name.toLowerCase().includes(needle) ||
-        e.designation.toLowerCase().includes(needle) ||
-        e.department.toLowerCase().includes(needle)
-      );
+  const departments = useMemo(() => {
+    const map = new Map<string, Employee[]>();
+    for (const e of scoped) {
+      const key = e.department || "Other";
+      const list = map.get(key);
+      if (list) list.push(e);
+      else map.set(key, [e]);
+    }
+    return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b));
+  }, [scoped]);
+
+  const sectionTitle =
+    company === "all"
+      ? "Departments of VOITH"
+      : `Departments of ${company}`;
+
+  const onCompanyChange = (next: string) => {
+    setCompany(next);
+    setOpenDepts(new Set());
+  };
+
+  const toggleDept = (dept: string) => {
+    setOpenDepts((prev) => {
+      const next = new Set(prev);
+      if (next.has(dept)) next.delete(dept);
+      else next.add(dept);
+      return next;
     });
-  }, [employees, q, dept]);
+  };
 
   return (
     <div className="family-view">
-      <p className="family-lead">
-        From the showroom floor to the cement plant, from the Ather Grid to the
-        wellness deck — the {employees.length} people who carry the VOITH name
-        across Nepal.
-      </p>
+      <h2 className="people-section-title">{sectionTitle}</h2>
 
-      <div className="emp-toolbar">
-        <input
-          type="search"
-          className="emp-search"
-          placeholder="Search by name or role…"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          aria-label="Search the VOITH family"
-        />
-        <select
-          className="emp-filter"
-          value={dept}
-          onChange={(e) => setDept(e.target.value)}
-          aria-label="Filter by department"
+      <div
+        className="emp-company-filter"
+        role="tablist"
+        aria-label="Filter by company"
+      >
+        <button
+          type="button"
+          role="tab"
+          aria-selected={company === "all"}
+          className={`emp-company-pill${company === "all" ? " is-active" : ""}`}
+          onClick={() => onCompanyChange("all")}
         >
-          <option value="">All departments</option>
-          {departments.map((d) => (
-            <option key={d} value={d}>
-              {d}
-            </option>
-          ))}
-        </select>
+          All companies
+          <span className="emp-company-count">{employees.length}</span>
+        </button>
+        {companies.map((c) => {
+          const count = employees.filter((e) => e.company === c).length;
+          return (
+            <button
+              key={c}
+              type="button"
+              role="tab"
+              aria-selected={company === c}
+              className={`emp-company-pill${company === c ? " is-active" : ""}`}
+              onClick={() => onCompanyChange(c)}
+            >
+              {c}
+              <span className="emp-company-count">{count}</span>
+            </button>
+          );
+        })}
       </div>
 
-      <p className="emp-count">
-        Showing {filtered.length} of {employees.length}
-      </p>
-
-      {filtered.length === 0 ? (
-        <p className="emp-empty">No team members match your search.</p>
+      {departments.length === 0 ? (
+        <p className="emp-empty">No team members in this company.</p>
       ) : (
-        <div className="emp-grid">
-          {filtered.map((e) => (
-            <article className="emp-card" key={e.id}>
-              <div className="emp-photo">
-                <EmpPhoto src={e.photo} name={e.name} />
-              </div>
-              <div className="emp-body">
-                <h4 className="emp-name">{e.name}</h4>
-                {e.designation ? (
-                  <p className="emp-role">{e.designation}</p>
+        <div className="dept-accordion">
+          {departments.map(([dept, members]) => {
+            const open = openDepts.has(dept);
+            const panelId = `dept-panel-${dept.replace(/\s+/g, "-").toLowerCase()}`;
+            return (
+              <div
+                key={dept}
+                className={`dept-item${open ? " is-open" : ""}`}
+              >
+                <button
+                  type="button"
+                  className="dept-trigger"
+                  aria-expanded={open}
+                  aria-controls={panelId}
+                  onClick={() => toggleDept(dept)}
+                >
+                  <span className="dept-trigger-label">{dept}</span>
+                  <span className="dept-chevron" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 12 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M1 1.5L6 6.5L11 1.5"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                {open ? (
+                  <div id={panelId} className="dept-panel" role="region">
+                    <p className="dept-panel-count">
+                      {members.length} team member
+                      {members.length === 1 ? "" : "s"}
+                    </p>
+                    <div className="emp-grid">
+                      {members.map((e) => (
+                        <article className="emp-card" key={e.id}>
+                          <div className="emp-photo">
+                            <EmpPhoto src={e.photo} name={e.name} />
+                          </div>
+                          <div className="emp-body">
+                            <h4 className="emp-name">{e.name}</h4>
+                            {e.designation ? (
+                              <p className="emp-role">{e.designation}</p>
+                            ) : null}
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
                 ) : null}
-                {e.department ? (
-                  <span className="emp-dept">{e.department}</span>
-                ) : null}
               </div>
-            </article>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

@@ -35,6 +35,9 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
           aria-hidden="true"
           style={{
             backgroundImage: `url(${company.image ?? fallbackImage})`,
+            ...(company.slug === "philippines-consulate"
+              ? { backgroundPosition: "center 58%" }
+              : {}),
           }}
         />
         <div className="pg-hero-content">

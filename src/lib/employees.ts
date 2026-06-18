@@ -20,14 +20,13 @@
  */
 
 import https from "node:https";
+import {
+  resolveEmployeeCompany,
+  type Employee,
+} from "@/lib/employee-shared";
 
-export type Employee = {
-  id: string;
-  name: string;
-  photo: string;
-  designation: string;
-  department: string;
-};
+export type { Employee, EmployeeCompany } from "@/lib/employee-shared";
+export { employeeCompanyOrder, resolveEmployeeCompany } from "@/lib/employee-shared";
 
 type ApiRow = {
   IOEMPID?: string | number;
@@ -101,13 +100,17 @@ export async function getEmployees(): Promise<Employee[]> {
         : [];
 
     return rows
-      .map((r) => ({
-        id: String(r.IOEMPID ?? ""),
-        name: clean(r.IOEMPName),
-        photo: clean(r.EMPPhoto),
-        designation: clean(r.DEG_NAME),
-        department: clean(r.DEPT_NAME),
-      }))
+      .map((r) => {
+        const department = clean(r.DEPT_NAME);
+        return {
+          id: String(r.IOEMPID ?? ""),
+          name: clean(r.IOEMPName),
+          photo: clean(r.EMPPhoto),
+          designation: clean(r.DEG_NAME),
+          department,
+          company: resolveEmployeeCompany(department),
+        };
+      })
       .filter((e) => e.id && e.name);
   } catch (err) {
     console.error("[employees] fetch failed:", err);

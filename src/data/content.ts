@@ -2,7 +2,7 @@ export const VOITH_FOUNDED_YEAR = 1964;
 
 /** Full legal / brand name (VOITH). */
 export const companyFullName =
-  "Vaidya's Organization of Industry & Trading Houses" as const;
+  "Vaidya's Organization of Industries & Trading Houses" as const;
 
 export const companyTagline = "Serving · Caring · Growing Together" as const;
 
@@ -57,7 +57,7 @@ export const pageMeta = {
       "The Vaidya family and leadership team guiding VOITH across generations of entrepreneurship in Nepal.",
     stat: "4",
     statLabel: "Generations leading",
-    heroImage: "/timeline/homepage.jpg",
+    heroImage: "/people/hero-team.png",
   },
   future: {
     eyebrow: "Forward",
@@ -95,10 +95,10 @@ export const sectorPlaceholderImages: Record<SectorSlug, string> = {
 export type IndustryDropdownItem = { label: string; slug: SectorSlug; tagline: string };
 
 export const industryDropdown: IndustryDropdownItem[] = [
-  { label: "Mobility", slug: "mobility", tagline: "Toyota · Ather · Two-wheelers" },
+  { label: "Mobility", slug: "mobility", tagline: "UTS · Trayana · Vaidya Energy · UHEEM" },
   { label: "Construction", slug: "construction", tagline: "Huaxin Narayani · Tadi" },
   { label: "Hospitality", slug: "hospitality", tagline: "Sasvata Wellness Resort" },
-  { label: "Other Industries", slug: "diversified", tagline: "WEAN · Lumbini · Pitstop" },
+  { label: "Other Industries", slug: "diversified", tagline: "WEAN · Lumbini · Pitstop · Philippines Consulate" },
 ];
 
 /** A physical location — showroom, service centre, charging station, dealer. */
@@ -115,6 +115,10 @@ export type BrandLocation = {
 /** A named group of models or products, e.g. "Trail Series". */
 export type BrandLineupGroup = { category: string; items: string[] };
 
+export type BrandStat = { value: string; label: string };
+
+export type BrandHighlight = { title: string; description: string };
+
 /** Optional rich content rendered on a brand's child page. */
 export type BrandDetail = {
   /** Founding / launch line, e.g. "Established · August 2021". */
@@ -123,6 +127,10 @@ export type BrandDetail = {
   origin?: string;
   /** Overview paragraphs (longer than `description`). */
   intro?: string[];
+  /** Key figures shown below the overview prose. */
+  stats?: BrandStat[];
+  /** Short callout cards for differentiators and milestones. */
+  highlights?: BrandHighlight[];
   /** Heading above the lineup grid, e.g. "Models available in Nepal". */
   lineupLabel?: string;
   lineup?: BrandLineupGroup[];
@@ -224,17 +232,41 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
       {
         slug: "uheem",
         mark: "UHEEM",
-        name: "United Heavy Equipment and Earth Movers",
-        role: "UHEEM · Heavy & construction equipment · Est. 2018",
+        name: "Construction & Heavy Equipment and Earth Movers",
+        role: "XCMG · Sole distributor · Est. 2018",
         image: "/brands/uheem.png",
         description:
-          "VOITH's heavy-equipment company and the sole authorised distributor of XCMG construction machinery in Nepal.",
+          "VOITH's heavy-equipment company — Construction & Heavy Equipment and Earth Movers Pvt. Ltd. (UHEEM) — and the sole authorised distributor of XCMG construction machinery in Nepal, supporting infrastructure projects nationwide with sales, service, and genuine parts.",
         detail: {
           established: "Established · April 2018",
           origin: "Sole distributor — XCMG, China",
           intro: [
-            "United Heavy Equipment and Earth Movers (UHEEM) is VOITH's specialised heavy-equipment and construction-machinery company. Established in April 2018, it strengthens the group's presence in Nepal's heavy-equipment and infrastructure-development sector.",
+            "Construction & Heavy Equipment and Earth Movers Pvt. Ltd. (UHEEM) is VOITH's specialised heavy-equipment and construction-machinery company. Established in April 2018, it strengthens the group's presence in Nepal's heavy-equipment and infrastructure-development sector.",
             "UHEEM is the sole authorised distributor of XCMG construction machinery in Nepal, focusing on distribution, sales, and after-sales support — backed by reliable spare-parts availability and professional service across the country.",
+            "From excavators and wheel loaders to motor graders, backhoe loaders, pneumatic rollers, and horizontal directional drills, UHEEM brings world-class Chinese engineering to Nepal's highways, hydropower, housing, and mining projects.",
+            "Guided by VOITH's long-term commitment to customer-first service, UHEEM builds enduring business relationships based on mutual goals — delivering quality, affordable heavy equipment tailored to the needs of contractors and developers across Nepal.",
+          ],
+          stats: [
+            { value: "2018", label: "Established" },
+            { value: "XCMG", label: "Exclusive brand" },
+            { value: "2", label: "Offices · KTM & Laxminiya" },
+          ],
+          highlights: [
+            {
+              title: "Exclusive XCMG partnership",
+              description:
+                "UHEEM is Nepal's sole authorised distributor for XCMG — one of the world's leading construction-equipment manufacturers — covering earth-moving, lifting, road-building, and concrete machinery.",
+            },
+            {
+              title: "Nationwide after-sales support",
+              description:
+                "Professional service teams, genuine spare parts, and responsive customer care ensure equipment uptime for contractors working on Nepal's most demanding infrastructure projects.",
+            },
+            {
+              title: "Part of the VOITH group",
+              description:
+                "UHEEM sits alongside United Traders Syndicate, Vaidya Energy, Trayana, and Pitstop under Vaidya's Organization of Industries & Trading Houses — Nepal's leading business group.",
+            },
           ],
           locationsLabel: "Offices",
           locations: [
@@ -267,15 +299,40 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
               origin: "XCMG — China",
               intro: [
                 "XCMG is one of the world's leading manufacturers of construction equipment and industrial machinery. Founded in China, it is globally recognised for advanced engineering across earth-moving, lifting, road-building, and concrete machinery.",
-                "In Nepal, XCMG is distributed exclusively by UHEEM, bringing world-class construction machinery and dependable after-sales support to the country's infrastructure projects.",
+                "In Nepal, XCMG is distributed exclusively by UHEEM, bringing world-class construction machinery and dependable after-sales support to the country's infrastructure projects — from urban road networks to remote hydropower sites.",
+                "XCMG's product range spans excavators, wheel loaders, motor graders, backhoe loaders, pneumatic rollers, and horizontal directional drills — equipment engineered for durability, performance, and total cost of ownership in demanding conditions.",
               ],
-              lineupLabel: "XCMG products available",
+              stats: [
+                { value: "6+", label: "Equipment categories" },
+                { value: "Global", label: "Top-3 manufacturer" },
+                { value: "UHEEM", label: "Nepal distributor" },
+              ],
+              highlights: [
+                {
+                  title: "Built for Nepal's terrain",
+                  description:
+                    "XCMG machinery is deployed across highways, housing, hydropower, and mining — engineered to perform in Himalayan conditions and on Nepal's challenging construction sites.",
+                },
+                {
+                  title: "Full lifecycle support",
+                  description:
+                    "UHEEM provides sales, operator guidance, maintenance, and genuine spare parts — keeping XCMG fleets productive throughout the project lifecycle.",
+                },
+              ],
+              lineupLabel: "XCMG equipment available in Nepal",
               lineup: [
                 {
-                  category: "Construction machinery",
+                  category: "Earth moving",
+                  items: ["Excavator", "Wheel Loader", "Backhoe Loader"],
+                },
+                {
+                  category: "Road & compaction",
+                  items: ["Motor Grader", "Pneumatic Roller"],
+                },
+                {
+                  category: "Specialised machinery",
                   items: [
-                    "Earth Moving Machinery",
-                    "Road Building Machinery",
+                    "Horizontal Directional Drill",
                     "Hoisting Machinery",
                     "Underground Mining Machinery",
                     "Drilling Machinery",
@@ -291,16 +348,55 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         slug: "united-traders-syndicate",
         mark: "UTS",
         name: "United Traders Syndicate",
-        role: "Toyota Nepal · Est. 1967",
+        role: "Toyota · Keeway · Benelli · Morbidelli · Est. 1967",
         image: "/brands/uts.png",
         description:
-          "VOITH's flagship automotive company and Nepal's authorised Toyota distributor since 1967 — now expanding into premium two-wheelers with Keeway, Benelli, and Morbidelli.",
+          "VOITH's flagship automotive company and Nepal's authorised Toyota distributor since 1967 — now expanding into premium two-wheelers with Keeway, Benelli, and Morbidelli, backed by a nationwide sales, service, and spare-parts network.",
         detail: {
           established: "UTS–Toyota partnership · December 1967",
           origin: "Authorised distributor — Toyota Motor Corporation, Japan",
           intro: [
             "United Traders Syndicate (UTS) is VOITH's flagship automotive company and the authorised distributor in Nepal for Toyota, established in December 1967. Founded by the late Dr. V. G. Vaidya and today led by Mr. Suraj Vaidya (President) and Mrs. Ritu Singh Vaidya (Managing Director), UTS has played a pioneering role in shaping Nepal's automotive industry for over five decades.",
+            "Toyota Nepal, represented by UTS, is the official distributor of Toyota vehicles, parts, and services in Nepal. With over five decades of presence, Toyota Nepal offers a wide range of reliable cars, SUVs, pickups, and MPVs, along with comprehensive after-sales support through showrooms and service centres across the country.",
             "Beyond Toyota, UTS has expanded into the two-wheeler segment — recently partnering with the Keeway Group, Benelli, and the Italian luxury marque Morbidelli — building toward a complete on-road mobility portfolio backed by a nationwide sales, service, and spare-parts network.",
+            "From supplying VIP vehicles for King Birendra's coronation to organising the Kathmandu–Calcutta motor rally and Nepal's pioneering Toyota Women's Rally, UTS has been at the centre of Nepal's automotive history — earning recognition from Toyota Motor Corporation as one of its most loyal and trustworthy partners worldwide.",
+          ],
+          stats: [
+            { value: "1967", label: "Toyota partnership" },
+            { value: "55+", label: "Years in Nepal" },
+            { value: "4", label: "Brand marques" },
+          ],
+          highlights: [
+            {
+              title: "Nepal's longest-standing Toyota partner",
+              description:
+                "UTS introduced Toyota to Nepal in 1967 and remains the country's authorised distributor — from electrified hybrids and rugged SUVs to commercial Hilux, Hiace, and Ace models.",
+            },
+            {
+              title: "Growing two-wheeler portfolio",
+              description:
+                "Keeway, Benelli, and Morbidelli joined UTS in 2025 — expanding VOITH's reach into commuter, lifestyle, and luxury motorcycle segments with local assembly on the horizon.",
+            },
+            {
+              title: "Nationwide dealer network",
+              description:
+                "Authorised sales, service, and spares partners in Biratnagar, Butwal, Bharatpur, Pokhara, and across the Kathmandu Valley — keeping Toyota owners supported wherever they drive.",
+            },
+            {
+              title: "Community & motorsport legacy",
+              description:
+                "From the Toyota Women's Rally (since 2004) and Dream Car Art Contest to Red Cross ambulance donations and youth sports programmes, UTS invests in Nepal beyond the showroom floor.",
+            },
+          ],
+          locationsLabel: "Head office & flagship facilities",
+          locations: [
+            {
+              name: "VOITH Complex — Dhumbarahi",
+              kind: "Head Office · 3S Facility",
+              address: "Anandanagar, Dhumbarahi, Kathmandu 44600, Nepal",
+              phone: "+977 01-4542901",
+              email: "info@voith.com.np",
+            },
           ],
         },
         children: [
@@ -318,6 +414,26 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
               intro: [
                 "Toyota, manufactured by Toyota Motor Corporation of Japan, has earned the trust of Nepali customers through its commitment to quality, durability, reliability, and customer satisfaction. Introduced to Nepal by United Traders Syndicate in 1967, it remains one of the country's most trusted automotive brands.",
                 "Supported by an extensive nationwide network, Toyota delivers world-class mobility solutions, genuine spare parts, and professional after-sales services — from electrified hybrids to rugged SUVs and commercial vehicles.",
+                "In 2017, UTS marked 50 years of Toyota in Nepal with the inauguration of a new state-of-the-art 3S facility at VOITH Complex, Dhumbarahi — a milestone in the country's automotive infrastructure.",
+                "UTS is one of Toyota Motor Corporation's most loyal and trustworthy partners worldwide — conducting business under the maxim of \"customers first\" and gaining great trust from customers across Nepal.",
+              ],
+              stats: [
+                { value: "1967", label: "In Nepal since" },
+                { value: "50+", label: "Years of partnership" },
+                { value: "Hybrid", label: "Electrified lineup" },
+                { value: "4", label: "Regional dealer partners" },
+              ],
+              highlights: [
+                {
+                  title: "Electrified & hybrid range",
+                  description:
+                    "Corolla Cross Hybrid, Camry Hybrid, Yaris Cross Hybrid, and RAV4 Core Hybrid — bringing Toyota's global electrification strategy to Nepali roads.",
+                },
+                {
+                  title: "From city to expedition",
+                  description:
+                    "Fortuner, Land Cruiser 70, Land Cruiser 250, Hilux, and Hiace — vehicles trusted for everything from daily commuting to Kailash Manasarovar expeditions.",
+                },
               ],
               lineupLabel: "Toyota models available in Nepal",
               lineup: [
@@ -391,6 +507,24 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
               intro: [
                 "Morbidelli is the Italian motorcycle marque introduced to Nepal in November 2025 through VOITH's United Traders Syndicate, marking the group's entry into the country's growing luxury motorcycle segment.",
                 "With a strong Italian design heritage and performance-driven engineering, Morbidelli offers a versatile lineup built for adventure, urban performance, and cruising — bringing globally recognised mobility solutions to Nepali riders.",
+                "Showrooms and service centres in Tinkune, Bhaktapur, and Naxal give riders access to the full Trail, Street Fighter, and Cruiser series — backed by UTS's nationwide after-sales infrastructure.",
+              ],
+              stats: [
+                { value: "Nov 2025", label: "Launched in Nepal" },
+                { value: "Italy", label: "Brand origin" },
+                { value: "3", label: "Showrooms & service centres" },
+              ],
+              highlights: [
+                {
+                  title: "Italian luxury motorcycles",
+                  description:
+                    "Trail Series (T1002VX, T502X, T352X), Street Fighter Series (F352), and Cruiser Series (C252V) — designed for adventure, urban performance, and long-distance cruising.",
+                },
+                {
+                  title: "Local assembly planned",
+                  description:
+                    "VOITH is building toward SKD assembly of Morbidelli — and other two-wheeler marques — in Nepal, creating technical expertise and economic value beyond import.",
+                },
               ],
               lineupLabel: "Morbidelli models available in Nepal",
               lineup: [
@@ -434,10 +568,29 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
             description:
               "Contemporary European-styled motorcycles and scooters from the Keeway Group, joining UTS's growing two-wheeler lineup.",
             detail: {
-              origin: "Keeway Group",
+              established: "Recently partnered · Keeway Group",
+              origin: "Keeway Group — Qianjiang, China",
               intro: [
                 "Keeway is an international motorcycle and scooter brand known for its contemporary European styling and accessible performance. Part of the Qianjiang group, Keeway offers a broad range of two-wheelers spanning commuter, cruiser, and lifestyle segments.",
                 "In Nepal, Keeway joins VOITH's growing two-wheeler portfolio under United Traders Syndicate, backed by the group's nationwide sales and after-sales network.",
+                "As part of the Keeway Group alongside Benelli and Morbidelli, Keeway strengthens UTS's position across every price point in Nepal's rapidly expanding motorcycle market.",
+              ],
+              stats: [
+                { value: "2025", label: "Recently partnered" },
+                { value: "Keeway Group", label: "Global parent" },
+                { value: "UTS", label: "Nepal distributor" },
+              ],
+              highlights: [
+                {
+                  title: "European-styled accessibility",
+                  description:
+                    "Contemporary design and accessible performance across commuter, cruiser, and lifestyle segments — making premium styling available to a broader range of Nepali riders.",
+                },
+                {
+                  title: "Backed by VOITH's network",
+                  description:
+                    "Sales, service, and spare parts through United Traders Syndicate's established nationwide infrastructure — the same trust that has carried Toyota for over five decades.",
+                },
               ],
             },
           },
@@ -450,10 +603,29 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
             description:
               "One of the world's oldest motorcycle makers, founded in Pesaro, Italy, in 1911 — now part of VOITH's two-wheeler portfolio.",
             detail: {
+              established: "Recently partnered · December 2025",
               origin: "Benelli — Italy (est. 1911)",
               intro: [
                 "Benelli is one of the world's oldest motorcycle manufacturers, founded in Pesaro, Italy, in 1911. Renowned for its racing heritage and distinctive design, the brand today combines Italian styling with modern engineering across a versatile motorcycle range.",
                 "Benelli enters Nepal under VOITH's United Traders Syndicate as part of the group's expanding two-wheeler portfolio, supported by a nationwide service network.",
+                "Signed alongside Morbidelli in December 2025, Benelli represents VOITH's commitment to bringing globally recognised two-wheeler brands to Nepal — with local SKD assembly planned to create technical jobs and economic value.",
+              ],
+              stats: [
+                { value: "1911", label: "Founded · Italy" },
+                { value: "Dec 2025", label: "Entered Nepal" },
+                { value: "UTS", label: "Authorised distributor" },
+              ],
+              highlights: [
+                {
+                  title: "Racing heritage since 1911",
+                  description:
+                    "Over a century of Italian motorcycle craftsmanship — from early racing dominance to today's versatile range combining distinctive design with modern engineering.",
+                },
+                {
+                  title: "Part of the Keeway Group portfolio",
+                  description:
+                    "Benelli sits alongside Keeway and Morbidelli under UTS — giving Nepali riders choice across commuter, sport, and luxury segments under one trusted distributor.",
+                },
               ],
             },
           },
@@ -463,25 +635,125 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         slug: "trayana",
         mark: "TR",
         name: "Trayana",
-        role: "New venture — Coming soon",
+        role: "Ultraviolette · Recently partnered",
         description:
-          "A new addition to VOITH's mobility portfolio. Details will be announced soon.",
-        comingSoon: true,
+          "VOITH's electric-motorcycle venture and the home of Ultraviolette — high-performance EV bikes for Nepal's premium mobility segment, recently partnered in January 2026.",
+        detail: {
+          established: "Ultraviolette partnership · January 2026",
+          origin: "VOITH electric-motorcycle division",
+          intro: [
+            "Trayana is VOITH's dedicated venture for premium electric motorcycles, recently partnering with Ultraviolette — India's high-performance EV motorcycle brand.",
+            "Through Trayana, VOITH brings next-generation electric motorcycle technology to Nepal, backed by the group's nationwide sales, service, and customer-support infrastructure.",
+            "Ultraviolette's launch in January 2026 marks VOITH's expansion beyond scooters into the premium electric-motorcycle category — complementing Vaidya Energy's Ather portfolio and UTS's growing two-wheeler lineup.",
+            "The UV Space Pod experience centre in Naxal, Kathmandu, serves as the brand's flagship touchpoint — offering test rides, product discovery, and after-sales support for Nepal's most advanced electric motorcycle platform.",
+          ],
+          stats: [
+            { value: "Jan 2026", label: "Recently partnered" },
+            { value: "Ultraviolette", label: "Launch brand" },
+            { value: "F77", label: "Flagship model" },
+          ],
+          highlights: [
+            {
+              title: "Premium EV motorcycles",
+              description:
+                "Ultraviolette's F77 delivers high-performance, zero-emission riding — bringing India's most advanced electric motorcycle technology to Nepal's premium segment.",
+            },
+            {
+              title: "VOITH group synergy",
+              description:
+                "Trayana leverages VOITH's mobility infrastructure — from UTS's service culture to Vaidya Energy's EV expertise — to build a complete electric two-wheeler ecosystem.",
+            },
+          ],
+        },
+        children: [
+          {
+            slug: "ultraviolette",
+            mark: "UV",
+            name: "Ultraviolette",
+            role: "Electric motorcycles — India",
+            description:
+              "High-performance electric motorcycles from India — the flagship F77, launched through the UV Space Pod in Naxal.",
+            detail: {
+              established: "Launched in Nepal · January 2026",
+              origin: "Ultraviolette — India",
+              intro: [
+                "Ultraviolette is a high-performance electric motorcycle brand from India, recognised for its performance-focused mobility technology, next-generation design, and advanced engineering. In Nepal, Ultraviolette launched in January 2026 under the VOITH Organization group through Trayana.",
+                "The brand's first experience centre — the UV Space Pod — was inaugurated in Naxal, Kathmandu, marking its entry into Nepal's premium electric-motorcycle category. Its fully electric platform delivers zero-emission performance, contributing to cleaner, more eco-friendly mobility in Nepal.",
+                "The flagship Ultraviolette F77 combines connected technology, advanced battery management, and performance-oriented design — setting a new benchmark for electric motorcycles in the Himalayan market.",
+              ],
+              stats: [
+                { value: "Jan 2026", label: "Launched in Nepal" },
+                { value: "F77", label: "Flagship model" },
+                { value: "India", label: "Brand origin" },
+              ],
+              highlights: [
+                {
+                  title: "UV Space Pod — Naxal",
+                  description:
+                    "Nepal's first Ultraviolette experience centre at Narayanchaur, Naxal — offering product discovery, test rides, and dedicated after-sales support for F77 owners.",
+                },
+                {
+                  title: "Zero-emission performance",
+                  description:
+                    "A fully electric platform engineered for high performance — contributing to VOITH's broader commitment to clean mobility across scooters, motorcycles, and passenger vehicles.",
+                },
+              ],
+              lineupLabel: "Models available in Nepal",
+              lineup: [
+                { category: "Electric motorcycle", items: ["Ultraviolette F77"] },
+              ],
+              locationsLabel: "Experience centre",
+              locations: [
+                {
+                  name: "UV Space Pod — Naxal",
+                  kind: "Experience Centre",
+                  address: "Narayanchaur, Naxal, Kathmandu 44600, Nepal",
+                  phone: "9851404609",
+                  email: "ultraviolettenepal@gmail.com",
+                },
+              ],
+            },
+          },
+        ],
       },
       {
         slug: "vaidya-energy",
         mark: "VE",
         name: "Vaidya Energy",
-        role: "EV & mobility division · Est. 2023",
+        role: "Ather Energy · EV division · Est. 2023",
         image: "/brands/vaidya-energy.png",
         description:
-          "VOITH's EV and mobility division, driving Nepal's electric transition — home to Ather Energy and Ultraviolette, with a growing Ather Grid charging network.",
+          "VOITH's EV and mobility division, driving Nepal's electric transition — home to Ather Energy, Nepal's #1 electric scooter brand, and a growing Ather Grid fast-charging network.",
         detail: {
           established: "EV division launched · 2023",
           origin: "VOITH EV & mobility division",
           intro: [
-            "Vaidya Energy is VOITH's EV and mobility division, driving Nepal's transition to electric mobility. As the authorised distributor for its partner brands, it oversees sales, distribution, service management, charging infrastructure, and after-sales support across the country.",
-            "Its portfolio pairs Ather Energy — Nepal's #1 electric scooter brand and Best Stall winner at NADA 2024 — with Ultraviolette's high-performance electric motorcycles, supported by a growing nationwide network of experience centres and Ather Grid fast-chargers.",
+            "Vaidya Energy is VOITH's EV and mobility division, driving Nepal's transition to electric mobility. As the authorised distributor for Ather Energy, it oversees sales, distribution, service management, charging infrastructure, and after-sales support across the country.",
+            "Ather Nepal brings Ather Energy's smart, high-performance electric scooters to Nepal, offering advanced battery technology, fast charging, and a premium riding experience. The brand focuses on sustainable mobility, strong after-sales support, and building a reliable charging ecosystem to accelerate Nepal's shift toward clean electric transportation.",
+            "Ather Energy — Nepal's #1 electric scooter brand and Best Stall winner at NADA 2024 — is supported by a growing nationwide network of experience centres, service centres, and Ather Grid fast-chargers spanning Kathmandu, Pokhara, Chitwan, Butwal, Itahari, Janakpur, and Birtamod.",
+            "In October 2024, Ather opened its first experience centre in Kathmandu, marking its official entry into Nepal's electric-mobility market. Vaidya Energy's team has since proven EV capability on Himalayan routes — including Nepal's first long-distance EV journey from Kathmandu to Kailash Manasarovar.",
+          ],
+          stats: [
+            { value: "#1", label: "EV scooter brand" },
+            { value: "30+", label: "Ather Grid chargers" },
+            { value: "2023", label: "Launched in Nepal" },
+          ],
+          highlights: [
+            {
+              title: "Best Stall at NADA 2024",
+              description:
+                "Ather took Best Stall at Nepal's premier auto show — cementing its position as the country's leading electric scooter brand and validating Vaidya Energy's go-to-market strategy.",
+            },
+            {
+              title: "Kathmandu to Kailash — EV first",
+              description:
+                "Nepal's first long-distance EV journey proved electric scooters can perform in Himalayan conditions — a landmark demonstration of Vaidya Energy's product and charging infrastructure.",
+            },
+            {
+              title: "Nationwide charging network",
+              description:
+                "Ather Grid fast-chargers and AirCharge stations across major cities — building the charging backbone Nepal needs for mass EV adoption.",
+            },
           ],
         },
         children: [
@@ -498,6 +770,25 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
               intro: [
                 "Ather Energy is an advanced electric scooter brand from India, known for its connected mobility technology, smart features, and performance-oriented design. In Nepal, Ather was officially introduced in November 2023 under the VOITH Organization group through its EV and mobility division, Vaidya Energy.",
                 "In October 2024 the brand opened its first experience center in Kathmandu, marking its official entry into Nepal's electric-mobility market. Vaidya Energy serves as the authorised distributor — overseeing sales, distribution, service management, charging infrastructure, and after-sales support nationwide.",
+                "The Ather 450S, 450X, and Rizta form the core lineup — connected, performance-oriented scooters backed by the Ather Grid charging network and a growing service footprint from Tinkune to Birtamod.",
+              ],
+              stats: [
+                { value: "Nov 2023", label: "Launched in Nepal" },
+                { value: "3", label: "Scooter models" },
+                { value: "10+", label: "Service centres" },
+                { value: "4+", label: "Experience & charging hubs" },
+              ],
+              highlights: [
+                {
+                  title: "Connected smart scooters",
+                  description:
+                    "Ather 450S, 450X, and Rizta feature connected mobility technology, smart dashboards, and performance-oriented design — setting the standard for premium EV scooters in Nepal.",
+                },
+                {
+                  title: "Open 24/7 experience centres",
+                  description:
+                    "Ather Space centres in Naxal and Jhamsikhel operate around the clock — making EV ownership accessible and visible in Nepal's most active urban corridors.",
+                },
               ],
               lineupLabel: "Ather models available in Nepal",
               lineup: [
@@ -602,36 +893,6 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
               ],
             },
           },
-          {
-            slug: "ultraviolette",
-            mark: "UV",
-            name: "Ultraviolette",
-            role: "Electric motorcycles — India",
-            description:
-              "High-performance electric motorcycles from India — the flagship F77, launched through the UV Space Pod in Naxal.",
-            detail: {
-              established: "Launched in Nepal · January 2026",
-              origin: "Ultraviolette — India",
-              intro: [
-                "Ultraviolette is a high-performance electric motorcycle brand from India, recognised for its performance-focused mobility technology, next-generation design, and advanced engineering. In Nepal, Ultraviolette launched in January 2026 under the VOITH Organization group through its EV and mobility division, Vaidya Energy.",
-                "The brand's first experience centre — the UV Space Pod — was inaugurated in Naxal, Kathmandu, marking its entry into Nepal's premium electric-motorcycle category. Its fully electric platform delivers zero-emission performance, contributing to cleaner, more eco-friendly mobility in Nepal.",
-              ],
-              lineupLabel: "Models available in Nepal",
-              lineup: [
-                { category: "Electric motorcycle", items: ["Ultraviolette F77"] },
-              ],
-              locationsLabel: "Experience centre",
-              locations: [
-                {
-                  name: "UV Space Pod — Naxal",
-                  kind: "Experience Centre",
-                  address: "Narayanchaur, Naxal, Kathmandu 44600, Nepal",
-                  phone: "9851404609",
-                  email: "ultraviolettenepal@gmail.com",
-                },
-              ],
-            },
-          },
         ],
       },
     ],
@@ -691,6 +952,30 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
             "VOITH has ventured into cement production with the world's top cement company — Huaxin Cement Co. Ltd. The total investment in the project in Nepal is USD 250 million. Production commenced in May 2022.",
             "The state-of-the-art plant has been designed with sustainability and growth in mind, and has drastically improved the quality of life in the geographic region around it.",
             "The plant is located between two populous cities, Kathmandu and Pokhara, and has a production capacity of 4,000 tons a day — with plans to expand to 6,000 tons in the future. It directly employs around 1,000 personnel.",
+            "Nepal's construction sector contributes about 10–11% of GDP and uses roughly 35% of the national budget. Huaxin Cement Narayani supplies the cement backbone for highways, housing, hydropower, and the next decade of national infrastructure build-out.",
+          ],
+          stats: [
+            { value: "USD 250M", label: "Total investment" },
+            { value: "4,000 t/day", label: "Current capacity" },
+            { value: "~1,000", label: "Direct employees" },
+            { value: "May 2022", label: "Production began" },
+          ],
+          highlights: [
+            {
+              title: "Largest cement plant in Nepal",
+              description:
+                "4,000 tons per day today, with a planned expansion to 6,000 tons — the largest single cement facility in the country, strategically located between Kathmandu and Pokhara.",
+            },
+            {
+              title: "World-class joint venture",
+              description:
+                "A partnership with Huaxin Cement Co., Ltd. — one of the world's top cement companies — bringing global engineering standards and sustainability practices to Nepal.",
+            },
+            {
+              title: "Regional economic impact",
+              description:
+                "The plant has transformed quality of life in the surrounding geographic region — creating around 1,000 direct jobs and supporting downstream construction activity across central Nepal.",
+            },
           ],
         },
       },
@@ -700,13 +985,33 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         name: "Tadi Cement & Lime Industries",
         role: "Limestone mining & supply · Est. 2019",
         description:
-          "TCLI is a limestone mining and supplier company established in 2019. The quarry at Suryagadhi Rural Municipality-05, Nuwakot spans 1.66 hectares, producing 200 tons per day across 270 working days per annum.",
+          "TCLI is a limestone mining and supplier company established in 2019 — operating a 1.66-hectare quarry at Suryagadhi, Nuwakot, producing 200 tons per day across 270 working days per annum for Nepal's cement and construction pipeline.",
         detail: {
           established: "Established · 2019 A.D.",
           origin: "Limestone quarry — Suryagadhi, Nuwakot",
           intro: [
             "Tadi Cement & Lime Industries (TCLI) is a limestone mining and supplier company established in 2019 A.D. The mine is located in Suryagadhi Rural Municipality-05, Nuwakot with a 1.66 ha. quarry area.",
             "Limestone production at the quarry site is 200 tons per day for 270 working days per annum — supplying the raw material backbone for Huaxin Cement Narayani and Nepal's growing infrastructure pipeline.",
+            "TCLI gives VOITH upstream control over the raw materials that feed Nepal's largest cement plant — ensuring quality, supply continuity, and integrated value capture across the construction value chain.",
+            "Operating alongside its sister company Tadi Mining & Construction (TMCC), TCLI forms the extraction foundation of VOITH's construction sector — from quarry to finished cement.",
+          ],
+          stats: [
+            { value: "2019", label: "Established" },
+            { value: "200 t/day", label: "Limestone output" },
+            { value: "1.66 ha", label: "Quarry area" },
+            { value: "270", label: "Working days / year" },
+          ],
+          highlights: [
+            {
+              title: "Strategic Nuwakot location",
+              description:
+                "The Suryagadhi quarry sits in Nepal's limestone-rich Nuwakot district — feeding both Huaxin Cement Narayani and the broader construction materials market.",
+            },
+            {
+              title: "Integrated supply chain",
+              description:
+                "TCLI works in tandem with TMCC and Huaxin Cement Narayani — giving VOITH end-to-end control from raw mineral extraction through to finished cement production.",
+            },
           ],
         },
       },
@@ -716,13 +1021,32 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         name: "Tadi Mining & Construction",
         role: "Mineral mining & treatment · Est. 2019",
         description:
-          "TMCC is a sister company of TCLI, established in 2019. It focuses on the mining, purification, and treatment of natural minerals such as limestone, sandstone, and marbles.",
+          "TMCC is a sister company of TCLI, established in 2019 — focused on the mining, purification, and treatment of natural minerals such as limestone, sandstone, and marbles for Nepal's construction industry.",
         detail: {
           established: "Established · 2019 A.D.",
           origin: "Sister company — Tadi Cement & Lime Industries",
           intro: [
             "Tadi Mining & Construction (TMCC) is a sister company of TCLI established in 2019 A.D.",
             "TMCC focuses on the mining, purification, and treatment of natural minerals such as limestone, sandstone, and marbles — extending VOITH's upstream control from raw extraction through processed material ready for construction.",
+            "Together with TCLI and Huaxin Cement Narayani, TMCC completes VOITH's vertically integrated construction materials chain — from quarry operations in Nuwakot to industrial-scale cement production between Kathmandu and Pokhara.",
+            "By processing and treating natural minerals on-site, TMCC adds value upstream of the cement plant — improving material quality and supply reliability for one of Nepal's most capital-intensive infrastructure projects.",
+          ],
+          stats: [
+            { value: "2019", label: "Established" },
+            { value: "3+", label: "Mineral types" },
+            { value: "TCLI", label: "Sister company" },
+          ],
+          highlights: [
+            {
+              title: "Mineral processing expertise",
+              description:
+                "Mining, purification, and treatment of limestone, sandstone, and marbles — ensuring processed materials meet the quality standards required by industrial cement production.",
+            },
+            {
+              title: "Vertical integration",
+              description:
+                "TMCC, TCLI, and Huaxin Cement Narayani form a connected value chain — giving VOITH control from extraction to finished product in Nepal's construction sector.",
+            },
           ],
         },
       },
@@ -775,7 +1099,47 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         role: "Upcoming flagship — Himalayan Nepal",
         image: "/brands/sasvata-wellness-resort.png",
         description:
-          "A premium all-inclusive resort designed around wellness, culture, and the spiritual presence of the Himalayas. Built for guests who want depth as well as luxury — and who VOITH hopes will return again and again as friends.",
+          "The most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal — where guests depart as friends and return as family. A VOITH hospitality flagship built around wellness, culture, and Himalayan depth.",
+        detail: {
+          established: "Upcoming · VOITH hospitality flagship",
+          origin: "Spiritual Himalayas — Nepal",
+          intro: [
+            "Sasvata Wellness Resort is VOITH's first hospitality property — the most luxurious all-inclusive premium resort in the spiritual Himalayas of Nepal.",
+            "Designed around wellness, culture, and the conviction that hospitality is a relationship rather than a transaction, Sasvata offers an all-inclusive premium experience where every element of the stay — wellness, dining, mountain access, and cultural immersion — is delivered under one roof.",
+            "The operating philosophy is simple: guests depart as friends and return as family. Success is measured not by occupancy alone, but by how many guests come back — and how deeply they connect with Nepal's spiritual landscape.",
+            "Sasvata represents VOITH's expansion beyond mobility and construction into experiential hospitality — hosting the world in the Himalayas with the same long-term commitment that has defined the group for over six decades.",
+          ],
+          stats: [
+            { value: "Premium", label: "All-inclusive positioning" },
+            { value: "Himalayas", label: "Spiritual setting" },
+            { value: "Wellness", label: "Core experience" },
+            { value: "Upcoming", label: "Opening soon" },
+          ],
+          highlights: [
+            {
+              title: "All-inclusive premium",
+              description:
+                "Every element of the stay — wellness programmes, dining, experiences, and mountain access — designed and delivered under one roof, without the upsell.",
+            },
+            {
+              title: "Spiritual Himalayan setting",
+              description:
+                "Located in landscapes that have drawn pilgrims and travellers for centuries — connecting guests with the cultural and natural heart of Nepal.",
+            },
+            {
+              title: "Guests as family",
+              description:
+                "Hospitality is a relationship, not a transaction. The measure of success is how many guests return — and how deeply they connect with the Sasvata experience.",
+            },
+          ],
+          services: [
+            "Wellness & spa programmes",
+            "All-inclusive dining & culinary experiences",
+            "Cultural immersion & guided mountain access",
+            "Premium accommodation & concierge service",
+            "Retreat & corporate hospitality packages",
+          ],
+        },
       },
     ],
     highlights: [
@@ -806,17 +1170,17 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
     eyebrow: "Sector 04",
     title: "Diversified services for Nepal",
     description:
-      "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, and a boutique automotive workshop — diversified industrial and financial services across the country.",
-    stat: "3",
+      "Micro-credit, insurance, automotive care, and diplomatic services — diversified industrial, financial, and consular offerings across Nepal.",
+    stat: "4",
     statLabel: "Service businesses",
     heroImage: "/timeline/home2.png",
     intro:
-      "Beyond mobility, construction, and hospitality, VOITH operates a portfolio of diversified industrial and financial services that quietly reach millions of Nepali households — through micro-credit, insurance, and specialised automotive care.",
+      "Beyond mobility, construction, and hospitality, VOITH operates a portfolio of diversified industrial and financial services — through micro-credit, insurance, specialised automotive care, and the Honorary Consulate General of the Philippines in Nepal.",
     stats: [
       { value: "Millions", label: "Women served by micro-credit" },
       { value: "Top 5", label: "Insurance presence in Nepal" },
       { value: "Boutique", label: "Automotive workshop" },
-      { value: "Nationwide", label: "Combined footprint" },
+      { value: "Philippines", label: "Honorary consulate" },
     ],
     brands: [
       {
@@ -825,7 +1189,41 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         name: "WEAN Nepal",
         role: "Women's Entrepreneurship Association — micro-credit",
         description:
-          "A micro-credit institution focused on financial inclusion for Nepali women. Small loans, large outcomes — capital that fuels small businesses, education, and household resilience in communities banks rarely reach.",
+          "A micro-credit institution focused on financial inclusion for Nepali women — empowering millions with small loans that fuel small businesses, education, and household resilience in communities banks rarely reach.",
+        detail: {
+          established: "Women's Entrepreneurship Association — Nepal",
+          origin: "Micro-credit · Financial inclusion",
+          intro: [
+            "WEAN Nepal (Women's Entrepreneurship Association of Nepal) is a micro-credit institution under the VOITH Organization group, focused on financial inclusion for Nepali women.",
+            "Small loans, large outcomes — WEAN extends credit and confidence to women excluded from formal banking, enabling them to start and grow small businesses, invest in education, and build household resilience.",
+            "WEAN is one of the most concrete forms of long-term economic impact VOITH operates — reaching millions of Nepali women and quietly carrying the weight of everyday financial life in communities across the country.",
+            "By channelling capital to entrepreneurs banks rarely reach, WEAN aligns with VOITH's broader mission of pioneering prosperity — bolstering the standard of living, knowledge, and quality of life for people in Nepal.",
+          ],
+          stats: [
+            { value: "Millions", label: "Women served" },
+            { value: "Micro-credit", label: "Core service" },
+            { value: "Nationwide", label: "Field footprint" },
+          ],
+          highlights: [
+            {
+              title: "Financial inclusion at scale",
+              description:
+                "Capital that fuels small businesses, education, and household resilience — extending credit to Nepali women in communities where formal banking has limited reach.",
+            },
+            {
+              title: "Long-term economic impact",
+              description:
+                "WEAN creates lasting change through entrepreneurship — one of VOITH's most direct contributions to Nepal's social and economic development.",
+            },
+          ],
+          services: [
+            "Micro-credit for women entrepreneurs",
+            "Small business startup loans",
+            "Education and household resilience financing",
+            "Field operations and community outreach",
+            "Financial literacy support",
+          ],
+        },
       },
       {
         slug: "lumbini-insurance",
@@ -833,21 +1231,79 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         name: "Lumbini Insurance",
         role: "One of Nepal's largest insurance companies",
         description:
-          "A diversified insurer with broad reach across Nepal, protecting households, businesses, and assets. A long-standing pillar of the country's financial-services landscape.",
+          "A diversified insurer with broad reach across Nepal — protecting households, businesses, and assets as a long-standing pillar of the country's financial-services landscape.",
+        detail: {
+          established: "Long-standing · Nepal insurance sector",
+          origin: "General & life insurance — Nepal",
+          intro: [
+            "Lumbini Insurance is one of Nepal's largest insurance companies — a diversified insurer with broad reach across the country, protecting households, businesses, and assets.",
+            "As a long-standing pillar of Nepal's financial-services landscape, Lumbini Insurance gives Nepali families and small businesses access to risk protection that underpins everything from home ownership to enterprise.",
+            "Insurance is infrastructure — and Lumbini Insurance provides the safety net that allows millions of Nepali households to invest, build, and plan for the future with confidence.",
+            "Under the VOITH Organization group, Lumbini Insurance complements WEAN Nepal's micro-credit mission and Pitstop's automotive services — forming a diversified portfolio that quietly reaches millions of Nepali households.",
+          ],
+          stats: [
+            { value: "Top 5", label: "Insurance presence" },
+            { value: "Nationwide", label: "Coverage reach" },
+            { value: "General", label: "Insurance lines" },
+          ],
+          highlights: [
+            {
+              title: "Protecting households & businesses",
+              description:
+                "Broad insurance coverage across Nepal — from personal assets to commercial risk — giving families and enterprises the protection they need to grow.",
+            },
+            {
+              title: "Insurance as infrastructure",
+              description:
+                "Risk protection underpins home ownership, business investment, and economic planning — Lumbini Insurance is a foundational service in VOITH's diversified portfolio.",
+            },
+          ],
+          services: [
+            "General insurance products",
+            "Household & property coverage",
+            "Commercial & business insurance",
+            "Claims processing & underwriting",
+            "Risk assessment & advisory",
+          ],
+        },
       },
       {
         slug: "pitstop",
         mark: "PS",
         name: "Pitstop",
-        role: "Boutique automotive workshop",
+        role: "Boutique automotive workshop · Est. 2021",
         description:
-          "A specialised service workshop bringing dealership-grade automotive care to independent owners — the same engineering culture that runs through UTS, applied at boutique scale.",
+          "A boutique automotive workshop in Kathmandu offering premium, all-in-one vehicle services — dealership-grade care for any Nepali vehicle owner, from detailing and PPF to restoration and modification.",
         detail: {
           established: "Established · August 2021",
           origin: "Pitstop Incorporated — Kathmandu, Nepal",
           intro: [
             "Pitstop Incorporated is a specialised automotive care and service provider under the VOITH Organization group. Established in August 2021, it was created to strengthen VOITH's presence in Nepal's automotive after-sales and service sector.",
-            "Operating a modern boutique workshop equipped with advanced automotive care and restoration facilities, Pitstop focuses on excellence, accuracy, and customer delight — delivering responsive after-sales support and maintaining high standards of automotive care across its operations.",
+            "Pitstop Incorporated is a boutique automotive workshop in Kathmandu offering premium, all-in-one vehicle services. They specialise in body repairs, painting, detailing, ceramic coating, PPF, restorations, modifications, and general maintenance.",
+            "Known for their modern facility and skilled technicians, Pitstop positions itself as a high-quality mobility solution provider — delivering exceptional service and craftsmanship with the same engineering culture that runs through United Traders Syndicate, applied at boutique scale.",
+            "Operating from VOITH Complex at Dhumbarahi, Pitstop extends VOITH's service ethos beyond Toyota — making dealership-grade automotive expertise available to any Nepali vehicle owner.",
+          ],
+          stats: [
+            { value: "2021", label: "Established" },
+            { value: "7+", label: "Service categories" },
+            { value: "Dhumbarahi", label: "Workshop location" },
+          ],
+          highlights: [
+            {
+              title: "Boutique automotive excellence",
+              description:
+                "A modern workshop equipped with advanced automotive care and restoration facilities — focusing on excellence, accuracy, and customer delight.",
+            },
+            {
+              title: "Care for every vehicle",
+              description:
+                "Not limited to Toyota — Pitstop serves any Nepali vehicle owner with PPF, vinyl wrapping, denting, painting, modification, and universal accessories.",
+            },
+            {
+              title: "Part of VOITH's mobility ecosystem",
+              description:
+                "Pitstop sits alongside UTS, Vaidya Energy, and Trayana under the VOITH group — strengthening the after-sales layer of Nepal's most complete mobility portfolio.",
+            },
           ],
           services: [
             "Vehicle servicing and maintenance",
@@ -870,6 +1326,64 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
           ],
         },
       },
+      {
+        slug: "philippines-consulate",
+        mark: "PH",
+        name: "Honorary Consulate General of the Philippines",
+        image: "/brands/philippines-consulate.png",
+        role: "Diplomatic & trade services · Nepal",
+        description:
+          "VOITH's diplomatic arm in Nepal — fostering trade, cultural exchange, and consular support between the Philippines and Nepal through the Honorary Consulate General.",
+        detail: {
+          established: "Honorary consular representation · Nepal",
+          origin: "Republic of the Philippines",
+          intro: [
+            "The Honorary Consulate General of the Philippines in Nepal is part of VOITH's diversified services portfolio — strengthening bilateral ties between Nepal and the Philippines through diplomatic, trade, and cultural engagement.",
+            "The consulate supports Filipino nationals in Nepal and facilitates connections between businesses, institutions, and communities in both countries — extending VOITH's long-standing relationship with the Philippines that began with the late Dr. V. G. Vaidya's appointment as Honorary Consul.",
+            "Today, VOITH leadership continues this legacy — with Mr. Suraj Vaidya and Mr. Suryansh Vaidya serving as Honorary Consul General of the Philippines in Nepal, promoting economic cooperation and people-to-people ties across South Asia.",
+            "Through the consulate, VOITH bridges Nepal and the Philippines — supporting trade opportunities, consular assistance, and the cultural exchange that has been a thread in the group's history for decades.",
+          ],
+          stats: [
+            { value: "Nepal", label: "Host country" },
+            { value: "Philippines", label: "Represented nation" },
+            { value: "Trade", label: "Bilateral focus" },
+          ],
+          highlights: [
+            {
+              title: "A legacy of diplomatic service",
+              description:
+                "Dr. V. G. Vaidya served as Honorary Consul of the Philippines — a relationship carried forward by VOITH's current leadership as Honorary Consul General in Nepal.",
+            },
+            {
+              title: "Trade & cultural bridge",
+              description:
+                "Connecting Nepali and Filipino businesses, institutions, and communities — fostering cooperation across mobility, construction, hospitality, and beyond.",
+            },
+            {
+              title: "Consular support",
+              description:
+                "Assistance for Filipino nationals in Nepal and facilitation of bilateral engagement — part of VOITH's broader commitment to international partnership.",
+            },
+          ],
+          services: [
+            "Consular assistance for Filipino nationals",
+            "Trade and investment facilitation",
+            "Cultural and institutional exchange",
+            "Bilateral business introductions",
+            "Diplomatic liaison services",
+          ],
+          locationsLabel: "Consulate",
+          locations: [
+            {
+              name: "Honorary Consulate General of the Philippines",
+              kind: "Diplomatic Office",
+              address: "VOITH Complex, Anandanagar, Dhumbarahi, Kathmandu 44600, Nepal",
+              phone: "+977 01-4542901",
+              email: "info@voith.com.np",
+            },
+          ],
+        },
+      },
     ],
     highlights: [
       {
@@ -887,9 +1401,14 @@ export const sectorPages: Record<SectorSlug, SectorPage> = {
         description:
           "Pitstop extends VOITH's service ethos beyond Toyota — boutique automotive expertise available to any Nepali vehicle owner.",
       },
+      {
+        title: "Nepal–Philippines diplomacy",
+        description:
+          "The Honorary Consulate General of the Philippines in Nepal carries forward decades of bilateral friendship — trade, culture, and consular support under VOITH leadership.",
+      },
     ],
     closing:
-      "These three businesses don't share a sector — but they share a thesis: building services that quietly carry the weight of everyday Nepali life.",
+      "These businesses don't share a single industry — but they share a thesis: building services that quietly carry the weight of everyday life, and bridges that connect Nepal to the world.",
   },
 };
 
@@ -944,7 +1463,7 @@ export type HeroItem = { title: string; sub: string; href: string };
 export const heroItems: HeroItem[] = [
   {
     title: "United Traders Syndicate",
-    sub: "Toyota Nepal · Est. 1967 · Revenue NPR 633 Cr",
+    sub: "Toyota · Keeway · Benelli · Morbidelli · Est. 1967",
     href: routes.industries,
   },
   {
@@ -953,8 +1472,8 @@ export const heroItems: HeroItem[] = [
     href: routes.industries,
   },
   {
-    title: "Huaxin Cement Narayani",
-    sub: "4,000 t/day · ~1,000 employees · USD 250M",
+    title: "UHEEM",
+    sub: "XCMG construction equipment · Est. 2018",
     href: routes.industries,
   },
 ];
@@ -993,7 +1512,7 @@ export const businesses: Business[] = [
     letter: "M",
     color: "#C41A1A",
     category: "Mobility",
-    sub: "UTS · Vaidya Energy · 2-Wheeler · UHEEM",
+    sub: "UTS · Trayana · Vaidya Energy · UHEEM",
     description:
       "From Toyota to Ather EV, from Italian motorcycles to construction equipment — Nepal's most complete mobility portfolio, serving every segment of the market.",
     image: "/timeline/homepage.jpg",
@@ -1020,9 +1539,9 @@ export const businesses: Business[] = [
     letter: "I",
     color: "#6B21A8",
     category: "Other Industries",
-    sub: "WEAN Nepal · Lumbini Insurance · Pitstop",
+    sub: "WEAN · Lumbini · Pitstop · Philippines Consulate",
     description:
-      "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, and a boutique automotive workshop — diversified industrial and financial services across Nepal.",
+      "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, a boutique automotive workshop, and the Honorary Consulate General of the Philippines — diversified services across Nepal.",
     image: "/sectors/other_industries.webp",
   },
 ];
@@ -1404,14 +1923,22 @@ export const voithFamily: FamilyTeam[] = [
   },
   {
     business: "Mobility",
-    unit: "Vaidya Energy — Ather & Two-Wheelers",
+    unit: "Vaidya Energy — Ather Energy",
     description:
-      "The team behind Nepal's #1 EV scooter brand, the Ather Grid charging network, and the growing two-wheeler portfolio.",
+      "The team behind Nepal's #1 EV scooter brand and the Ather Grid charging network.",
     members: [
       { initials: "NT", name: "Niraj Thapa", role: "Head of EV Operations" },
       { initials: "SM", name: "Sweta Maharjan", role: "Brand & Marketing Lead" },
       { initials: "PB", name: "Pratik Bhattarai", role: "Charging Network Manager" },
-      { initials: "AKC", name: "Ashish K.C.", role: "Two-Wheeler Division Manager" },
+    ],
+  },
+  {
+    business: "Mobility",
+    unit: "Trayana — Ultraviolette",
+    description:
+      "The team launching Nepal's premium electric-motorcycle segment through the Ultraviolette partnership.",
+    members: [
+      { initials: "AKC", name: "Ashish K.C.", role: "Electric Motorcycle Division Manager" },
     ],
   },
   {
@@ -1440,9 +1967,9 @@ export const voithFamily: FamilyTeam[] = [
   },
   {
     business: "Other Industries",
-    unit: "WEAN Nepal · Lumbini Insurance · Pitstop",
+    unit: "WEAN Nepal · Lumbini Insurance · Pitstop · Philippines Consulate",
     description:
-      "Field officers, underwriters, and workshop technicians delivering credit, insurance, and automotive care to Nepali households nationwide.",
+      "Field officers, underwriters, workshop technicians, and consular staff delivering credit, insurance, automotive care, and diplomatic services to Nepali and Filipino communities nationwide.",
     members: [
       { initials: "KS", name: "Kabita Shrestha", role: "WEAN — Field Operations Lead" },
       { initials: "DA", name: "Dipesh Acharya", role: "Lumbini Insurance — Head of Claims" },
@@ -1862,7 +2389,7 @@ export const legalSections: LegalSection[] = [
     id: "privacy",
     title: "Privacy Policy",
     paragraphs: [
-      "This Privacy Policy explains how Vaidya's Organization of Industry & Trading Houses (\"VOITH\", \"we\", \"us\") collects, uses, and protects information you share with us through this website.",
+      "This Privacy Policy explains how Vaidya's Organization of Industries & Trading Houses (\"VOITH\", \"we\", \"us\") collects, uses, and protects information you share with us through this website.",
       "We collect only the information you choose to provide — such as your name, email address, phone number, and message when you use our contact or inquiry forms. We use this information solely to respond to your request, provide the services you ask for, and improve our communication with you.",
       "We do not sell or rent your personal information. We may share it with the relevant VOITH business unit or an authorised brand partner strictly to fulfil your request, and only to the extent required to do so.",
       "You may ask us to access, correct, or delete the personal information we hold about you at any time by writing to info@voith.com.np.",

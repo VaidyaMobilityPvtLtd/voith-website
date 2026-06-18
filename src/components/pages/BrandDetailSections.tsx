@@ -32,6 +32,42 @@ export default function BrandDetailSections({
         </section>
       ) : null}
 
+      {detail.stats && detail.stats.length > 0 ? (
+        <section className="brand-stats">
+          <Reveal as="p" className="sec-eyebrow-line">
+            At a glance
+          </Reveal>
+          <div className="brand-stat-row">
+            {detail.stats.map((stat, i) => (
+              <Reveal key={stat.label} delay={stagger(i)} className="brand-stat-cell">
+                <span className="brand-stat-v">{stat.value}</span>
+                <span className="brand-stat-l">{stat.label}</span>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {detail.highlights && detail.highlights.length > 0 ? (
+        <section className="brand-highlights">
+          <Reveal as="h2" className="pg-section-title">
+            Key highlights
+          </Reveal>
+          <div className="brand-highlight-grid">
+            {detail.highlights.map((item, i) => (
+              <Reveal
+                key={item.title}
+                delay={stagger(i)}
+                className="brand-highlight-card"
+              >
+                <h3 className="brand-highlight-title">{item.title}</h3>
+                <p className="brand-highlight-desc">{item.description}</p>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       {detail.lineup && detail.lineup.length > 0 ? (
         <section className="brand-lineup">
           <Reveal as="h2" className="pg-section-title">
