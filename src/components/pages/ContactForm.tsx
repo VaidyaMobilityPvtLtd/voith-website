@@ -4,25 +4,22 @@ import { useState, type FormEvent } from "react";
 
 type Props = {
   destinationEmail: string;
-  topics: readonly string[];
 };
 
-export default function ContactForm({ destinationEmail, topics }: Props) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [organisation, setOrganisation] = useState("");
-  const [topic, setTopic] = useState(topics[0] ?? "");
+export default function ContactForm({ destinationEmail }: Props) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [contact, setContact] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const subject = `[VOITH Contact] ${topic} — ${name || "Web inquiry"}`;
+    const fullName = [firstName, lastName].filter(Boolean).join(" ");
+    const subject = `[VOITH Contact] ${fullName || "Web inquiry"}`;
     const body = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      organisation ? `Organisation: ${organisation}` : null,
-      `Topic: ${topic}`,
+      `Name: ${fullName}`,
+      `Email / Phone: ${contact}`,
       "",
       message,
     ]
@@ -37,72 +34,64 @@ export default function ContactForm({ destinationEmail, topics }: Props) {
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
-      <div className="cf-row">
-        <label className="cf-field">
-          <span>Your name</span>
-          <input
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Full name"
-            autoComplete="name"
-          />
-        </label>
-        <label className="cf-field">
-          <span>Email</span>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            autoComplete="email"
-          />
-        </label>
-      </div>
+      <header className="cf-head">
+        <h2 className="cf-title">Send Message</h2>
+        <p className="cf-subtitle">
+          Please fill out the form below with your details and message to
+          contact with us.
+        </p>
+      </header>
 
       <div className="cf-row">
         <label className="cf-field">
-          <span>Organisation</span>
           <input
             type="text"
-            value={organisation}
-            onChange={(e) => setOrganisation(e.target.value)}
-            placeholder="Company or institution (optional)"
-            autoComplete="organization"
+            required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First Name"
+            aria-label="First name"
+            autoComplete="given-name"
           />
         </label>
         <label className="cf-field">
-          <span>Topic</span>
-          <select
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
-            required
-          >
-            {topics.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Last Name"
+            aria-label="Last name"
+            autoComplete="family-name"
+          />
         </label>
       </div>
 
       <label className="cf-field cf-field--full">
-        <span>How can we help?</span>
+        <input
+          type="text"
+          required
+          value={contact}
+          onChange={(e) => setContact(e.target.value)}
+          placeholder="Email or Phone Number"
+          aria-label="Email or phone number"
+          autoComplete="email"
+        />
+      </label>
+
+      <label className="cf-field cf-field--full">
         <textarea
           required
           rows={6}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Tell us a bit about what you're looking for…"
+          placeholder="Write Message Here..."
+          aria-label="Message"
         />
       </label>
 
       <div className="cf-actions">
         <button type="submit" className="cf-submit">
-          Send message
+          Send Message
         </button>
         <p className="cf-note">
           Submitting opens your email client addressed to{" "}

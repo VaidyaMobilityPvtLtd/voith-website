@@ -1,7 +1,5 @@
 import {
   contactChannels,
-  contactOffices,
-  contactTopics,
   footerContact,
   footerSocial,
   pageMeta,
@@ -60,11 +58,13 @@ export default function ContactPageView() {
       </section>
 
       <section className="contact-form-section">
-        <div className="contact-form-grid">
-          <div className="contact-form-intro">
-            <p className="contact-eyebrow">Send a message</p>
-            <h2 className="pg-section-title">Write to us directly</h2>
-            <p className="contact-lead">
+        <div className="contact-form-shell">
+          <aside className="contact-form-intro">
+            <p className="contact-eyebrow contact-eyebrow--light">
+              Send a message
+            </p>
+            <h2 className="contact-form-heading">Write to us directly</h2>
+            <p className="contact-form-sub">
               Share a short note and we'll get back to you within one business
               day. For urgent matters please call the team listed above.
             </p>
@@ -77,7 +77,9 @@ export default function ContactPageView() {
               </li>
               <li>
                 <span>Hours</span>
-                Sun – Fri · 09:00 – 18:00 NPT
+                <span className="contact-quick-val">
+                  Sun – Fri · 09:00 – 18:00 NPT
+                </span>
               </li>
               <li>
                 <span>Follow</span>
@@ -95,34 +97,25 @@ export default function ContactPageView() {
                 </div>
               </li>
             </ul>
-          </div>
-          <ContactForm
-            destinationEmail={footerContact.email}
-            topics={contactTopics}
-          />
+          </aside>
+          <ContactForm destinationEmail={footerContact.email} />
         </div>
       </section>
 
-      <section className="contact-offices">
+      <section className="contact-map">
         <header className="contact-section-head">
-          <p className="contact-eyebrow contact-eyebrow--light">Visit us</p>
-          <h2 className="pg-section-title pg-section-title--light">
-            Where to find VOITH
-          </h2>
+          <p className="contact-eyebrow">Visit us</p>
+          <h2 className="pg-section-title">Where to find VOITH</h2>
         </header>
-        <div className="contact-office-grid">
-          {contactOffices.map((o) => (
-            <article className="contact-office-card" key={o.city}>
-              <span className="contact-office-tag">{o.role}</span>
-              <h3>{o.city}</h3>
-              <address>
-                {o.addressLines.map((line) => (
-                  <span key={line}>{line}</span>
-                ))}
-              </address>
-              <p className="contact-office-hours">{o.hours}</p>
-            </article>
-          ))}
+        <div className="contact-map-frame">
+          <iframe
+            className="contact-map-embed"
+            title="VOITH Complex, Dhumbarahi, Kathmandu"
+            src="https://www.google.com/maps?q=VOITH%20Complex%2C%20Dhumbarahi%2C%20Kathmandu%2C%20Nepal&z=15&output=embed"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
         </div>
       </section>
     </PageShell>

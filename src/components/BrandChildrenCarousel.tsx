@@ -86,6 +86,7 @@ export default function BrandChildrenCarousel({
           >
             <CardMedia
               image={c.image ?? fallbackImage}
+              logo={c.logo}
               mark={c.mark}
               name={c.name}
               color={color}

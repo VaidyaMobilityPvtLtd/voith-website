@@ -122,6 +122,7 @@ export default function BrandPageView({ slug, companySlug, brandSlug }: Props) {
                   >
                     <CardMedia
                       image={c.image ?? fallbackImage}
+                      logo={c.logo}
                       mark={c.mark}
                       name={c.name}
                       color={data.color}
