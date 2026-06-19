@@ -84,6 +84,13 @@ export const boardOfDirectors: PersonCard[] = [
     image: "/SuryanshSir.JPG",
     bio: "Driving Nepal's EV transition as CEO of Vaidya Energy — sole authorised Ather Energy distributor. Ather won Best Stall at NADA 2024. Finalising new EV partnerships and expanding the two-wheeler portfolio. Honorary Consul General of the Philippines in Nepal. Leads strategic growth initiatives across the next-generation VOITH portfolio.",
   },
+  {
+    initials: "SVB",
+    name: "Savanna Vaidya Basnyat",
+    role: "Director — VOITH Hospitality",
+    image: "/people/SavanaMam.png",
+    bio: "Savanna is a seasoned hospitality professional with over 15 years of experience, known for her strategic approach to business development. With a deep focus on time, adaptation, and the human aspects that drive business success, she blends business acumen with a passion for the hospitality industry — expertise shaped by work with prestigious brands like Taj and spanning operations, development, and organisational growth. She is expanding VOITH's portfolio in the hospitality sector as the Founder of Sasvata Wildlife Resort and Himalayan Sasvata, focusing on innovative hotel-development projects that leverage Nepal's mega biodiversity. Beyond her professional achievements, Savanna is a dedicated mother and a continuously evolving individual who values both personal growth and the impact of her work on the communities she engages with.",
+  },
   // Independent / non-executive directors — placeholder names, replace with real appointees.
   {
     initials: "RKA",
