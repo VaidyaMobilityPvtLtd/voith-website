@@ -55,7 +55,14 @@ export type FamilyTeam = {
 
 export type FamilyStat = { value: string; label: string };
 
-export const executiveTeam: PersonCard[] = [
+export const boardOfDirectors: PersonCard[] = [
+  {
+    initials: "VGV",
+    name: "Dr. Vijaya Gajananda Vaidya",
+    role: "Founder & Late Chairman",
+    badge: "In Memoriam",
+    image: "/dr-vaidya.png",
+  },
   {
     initials: "SV",
     name: "Suraj Vaidya",
@@ -77,30 +84,7 @@ export const executiveTeam: PersonCard[] = [
     image: "/SuryanshSir.JPG",
     bio: "Driving Nepal's EV transition as CEO of Vaidya Energy — sole authorised Ather Energy distributor. Ather won Best Stall at NADA 2024. Finalising new EV partnerships and expanding the two-wheeler portfolio. Honorary Consul General of the Philippines in Nepal. Leads strategic growth initiatives across the next-generation VOITH portfolio.",
   },
-];
-
-export const boardOfDirectors: PersonCard[] = [
-  {
-    initials: "VGV",
-    name: "Dr. Vijaya Gajananda Vaidya",
-    role: "Founder & Late Chairman",
-    badge: "In Memoriam",
-  },
-  {
-    initials: "SV",
-    name: "Suraj Vaidya",
-    role: "Chairman of the Board",
-  },
-  {
-    initials: "RSV",
-    name: "Ritu Singh Vaidya",
-    role: "Managing Director",
-  },
-  {
-    initials: "SuV",
-    name: "Suryansh Vaidya",
-    role: "Director — Strategic Growth",
-  },
+  // Independent / non-executive directors — placeholder names, replace with real appointees.
   {
     initials: "RKA",
     name: "Rajendra K. Acharya",
@@ -110,6 +94,16 @@ export const boardOfDirectors: PersonCard[] = [
     initials: "SMR",
     name: "Saroj M. Rana",
     role: "Independent Director",
+  },
+  {
+    initials: "AT",
+    name: "Anjana Tamang",
+    role: "Independent Director",
+  },
+  {
+    initials: "PS",
+    name: "Prabesh Sherchan",
+    role: "Non-Executive Director",
   },
 ];
 

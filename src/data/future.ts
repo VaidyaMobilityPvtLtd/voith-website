@@ -17,11 +17,32 @@ export const futureItems: FutureItem[] = [
     image: "/brands/sasvata-wellness-resort.png",
   },
   {
+    pill: "Hospitality — Coming Soon",
+    title: "Himalayan Sasvata",
+    description:
+      "Your first Everest home — a mountain lodge and experiential hospitality destination in Phakding, the gateway to the Everest region, redefining the first night of the journey to Everest.",
+    image: "/timeline/2025-kailash.png",
+  },
+  {
+    pill: "Travel Platform — Coming Soon",
+    title: "Golden Thread Travel Platform",
+    description:
+      "VOITH Hospitality's travel platform — connecting travellers with authentic Nepali experiences and weaving the country's destinations, stories, and journeys into one seamless thread, from the Terai to the foot of Everest.",
+    image: "/timeline/homepage.jpg",
+  },
+  {
     pill: "Electric Vehicles — 2026",
     title: "EV Portfolio Expansion",
     description:
       "New international EV distribution agreements in the final stages of completion — extending VOITH's commitment to clean mobility across Nepal.",
     image: "/brands/vaidya-energy.png",
+  },
+  {
+    pill: "Mobility — Coming Soon",
+    title: "Firirii",
+    description:
+      "Nepal's first peer-to-peer vehicle rental platform — connecting vehicle owners with travellers and renters, turning idle vehicles into income and making everyday mobility accessible across the country.",
+    image: "/brands/toyota_hero.webp",
   },
   {
     pill: "Manufacturing — In Progress",

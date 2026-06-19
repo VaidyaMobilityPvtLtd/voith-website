@@ -6,18 +6,16 @@ import type { FamilyStat, FamilyTeam, PersonCard } from "@/data/content";
 import type { Employee } from "@/lib/employee-shared";
 import { employeeCompanyOrder } from "@/lib/employee-shared";
 
-type TabKey = "exec" | "board" | "family";
+type TabKey = "board" | "family";
 
 type Tab = { key: TabKey; label: string };
 
 const tabs: Tab[] = [
-  { key: "exec", label: "Executive Management Team" },
   { key: "board", label: "Board of Directors" },
   { key: "family", label: "VOITH Family" },
 ];
 
 type Props = {
-  executiveTeam: PersonCard[];
   boardOfDirectors: PersonCard[];
   voithFamily: FamilyTeam[];
   voithFamilyStats: FamilyStat[];
@@ -25,13 +23,12 @@ type Props = {
 };
 
 export default function PeopleTabs({
-  executiveTeam,
   boardOfDirectors,
   voithFamily,
   voithFamilyStats,
   employees,
 }: Props) {
-  const [active, setActive] = useState<TabKey>("exec");
+  const [active, setActive] = useState<TabKey>("board");
   const [openPerson, setOpenPerson] = useState<PersonCard | null>(null);
   const current = tabs.find((t) => t.key === active)!;
 
@@ -71,9 +68,6 @@ export default function PeopleTabs({
           <h2 className="people-section-title">{current.label}</h2>
         ) : null}
 
-        {active === "exec" && (
-          <PeopleGrid people={executiveTeam} onOpen={setOpenPerson} />
-        )}
         {active === "board" && (
           <PeopleGrid people={boardOfDirectors} onOpen={setOpenPerson} />
         )}

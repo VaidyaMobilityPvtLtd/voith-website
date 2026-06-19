@@ -55,13 +55,6 @@ export default function FuturePageView() {
           })}
         </div>
       </section>
-
-      <aside className="pg-future-cta">
-        <p>Building Nepal&apos;s next chapter — mobility, wellness, and manufacturing at scale.</p>
-        <a href="mailto:info@voith.com.np" className="pg-cta-btn">
-          Partner with VOITH
-        </a>
-      </aside>
     </PageShell>
   );
 }

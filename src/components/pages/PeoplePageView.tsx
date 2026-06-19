@@ -1,6 +1,5 @@
 import {
   boardOfDirectors,
-  executiveTeam,
   pageMeta,
   voithFamily,
   voithFamilyStats,
@@ -25,7 +24,6 @@ export default async function PeoplePageView() {
       heroImage={meta.heroImage}
     >
       <PeopleTabs
-        executiveTeam={executiveTeam}
         boardOfDirectors={boardOfDirectors}
         voithFamily={voithFamily}
         voithFamilyStats={voithFamilyStats}
