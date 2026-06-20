@@ -201,7 +201,7 @@ export const mobilitySector: SectorPage = {
           mark: "TO",
           name: "Toyota",
           role: "Toyota Motor Corporation, Japan",
-          image: "/brands/toyota_hero.webp",
+          image: "/brands/toyota-hero.jpg",
           logo: "/brands/toyota_logo.png",
           description:
             "Nepal's most trusted automotive brand, from electrified hybrids to rugged SUVs, distributed by UTS since 1967.",

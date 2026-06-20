@@ -69,7 +69,7 @@ export const pageMeta = {
       "Hospitality, electric mobility, digital platforms, and local manufacturing. This is where VOITH is headed next.",
     stat: "6",
     statLabel: "Major initiatives",
-    heroImage: "/future-hero.png",
+    heroImage: "/future-hero.jpg",
   },
   contact: {
     eyebrow: "Get in touch",
@@ -78,7 +78,7 @@ export const pageMeta = {
       "From dealership inquiries to partnership opportunities and press, reach the right team at VOITH directly.",
     stat: "24h",
     statLabel: "Typical reply",
-    heroImage: "/timeline/homepage.jpg",
+    heroImage: "/contact-hero.jpg",
   },
 } as const;
 
