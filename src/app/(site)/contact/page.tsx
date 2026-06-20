@@ -3,7 +3,7 @@ import ContactPageView from "@/components/pages/ContactPageView";
 import { pageMeta } from "@/data/content";
 
 export const metadata: Metadata = {
-  title: "Contact — VOITH",
+  title: "Contact · VOITH",
   description: pageMeta.contact.description,
 };
 

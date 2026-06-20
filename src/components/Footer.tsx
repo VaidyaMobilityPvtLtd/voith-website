@@ -7,7 +7,7 @@ import {
   footerSocial,
   routes,
 } from "@/data/content";
-import Logo from "../../public/voithlogo.png";
+import Logo from "../../public/voithlogo-nav.png";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -52,10 +52,12 @@ export default function Footer() {
         </div>
 
         <div className="foot-brand">
-          <Link href={routes.home} className="foot-logo" aria-label="VOITH home">
-            <Image src={Logo} alt="VOITH" width={160} height={160} />
-          </Link>
-          <p className="foot-full-name">{companyFullName}</p>
+          <div className="foot-brand-stack">
+            <Link href={routes.home} className="foot-logo" aria-label="VOITH home">
+              <Image src={Logo} alt="VOITH" width={192} height={192} />
+            </Link>
+            <p className="foot-full-name">{companyFullName}</p>
+          </div>
         </div>
       </div>
 

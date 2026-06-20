@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { industryDropdown, navLinks, routes } from "@/data/content";
-import Logo from "../../public/voithlogo.png";
+import Logo from "../../public/voithlogo-nav.png";
 
 
 function isActive(pathname: string, href: string) {
@@ -37,7 +37,14 @@ export default function Nav() {
     <nav id="nav">
       <div className="nav-l">
         <Link href={routes.home} className="nav-logo" aria-label="VOITH home">
-          <Image src={Logo} alt="VOITH" width={48} height={48} priority />
+          <Image
+            src={Logo}
+            alt="VOITH"
+            width={128}
+            height={128}
+            priority
+            className="nav-logo-img"
+          />
         </Link>
         <ul className="nav-links">
           {navLinks.map((l) => {

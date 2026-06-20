@@ -16,9 +16,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const data = sectorPages[slug as SectorSlug];
-  if (!data) return { title: "Industries — VOITH" };
+  if (!data) return { title: "Industries · VOITH" };
   return {
-    title: `${data.label} — VOITH`,
+    title: `${data.label} · VOITH`,
     description: data.description,
   };
 }

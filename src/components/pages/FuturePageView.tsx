@@ -23,7 +23,7 @@ export default function FuturePageView() {
 
         <div className="pg-init-rows">
           {futureItems.map((item, i) => {
-            const [category, status] = item.pill.split(" — ");
+            const [category, status] = item.pill.split(", ");
             return (
               <Reveal
                 as="article"

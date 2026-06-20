@@ -150,7 +150,7 @@ function PersonCardView({
         type="button"
         className="people-card people-card--button"
         onClick={() => onOpen(p)}
-        aria-label={`View ${p.name} — ${p.role}`}
+        aria-label={`View ${p.name}, ${p.role}`}
       >
         {content}
       </button>
@@ -229,7 +229,7 @@ function FamilyView({
     <div className="family-view">
       <p className="family-lead">
         From the showroom floor to the cement plant, from the Ather Grid to the
-        wellness deck — the people who carry the VOITH name across Nepal.
+        wellness deck: the people who carry the VOITH name across Nepal.
       </p>
 
       <div className="family-stats">
@@ -249,16 +249,18 @@ function FamilyView({
               <h3>{team.unit}</h3>
               <p>{team.description}</p>
             </header>
-            <div className="people-grid">
-              {team.members.map((m) => (
-                <PersonCardView
-                  key={`${team.unit}-${m.name}`}
-                  person={m}
-                  onOpen={onOpen}
-                  headingLevel={4}
-                />
-              ))}
-            </div>
+            {team.members.length > 0 ? (
+              <div className="people-grid">
+                {team.members.map((m) => (
+                  <PersonCardView
+                    key={`${team.unit}-${m.name}`}
+                    person={m}
+                    onOpen={onOpen}
+                    headingLevel={4}
+                  />
+                ))}
+              </div>
+            ) : null}
           </section>
         ))}
       </div>
@@ -290,7 +292,7 @@ function EmpPhoto({ src, name }: { src: string; name: string }) {
   );
 }
 
-/** Live employee directory — filter by company, then departments (Toyota style). */
+/** Live employee directory, filter by company, then departments (Toyota style). */
 function FamilyDirectory({ employees }: { employees: Employee[] }) {
   const [company, setCompany] = useState<string>("all");
   const [openDepts, setOpenDepts] = useState<Set<string>>(new Set());

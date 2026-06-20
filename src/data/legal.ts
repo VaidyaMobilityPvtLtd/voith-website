@@ -1,5 +1,5 @@
 // Legal / privacy page content
-// Part of the VOITH site content. Edit freely — re-exported via data/content.ts.
+// Part of the VOITH site content. Edit freely, re-exported via data/content.ts.
 
 export type LegalSection = {
   id: string;
@@ -15,7 +15,7 @@ export const legalSections: LegalSection[] = [
     title: "Privacy Policy",
     paragraphs: [
       'This Privacy Policy explains how Vaidya\'s Organization of Industries & Trading Houses ("VOITH", "we", "us") collects, uses, and protects information you share with us through this website.',
-      "We collect only the information you choose to provide — such as your name, email address, phone number, and message when you use our contact or inquiry forms. We use this information solely to respond to your request, provide the services you ask for, and improve our communication with you.",
+      "We collect only the information you choose to provide, such as your name, email address, phone number, and message when you use our contact or inquiry forms. We use this information solely to respond to your request, provide the services you ask for, and improve our communication with you.",
       "We do not sell or rent your personal information. We may share it with the relevant VOITH business unit or an authorised brand partner strictly to fulfil your request, and only to the extent required to do so.",
       "You may ask us to access, correct, or delete the personal information we hold about you at any time by writing to info@voith.com.np.",
     ],
@@ -25,7 +25,7 @@ export const legalSections: LegalSection[] = [
     title: "Terms of Use",
     paragraphs: [
       "By accessing this website you agree to use it for lawful purposes only and in a way that does not infringe the rights of, or restrict the use of this site by, any third party.",
-      "The content on this website — including text, images, logos, and brand names — is provided for general information about VOITH and its businesses. Product details, figures, and availability may change without notice and do not constitute a binding offer.",
+      "The content on this website, including text, images, logos, and brand names, is provided for general information about VOITH and its businesses. Product details, figures, and availability may change without notice and do not constitute a binding offer.",
       "Trademarks and brand names referenced on this site (including those of our partners) remain the property of their respective owners and are used here for identification purposes only.",
       "VOITH reserves the right to modify or withdraw any part of this website at any time without liability.",
     ],

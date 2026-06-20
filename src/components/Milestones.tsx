@@ -11,7 +11,7 @@ export default function Milestones() {
           <h2>A Conglomerate That Keeps Moving Forward</h2>
           <p>
             From Nepal&apos;s first automotive distributors to Nepal&apos;s first EV journey to
-            Kailash — VOITH has never stopped pioneering.
+            Kailash, VOITH has never stopped pioneering.
           </p>
         </Reveal>
       </div>

@@ -1,5 +1,5 @@
-// Industries — assembled sector pages, dropdown, slugs, and lookup helpers
-// Part of the VOITH site content. Edit freely — re-exported via data/content.ts.
+// Industries, assembled sector pages, dropdown, slugs, and lookup helpers
+// Part of the VOITH site content. Edit freely, re-exported via data/content.ts.
 
 import type {
   SectorSlug,
@@ -13,15 +13,19 @@ import { constructionSector } from "./construction";
 import { hospitalitySector } from "./hospitality";
 import { diversifiedSector } from "./diversified";
 
-/**
- * Placeholder card/hero imagery reused from the sector library until
- * brand-specific photography lands. Repeats across sectors are intentional.
- */
+export const sectorPages: Record<SectorSlug, SectorPage> = {
+  mobility: mobilitySector,
+  construction: constructionSector,
+  hospitality: hospitalitySector,
+  diversified: diversifiedSector,
+};
+
+/** Card / fallback imagery, always matches each sector's hero. */
 export const sectorPlaceholderImages: Record<SectorSlug, string> = {
-  mobility: "/sectors/other_industries.webp",
-  construction: "/sectors/construction.jpg",
-  hospitality: "/sectors/Hospitalityhero.jpeg",
-  diversified: "/sectors/other_industries.webp",
+  mobility: sectorPages.mobility.heroImage,
+  construction: sectorPages.construction.heroImage,
+  hospitality: sectorPages.hospitality.heroImage,
+  diversified: sectorPages.diversified.heroImage,
 };
 
 export const industryDropdown: IndustryDropdownItem[] = [
@@ -43,16 +47,9 @@ export const industryDropdown: IndustryDropdownItem[] = [
   {
     label: "Other Industries",
     slug: "diversified",
-    tagline: "WEAN · Lumbini · Pitstop · Philippines Consulate",
+    tagline: "WEAN · Lumbini · Pitstop · Consulate",
   },
 ];
-
-export const sectorPages: Record<SectorSlug, SectorPage> = {
-  mobility: mobilitySector,
-  construction: constructionSector,
-  hospitality: hospitalitySector,
-  diversified: diversifiedSector,
-};
 
 export const sectorOrder: SectorSlug[] = [
   "mobility",

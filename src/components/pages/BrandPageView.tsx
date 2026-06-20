@@ -21,6 +21,7 @@ export default function BrandPageView({ slug, companySlug, brandSlug }: Props) {
   const detail = brand.detail;
   const companyBase = `${routes.industries}/${slug}/${company.slug}`;
   const fallbackImage = sectorPlaceholderImages[slug];
+  const hasOverviewStats = Boolean(detail?.stats && detail.stats.length > 0);
 
   return (
     <div
@@ -33,6 +34,7 @@ export default function BrandPageView({ slug, companySlug, brandSlug }: Props) {
           aria-hidden="true"
           style={{ backgroundImage: `url(${brand.image ?? fallbackImage})` }}
         />
+        <div className="brand-hero-shade" aria-hidden="true" />
         <div className="pg-hero-content">
           <nav className="pg-crumb" aria-label="Breadcrumb">
             <Link href={routes.home}>Home</Link>
@@ -45,13 +47,10 @@ export default function BrandPageView({ slug, companySlug, brandSlug }: Props) {
             <span aria-hidden="true">/</span>
             <span>{brand.name}</span>
           </nav>
-          <Reveal className="brand-hero-mark" aria-hidden="true">
-            {brand.mark}
-          </Reveal>
-          <Reveal as="h1" className="pg-title" delay={1}>
+          <Reveal as="h1" className="pg-title">
             {brand.name}
           </Reveal>
-          <Reveal as="p" className="brand-hero-role" delay={2}>
+          <Reveal as="p" className="brand-hero-role" delay={1}>
             {brand.role}
           </Reveal>
         </div>
@@ -59,13 +58,33 @@ export default function BrandPageView({ slug, companySlug, brandSlug }: Props) {
 
       <div className="pg-body">
         <section className="brand-overview">
-          <Reveal className="brand-overview-grid">
-            <div>
+          <div className="brand-overview-shell">
+            <span className="brand-overview-watermark" aria-hidden="true">
+              {brand.mark}
+            </span>
+            <Reveal className="brand-overview-head">
               <p className="sec-eyebrow-line">{company.name} · Brand</p>
-              <h2 className="pg-section-title">About {brand.name}</h2>
-            </div>
-            <p className="brand-overview-body">{brand.description}</p>
-          </Reveal>
+              <h2 className="brand-section-title">About {brand.name}</h2>
+              <p className="brand-overview-lead">{brand.description}</p>
+            </Reveal>
+            {hasOverviewStats ? (
+              <ul
+                className="sec-stat-grid brand-overview-stats"
+                aria-label={`${brand.name} at a glance`}
+              >
+                {detail!.stats!.map((s, i) => (
+                  <li key={s.label} className="sec-stat-card">
+                    <span className="sec-stat-card-n" aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="sec-stat-v">{s.value}</span>
+                    <span className="sec-stat-l">{s.label}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+
           <Reveal className="brand-feature" delay={1}>
             <CardMedia
               image={brand.image ?? fallbackImage}
@@ -102,13 +121,17 @@ export default function BrandPageView({ slug, companySlug, brandSlug }: Props) {
           </Reveal>
         </section>
 
-        {detail ? <BrandDetailSections detail={detail} /> : null}
+        {detail ? (
+          <BrandDetailSections detail={detail} skipStats={hasOverviewStats} />
+        ) : null}
 
         {siblings.length > 0 ? (
-          <section className="sec-other">
-            <Reveal as="h2" className="pg-section-title">
-              More from {company.name}
-            </Reveal>
+          <section className="sec-other brand-other">
+            <div className="brand-section-head">
+              <Reveal as="h2" className="brand-section-title">
+                More from {company.name}
+              </Reveal>
+            </div>
             <div className="sec-other-grid">
               {siblings.map((c, i) => (
                 <Reveal
@@ -142,7 +165,7 @@ export default function BrandPageView({ slug, companySlug, brandSlug }: Props) {
           </section>
         ) : null}
 
-        <section className="sec-closing">
+        <section className="sec-closing brand-closing">
           <Reveal as="p" className="sec-closing-quote">
             {data.closing}
           </Reveal>

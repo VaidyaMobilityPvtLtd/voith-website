@@ -27,15 +27,15 @@ declare global {
 const TOPO_LIB = "https://unpkg.com/topojson-client@3/dist/topojson-client.min.js";
 const WORLD_DATA = "https://unpkg.com/world-atlas@2/countries-110m.json";
 
-// Partner countries — by ISO 3166-1 numeric code. Nepal 524, Japan 392,
+// Partner countries, by ISO 3166-1 numeric code. Nepal 524, Japan 392,
 // India 356, China 156, Germany 276, Thailand 764, UAE/Dubai 784, USA 840,
-// Indonesia 360. (Singapore is too small for the 110m polygon set — drawn
+// Indonesia 360. (Singapore is too small for the 110m polygon set, drawn
 // explicitly via PARTNER_POINTS below.)
 const PARTNER_IDS = new Set([
   "524", "392", "356", "156", "276", "764", "784", "840", "360",
 ]);
 
-// Partner locations too small to exist in the 110m polygon set — drawn as
+// Partner locations too small to exist in the 110m polygon set, drawn as
 // explicit dots so they still register. [lon, lat]
 const PARTNER_POINTS: Array<[number, number]> = [
   [103.82, 1.35], // Singapore

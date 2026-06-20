@@ -12,9 +12,9 @@ const ibmPlex = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: `VOITH — ${companyFullName}`,
+  title: `VOITH · ${companyFullName}`,
   description:
-    "From Toyota to Ather Energy to cement — VOITH has been pioneering Nepal's industrial and economic growth for over six decades.",
+    "From Toyota to Ather Energy to cement, VOITH has been pioneering Nepal's industrial and economic growth for over six decades.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -17,9 +17,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const m = getMilestone(slug);
-  if (!m) return { title: "Milestones — VOITH" };
+  if (!m) return { title: "Milestones · VOITH" };
   return {
-    title: `${m.title} — VOITH`,
+    title: `${m.title} · VOITH`,
     description: m.description,
   };
 }

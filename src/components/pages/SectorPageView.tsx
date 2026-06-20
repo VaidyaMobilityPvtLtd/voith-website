@@ -17,7 +17,7 @@ export default function SectorPageView({ slug }: Props) {
   const fallbackImage = sectorPlaceholderImages[slug];
 
   return (
-    <div className="pg pg-sector" style={{ "--sector-color": data.color } as React.CSSProperties}>
+    <div className={`pg pg-sector pg-sector-${slug}`} style={{ "--sector-color": data.color } as React.CSSProperties}>
       <header className="pg-hero sec-hero">
         <div
           className="pg-hero-bg"
@@ -38,13 +38,6 @@ export default function SectorPageView({ slug }: Props) {
           <p className="pg-lead">{data.description}</p>
           <div className="pg-hero-badge">
             <span className="pg-hero-badge-rule" aria-hidden="true" />
-            <span
-              className="pg-hero-badge-mark"
-              style={{ background: data.color }}
-              aria-hidden="true"
-            >
-              {data.letter}
-            </span>
             <span className="pg-hero-badge-n">{data.stat}</span>
             <span className="pg-hero-badge-l">{data.statLabel}</span>
             <span className="pg-hero-badge-rule" aria-hidden="true" />
@@ -54,20 +47,26 @@ export default function SectorPageView({ slug }: Props) {
 
       <div className="pg-body">
         <section className="sec-intro">
-          <div className="sec-intro-grid">
-            <div>
+          <div className="sec-intro-shell">
+            <span className="sec-intro-watermark" aria-hidden="true">
+              {data.letter}
+            </span>
+            <div className="sec-intro-head">
               <p className="sec-eyebrow-line">{data.label} · Overview</p>
-              <h2 className="pg-section-title">{data.intro.split(".")[0]}.</h2>
+              <h2 className="sec-intro-title">{data.title}</h2>
             </div>
             <p className="sec-intro-body">{data.intro}</p>
-          </div>
-          <div className="sec-stat-row">
-            {data.stats.map((s) => (
-              <div key={s.label} className="sec-stat-cell">
-                <span className="sec-stat-v">{s.value}</span>
-                <span className="sec-stat-l">{s.label}</span>
-              </div>
-            ))}
+            <ul className="sec-stat-grid" aria-label={`${data.label} highlights`}>
+              {data.stats.map((s, i) => (
+                <li key={s.label} className="sec-stat-card">
+                  <span className="sec-stat-card-n" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="sec-stat-v">{s.value}</span>
+                  <span className="sec-stat-l">{s.label}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -92,15 +91,7 @@ export default function SectorPageView({ slug }: Props) {
                     style={{
                       backgroundImage: `url(${b.image ?? fallbackImage})`,
                     }}
-                  >
-                    <span className="sec-brand-blob">
-                      <span
-                        className={`sec-brand-blob-mark${b.mark.length > 3 ? " sec-brand-blob-mark--sm" : ""}`}
-                      >
-                        {b.mark}
-                      </span>
-                    </span>
-                  </Link>
+                  />
                   <div className="sec-brand-copy">
                     <div className="sec-brand-toprow">
                       <span className="sec-brand-num">
@@ -174,8 +165,7 @@ export default function SectorPageView({ slug }: Props) {
                     style={{ "--sector-color": o.color } as React.CSSProperties}
                   >
                     <CardMedia
-                      image={sectorPlaceholderImages[s]}
-                      mark={o.letter}
+                      image={o.heroImage}
                       name={o.label}
                       color={o.color}
                       className="sec-other-media"

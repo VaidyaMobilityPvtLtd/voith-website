@@ -42,7 +42,7 @@ export default function Hero() {
           </h1>
           <div className="hl-badge">★&nbsp;Founded 1964</div>
           <p>
-            From Toyota to Ather Energy to cement production — VOITH has been
+            From Toyota to Ather Energy to cement production, VOITH has been
             pioneering Nepal&apos;s industrial and economic growth for over six decades.
           </p>
           <Link href={routes.industries} className="btn-red">

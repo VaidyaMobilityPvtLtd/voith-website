@@ -5,7 +5,7 @@ const blocks = [
   {
     label: "Vision",
     body:
-      "Pioneering in all industries to flourish and bring prosperity to society — bolstering the standard of living, knowledge, and quality of life for people in Nepal.",
+      "Pioneering in all industries to flourish and bring prosperity to society, bolstering the standard of living, knowledge, and quality of life for people in Nepal.",
   },
   {
     label: "Mission",

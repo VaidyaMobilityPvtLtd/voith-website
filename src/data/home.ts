@@ -1,5 +1,5 @@
 // Home page content: hero, features, founder spotlight, businesses, testimonials
-// Part of the VOITH site content. Edit freely — re-exported via data/content.ts.
+// Part of the VOITH site content. Edit freely, re-exported via data/content.ts.
 
 import { routes } from "./shared";
 
@@ -13,7 +13,7 @@ export const heroItems: HeroItem[] = [
   },
   {
     title: "Vaidya Energy",
-    sub: "Nepal's #1 EV Scooter · Ather Energy",
+    sub: "Leading EV scooter brand · Ather Energy",
     href: routes.industries,
   },
   {
@@ -63,7 +63,7 @@ export const businesses: Business[] = [
     category: "Mobility",
     sub: "UTS · Trayana · Vaidya Energy · UHEEM",
     description:
-      "From Toyota to Ather EV, from Italian motorcycles to construction equipment — Nepal's most complete mobility portfolio, serving every segment of the market.",
+      "From Toyota to Ather EV, from Italian motorcycles to construction equipment, Nepal's most complete mobility portfolio, serving every segment of the market.",
     image: "/timeline/homepage.jpg",
   },
   {
@@ -72,7 +72,7 @@ export const businesses: Business[] = [
     category: "Construction",
     sub: "Huaxin Narayani · TCLI · TMCC",
     description:
-      "From limestone quarries in Nuwakot to Nepal's largest cement plant — 4,000 tons per day, a USD 250M joint venture with world leader Huaxin Cement.",
+      "From limestone quarries in Nuwakot to Nepal's largest cement plant (4,000 tons per day), a USD 250M joint venture with world leader Huaxin Cement.",
     image: "/sectors/construction.jpg",
   },
   {
@@ -81,7 +81,7 @@ export const businesses: Business[] = [
     category: "Hospitality",
     sub: "Sasvata Wildlife Resort · Himalayan Sasvata · Golden Thread",
     description:
-      "VOITH Hospitality — a tribute to Nepal's timeless diversity. Three flagship destinations from the jungles of Chitwan to the gateway of Everest, turning natural and cultural heritage into world-class travel experiences.",
+      "VOITH Hospitality, a tribute to Nepal's timeless diversity. Three flagship destinations from the jungles of Chitwan to the gateway of Everest, turning natural and cultural heritage into world-class travel experiences.",
     image: "/sectors/hospitality.jpg",
   },
   {
@@ -90,8 +90,8 @@ export const businesses: Business[] = [
     category: "Other Industries",
     sub: "WEAN · Lumbini · Pitstop · Philippines Consulate",
     description:
-      "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, a boutique automotive workshop, and the Honorary Consulate General of the Philippines — diversified services across Nepal.",
-    image: "/sectors/other_industries.webp",
+      "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, a boutique automotive workshop, and the Honorary Consulate General of the Philippines, diversified services across Nepal.",
+    image: "/sectors/diversified-hero.png",
   },
 ];
 
@@ -118,7 +118,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'WWF Nepal is proud to have been a partner with VOITH in the "Drive for Anti-Poaching" — strengthening the conservation of rhinos in Chitwan National Park.',
+      'WWF Nepal is proud to have been a partner with VOITH in the "Drive for Anti-Poaching", strengthening the conservation of rhinos in Chitwan National Park.',
     author: "Anil Manandhar",
     role: "Country Representative, WWF Nepal",
   },

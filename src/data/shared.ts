@@ -1,5 +1,5 @@
 // Site-wide content: company info, routes, nav, page meta, footer, global features
-// Part of the VOITH site content. Edit freely — re-exported via data/content.ts.
+// Part of the VOITH site content. Edit freely, re-exported via data/content.ts.
 
 export const VOITH_FOUNDED_YEAR = 1964;
 
@@ -39,7 +39,7 @@ export const pageMeta = {
     eyebrow: "Our Group",
     title: "Industries & Businesses",
     description:
-      "Mobility, construction, hospitality, and diversified services — VOITH's four sectors building Nepal's economy.",
+      "Mobility, construction, hospitality, and diversified services. VOITH's four sectors building Nepal's economy.",
     stat: "4",
     statLabel: "Core sectors",
     heroImage: "/IndustriesHero.png",
@@ -51,7 +51,7 @@ export const pageMeta = {
       "Partnerships, values, and milestones that reflect VOITH's commitment to Nepal's people and institutions.",
     stat: "60+",
     statLabel: "Years of contribution",
-    heroImage: "/timeline/home2.png",
+    heroImage: "/impact-hero.png",
   },
   people: {
     eyebrow: "Leadership",
@@ -66,7 +66,7 @@ export const pageMeta = {
     eyebrow: "Forward",
     title: "The Future",
     description:
-      "Hospitality, electric mobility, digital platforms, and local manufacturing — where VOITH is headed next.",
+      "Hospitality, electric mobility, digital platforms, and local manufacturing. This is where VOITH is headed next.",
     stat: "6",
     statLabel: "Major initiatives",
     heroImage: "/future-hero.png",
@@ -75,7 +75,7 @@ export const pageMeta = {
     eyebrow: "Get in touch",
     title: "Contact VOITH",
     description:
-      "From dealership inquiries to partnership opportunities and press — reach the right team at VOITH directly.",
+      "From dealership inquiries to partnership opportunities and press, reach the right team at VOITH directly.",
     stat: "24h",
     statLabel: "Typical reply",
     heroImage: "/timeline/homepage.jpg",
@@ -97,21 +97,21 @@ export const values = [
 export const globalFeatures = [
   {
     icon: "🤝",
-    title: "15 International Partners",
+    title: "10+ International Partners",
     description:
-      "Toyota, Ather, Huaxin, Keeway, Benelli, Morbidelli, XCMG and more — world leaders in every sector VOITH operates in.",
+      "Toyota, Ather, Ultraviolette, Huaxin, Keeway, Benelli, Morbidelli, XCMG, The Postcard Hotel and more. World leaders across every sector VOITH operates in.",
   },
   {
     icon: "🌐",
-    title: "8+ Partner Countries",
+    title: "7 Partner Countries",
     description:
-      "Japan, China, India, Italy, Germany, South Korea, Philippines — four continents of expertise flowing into Nepal's economy.",
+      "Japan, China, India, Italy, Germany, South Korea, and the Philippines. Four continents of expertise flowing into Nepal's economy.",
   },
   {
     icon: "📍",
-    title: "Nationwide Presence",
+    title: "All 7 Provinces",
     description:
-      "Dealer and service networks spanning East to West Nepal, with 30 Ather Grid fast-chargers and an expanding footprint across all regions.",
+      "Dealer and service networks across every province in Nepal, with 30+ Ather Grid fast-chargers and an expanding footprint from east to west.",
   },
 ] as const;
 

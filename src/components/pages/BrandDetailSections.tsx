@@ -10,58 +10,84 @@ const stagger = (i: number) => (((i % 3) + 1) as 1 | 2 | 3);
 export default function BrandDetailSections({
   detail,
   skipIntro = false,
+  skipStats = false,
 }: {
   detail: BrandDetail;
   /** Omit the intro prose (when the parent renders it before other content). */
   skipIntro?: boolean;
+  /** Omit stats when shown in the overview hero section. */
+  skipStats?: boolean;
 }) {
   return (
     <>
       {!skipIntro && detail.intro && detail.intro.length > 0 ? (
         <section className="brand-detail">
-          <Reveal as="p" className="sec-eyebrow-line">
-            In Nepal
-          </Reveal>
-          <div className="brand-detail-prose">
-            {detail.intro.map((p, i) => (
-              <Reveal as="p" key={i} delay={1}>
-                {p}
-              </Reveal>
-            ))}
+          <div className="brand-section-head">
+            <Reveal as="p" className="sec-eyebrow-line">
+              In Nepal
+            </Reveal>
+            <Reveal as="h2" className="brand-section-title" delay={1}>
+              Overview
+            </Reveal>
+          </div>
+          <div className="brand-detail-card">
+            <div className="brand-detail-prose">
+              {detail.intro.map((p, i) => (
+                <Reveal as="p" key={i} delay={1}>
+                  {p}
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
       ) : null}
 
-      {detail.stats && detail.stats.length > 0 ? (
+      {!skipStats && detail.stats && detail.stats.length > 0 ? (
         <section className="brand-stats">
-          <Reveal as="p" className="sec-eyebrow-line">
-            At a glance
-          </Reveal>
-          <div className="brand-stat-row">
-            {detail.stats.map((stat, i) => (
-              <Reveal key={stat.label} delay={stagger(i)} className="brand-stat-cell">
-                <span className="brand-stat-v">{stat.value}</span>
-                <span className="brand-stat-l">{stat.label}</span>
-              </Reveal>
-            ))}
+          <div className="brand-section-head">
+            <Reveal as="p" className="sec-eyebrow-line">
+              At a glance
+            </Reveal>
+            <Reveal as="h2" className="brand-section-title" delay={1}>
+              Key figures
+            </Reveal>
           </div>
+          <ul className="sec-stat-grid" aria-label="Key figures">
+            {detail.stats.map((stat, i) => (
+              <li key={stat.label} className="sec-stat-card">
+                <span className="sec-stat-card-n" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="sec-stat-v">{stat.value}</span>
+                <span className="sec-stat-l">{stat.label}</span>
+              </li>
+            ))}
+          </ul>
         </section>
       ) : null}
 
       {detail.highlights && detail.highlights.length > 0 ? (
-        <section className="brand-highlights">
-          <Reveal as="h2" className="pg-section-title">
-            Key highlights
-          </Reveal>
-          <div className="brand-highlight-grid">
+        <section className="brand-highlights sec-highlights">
+          <div className="brand-section-head brand-section-head--light">
+            <Reveal as="p" className="sec-eyebrow-line">
+              Highlights
+            </Reveal>
+            <Reveal as="h2" className="brand-section-title brand-section-title--light" delay={1}>
+              What sets us apart
+            </Reveal>
+          </div>
+          <div className="sec-highlight-grid">
             {detail.highlights.map((item, i) => (
               <Reveal
                 key={item.title}
                 delay={stagger(i)}
-                className="brand-highlight-card"
+                className="sec-highlight-card"
               >
-                <h3 className="brand-highlight-title">{item.title}</h3>
-                <p className="brand-highlight-desc">{item.description}</p>
+                <span className="brand-highlight-n" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
               </Reveal>
             ))}
           </div>
@@ -70,9 +96,14 @@ export default function BrandDetailSections({
 
       {detail.lineup && detail.lineup.length > 0 ? (
         <section className="brand-lineup">
-          <Reveal as="h2" className="pg-section-title">
-            {detail.lineupLabel ?? "Available in Nepal"}
-          </Reveal>
+          <div className="brand-section-head">
+            <Reveal as="p" className="sec-eyebrow-line">
+              Lineup
+            </Reveal>
+            <Reveal as="h2" className="brand-section-title" delay={1}>
+              {detail.lineupLabel ?? "Available in Nepal"}
+            </Reveal>
+          </div>
           <div className="brand-lineup-grid">
             {detail.lineup.map((group, i) => (
               <Reveal
@@ -94,9 +125,14 @@ export default function BrandDetailSections({
 
       {detail.services && detail.services.length > 0 ? (
         <section className="brand-services">
-          <Reveal as="h2" className="pg-section-title">
-            Services offered
-          </Reveal>
+          <div className="brand-section-head">
+            <Reveal as="p" className="sec-eyebrow-line">
+              Services
+            </Reveal>
+            <Reveal as="h2" className="brand-section-title" delay={1}>
+              What we offer
+            </Reveal>
+          </div>
           <ul className="brand-services-grid">
             {detail.services.map((s, i) => (
               <Reveal
@@ -115,9 +151,14 @@ export default function BrandDetailSections({
 
       {detail.locations && detail.locations.length > 0 ? (
         <section className="brand-locations">
-          <Reveal as="h2" className="pg-section-title">
-            {detail.locationsLabel ?? "Find us"}
-          </Reveal>
+          <div className="brand-section-head">
+            <Reveal as="p" className="sec-eyebrow-line">
+              Locations
+            </Reveal>
+            <Reveal as="h2" className="brand-section-title" delay={1}>
+              {detail.locationsLabel ?? "Find us"}
+            </Reveal>
+          </div>
           <div className="brand-loc-grid">
             {detail.locations.map((loc, i) => (
               <Reveal
@@ -143,8 +184,6 @@ export default function BrandDetailSections({
                     <div>
                       <dt>Phone</dt>
                       <dd>
-                        {/* Some entries list several numbers joined by " · ";
-                            dial only the first, but show them all. */}
                         <a
                           href={`tel:${loc.phone
                             .split("·")[0]

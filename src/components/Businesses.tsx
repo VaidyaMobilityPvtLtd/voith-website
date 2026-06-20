@@ -21,7 +21,7 @@ export default function Businesses() {
           </span>
           <h2 className="biz-title">Our Businesses</h2>
           <p className="biz-lead">
-            Four pillars driving Nepal&apos;s growth — mobility, construction, hospitality,
+            Four pillars driving Nepal&apos;s growth, mobility, construction, hospitality,
             and diversified industry.
           </p>
         </Reveal>

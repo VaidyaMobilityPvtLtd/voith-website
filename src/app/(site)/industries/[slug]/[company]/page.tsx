@@ -21,9 +21,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug, company } = await params;
   const data = getSectorBrand(slug as SectorSlug, company);
-  if (!data) return { title: "Industries — VOITH" };
+  if (!data) return { title: "Industries · VOITH" };
   return {
-    title: `${data.name} — VOITH`,
+    title: `${data.name} · VOITH`,
     description: data.description,
   };
 }

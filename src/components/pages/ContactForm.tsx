@@ -101,7 +101,7 @@ export default function ContactForm({ destinationEmail }: Props) {
 
       {sent ? (
         <p className="cf-confirm" role="status">
-          Your email draft is ready — send it from your client and we'll reply
+          Your email draft is ready, send it from your client and we'll reply
           within one business day.
         </p>
       ) : null}

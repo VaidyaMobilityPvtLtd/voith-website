@@ -52,7 +52,7 @@ export default function NepalDialog({ open, onClose }: Props) {
         <aside className="nd-side">
           <h2 className="nd-title">Our Footprint</h2>
           <p className="nd-sub">
-            VOITH brands and operations mapped across Nepal — from the Kathmandu
+            VOITH brands and operations mapped across Nepal, from the Kathmandu
             valley to the Far-Western Terai.
           </p>
 
@@ -118,8 +118,8 @@ function BrandTable({
           </span>
           {kind === "automotive" ? (
             <>
-              <span>{b.sales ?? "—"}</span>
-              <span>{b.service ?? "—"}</span>
+              <span>{b.sales ?? ", "}</span>
+              <span>{b.service ?? ", "}</span>
               <span className="nd-cell-others">{b.others ?? 0}</span>
             </>
           ) : (

@@ -1,5 +1,5 @@
 /**
- * Content barrel — re-exports every section so existing `@/data/content`
+ * Content barrel, re-exports every section so existing `@/data/content`
  * imports keep working unchanged. Do NOT add content here; edit the
  * page-wise files instead:
  *

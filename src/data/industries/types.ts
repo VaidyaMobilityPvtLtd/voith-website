@@ -1,5 +1,5 @@
-// Industries — shared types for sectors, companies, and brands
-// Part of the VOITH site content. Edit freely — re-exported via data/content.ts.
+// Industries, shared types for sectors, companies, and brands
+// Part of the VOITH site content. Edit freely, re-exported via data/content.ts.
 
 export type SectorSlug =
   | "mobility"
@@ -13,7 +13,7 @@ export type IndustryDropdownItem = {
   tagline: string;
 };
 
-/** A physical location — showroom, service centre, charging station, dealer. */
+/** A physical location, showroom, service centre, charging station, dealer. */
 export type BrandLocation = {
   name: string;
   /** Short type label, e.g. "Showroom & Service Center", "Charging Station". */
@@ -35,7 +35,7 @@ export type BrandHighlight = { title: string; description: string };
 export type BrandDetail = {
   /** Founding / launch line, e.g. "Established · August 2021". */
   established?: string;
-  /** Origin / manufacturer line, e.g. "Toyota Motor Corporation — Japan". */
+  /** Origin / manufacturer line, e.g. "Toyota Motor Corporation, Japan". */
   origin?: string;
   /** Overview paragraphs (longer than `description`). */
   intro?: string[];
@@ -54,7 +54,7 @@ export type BrandDetail = {
 };
 
 /**
- * A child brand under an operating company — e.g. Toyota or Morbidelli under
+ * A child brand under an operating company, e.g. Toyota or Morbidelli under
  * United Traders Syndicate. Rendered at
  * /industries/[slug]/[company]/[brand] with its own detailed page.
  */
@@ -81,7 +81,7 @@ export type ChildBrand = {
 };
 
 /**
- * An operating company under a VOITH sector — e.g. United Traders Syndicate.
+ * An operating company under a VOITH sector, e.g. United Traders Syndicate.
  * Rendered at /industries/[slug]/[company]. May own child brands; a company
  * with no children renders its own `detail` directly (a leaf node).
  */
@@ -109,7 +109,7 @@ export type SectorBrand = {
   comingSoon?: boolean;
   /**
    * Short status badge shown on cards and the company hero without hiding the
-   * detail content — e.g. "Coming Soon", "Opening 13 Oct 2026". Use instead of
+   * detail content, e.g. "Coming Soon", "Opening 13 Oct 2026". Use instead of
    * `comingSoon` when there IS content to show alongside the badge.
    */
   status?: string;

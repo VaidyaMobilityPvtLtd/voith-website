@@ -18,7 +18,7 @@ export default function Global() {
         </div>
         <p className="gl-desc">
           VOITH&apos;s supply chain, technology, and brand agreements span Japan, China, India,
-          Italy, Germany, South Korea, and beyond — bringing world-class products and expertise
+          Italy, Germany, South Korea, and beyond, bringing world-class products and expertise
           directly to Nepal.
         </p>
       </Reveal>

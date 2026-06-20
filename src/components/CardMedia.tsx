@@ -2,22 +2,19 @@ type Props = {
   image?: string;
   /** Brand logo shown in place of the photo (contained on a clean surface). */
   logo?: string;
-  mark: string;
+  mark?: string;
   name: string;
   color: string;
   className?: string;
 };
 
 /**
- * Card/hero media slot. Renders the brand logo when supplied (contained on a
- * clean surface), otherwise the photo, otherwise a branded gradient placeholder
- * carrying the brand initials — so layouts stay complete before real
- * photography is dropped in.
+ * Card/hero media slot. Renders the brand logo when supplied, otherwise the photo,
+ * otherwise a plain branded gradient placeholder.
  */
 export default function CardMedia({
   image,
   logo,
-  mark,
   name,
   color,
   className = "",
@@ -41,9 +38,7 @@ export default function CardMedia({
         // eslint-disable-next-line @next/next/no-img-element
         <img src={image} alt={name} loading="lazy" />
       ) : (
-        <span className="card-media-mark" aria-hidden="true">
-          {mark}
-        </span>
+        null
       )}
     </div>
   );

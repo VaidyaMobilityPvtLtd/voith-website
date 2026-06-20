@@ -59,13 +59,6 @@ export default function IndustriesPageView() {
                   <span className="ind-sector-index" aria-hidden="true">
                     0{i + 1}
                   </span>
-                  <span
-                    className="ind-sector-badge"
-                    style={{ background: b.color }}
-                    aria-hidden="true"
-                  >
-                    {b.letter}
-                  </span>
                   {companies.length > 0 ? (
                     <span className="ind-sector-count">
                       {companies.length}{" "}
@@ -100,13 +93,6 @@ export default function IndustriesPageView() {
                             href={`${routes.industries}/${slug}/${c.slug}`}
                             className="ind-company-card"
                           >
-                            <span
-                              className="ind-company-mark"
-                              style={{ background: b.color }}
-                              aria-hidden="true"
-                            >
-                              {c.mark}
-                            </span>
                             <div className="ind-company-body">
                               <h4 className="ind-company-name">
                                 {c.name}

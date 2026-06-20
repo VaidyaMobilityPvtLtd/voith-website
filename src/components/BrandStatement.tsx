@@ -11,8 +11,8 @@ export default function BrandStatement() {
           <Image
             src={logo}
             alt="VOITH emblem"
-            width={120}
-            height={120}
+            width={264}
+            height={264}
             className="bs-mark-img"
           />
         </Reveal>

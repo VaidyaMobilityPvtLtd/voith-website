@@ -3,7 +3,7 @@ import FuturePageView from "@/components/pages/FuturePageView";
 import { pageMeta } from "@/data/content";
 
 export const metadata: Metadata = {
-  title: "Future — VOITH",
+  title: "Future · VOITH",
   description: pageMeta.future.description,
 };
 

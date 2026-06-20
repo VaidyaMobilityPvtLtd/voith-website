@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { storyMilestones } from "@/data/content";
 
-// SVG world — vertical arc anchored to the right edge
+// SVG world, vertical arc anchored to the right edge
 const VBW = 560;
 const VBH = 720;
 const CX = 540;          // arc center sits near the right edge of the viewBox
@@ -25,7 +25,7 @@ function polar(theta: number, radius = R): Point {
 export default function InteractiveTimeline() {
   const items = storyMilestones;
   const last = items.length - 1;
-  const [progress, setProgress] = useState(0); // 0..1 — derived from scroll position
+  const [progress, setProgress] = useState(0); // 0..1, derived from scroll position
   const sectionRef = useRef<HTMLElement | null>(null);
   const rafRef = useRef<number | null>(null);
 
@@ -137,7 +137,7 @@ export default function InteractiveTimeline() {
             <span className="arc-tl-title-accent"> so far</span>
           </h2>
           <p className="arc-tl-intro">
-            {items.length} milestones from <strong>1960</strong> to <strong>2025</strong> — scroll up
+            {items.length} milestones from <strong>1960</strong> to <strong>2025</strong>, scroll up
             and down to scrub the dial through six decades.
           </p>
         </header>

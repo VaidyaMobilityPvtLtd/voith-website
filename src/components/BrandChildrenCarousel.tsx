@@ -55,7 +55,7 @@ export default function BrandChildrenCarousel({
   return (
     <section className="brand-children">
       <div className="brand-children-head">
-        <h2 className="pg-section-title">{title}</h2>
+        <h2 className="brand-section-title">{title}</h2>
         <div className="brand-children-nav">
           <button
             type="button"

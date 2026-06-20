@@ -26,7 +26,7 @@ export default function ContactPageView() {
           <h2 className="pg-section-title">Talk to the right team</h2>
           <p className="contact-lead">
             Every VOITH business has a dedicated point of contact. Pick the one
-            closest to what you need — or write to general inquiries and we'll
+            closest to what you need, or write to general inquiries and we'll
             route you.
           </p>
         </header>

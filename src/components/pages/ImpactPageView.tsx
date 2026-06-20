@@ -7,7 +7,7 @@ const meta = pageMeta.impact;
 const mission =
   "Continuous sustainable growth and improvement by adapting to the environment and the needs of the country.";
 const vision =
-  "Pioneering in all industries to flourish and bring prosperity to society — bolstering the standard of living, knowledge, and quality of life for people in Nepal.";
+  "Pioneering in all industries to flourish and bring prosperity to society, bolstering the standard of living, knowledge, and quality of life for people in Nepal.";
 
 export default function ImpactPageView() {
   const featured = testimonials[0];
@@ -74,9 +74,10 @@ export default function ImpactPageView() {
               <video
                 className="pg-quote-video-el"
                 src="/DrToyoda.mp4"
+                poster="/dr-toyoda-poster.jpg"
                 controls
                 playsInline
-                preload="metadata"
+                preload="none"
                 controlsList="nodownload"
               />
             </div>

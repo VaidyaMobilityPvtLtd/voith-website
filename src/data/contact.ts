@@ -1,5 +1,5 @@
 // Contact page content: channels, offices, topics
-// Part of the VOITH site content. Edit freely — re-exported via data/content.ts.
+// Part of the VOITH site content. Edit freely, re-exported via data/content.ts.
 
 export type ContactChannel = {
   label: string;
@@ -17,14 +17,14 @@ export const contactChannels: ContactChannel[] = [
     phone: "+977 1 442 0000",
   },
   {
-    label: "Sales — Toyota Nepal (UTS)",
+    label: "Sales, Toyota Nepal (UTS)",
     description:
       "Vehicle purchase inquiries, test drives, fleet, and dealership appointments.",
     email: "sales@uts.com.np",
     phone: "+977 1 442 1967",
   },
   {
-    label: "Vaidya Energy — Ather",
+    label: "Vaidya Energy, Ather",
     description:
       "EV bookings, Ather Grid charging support, and two-wheeler distribution.",
     email: "hello@vaidyaenergy.com",
@@ -47,7 +47,7 @@ export type ContactOffice = {
 
 export const contactOffices: ContactOffice[] = [
   {
-    city: "Kathmandu — Head Office",
+    city: "Kathmandu, Head Office",
     role: "VOITH Complex",
     addressLines: [
       "VOITH Complex",
@@ -58,7 +58,7 @@ export const contactOffices: ContactOffice[] = [
     hours: "Sun – Fri · 09:00 – 18:00 NPT",
   },
   {
-    city: "Nuwakot — Quarry & Plant",
+    city: "Nuwakot, Quarry & Plant",
     role: "TCLI · TMCC · Huaxin Cement Narayani",
     addressLines: [
       "Tadi Cement & Lime Industries",
@@ -68,7 +68,7 @@ export const contactOffices: ContactOffice[] = [
     hours: "Sun – Fri · 08:00 – 17:00 NPT",
   },
   {
-    city: "Nationwide — Dealer Network",
+    city: "Nationwide, Dealer Network",
     role: "UTS & Vaidya Energy",
     addressLines: [
       "Toyota dealerships and Ather experience centres",
