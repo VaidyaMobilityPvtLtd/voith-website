@@ -3473,6 +3473,12 @@ main {
 .pg-people .pg-hero-bg {
   background-position: center 40%;
 }
+
+/* Future page */
+.pg-future .pg-hero-bg {
+  background-position: center center;
+}
+
 .people-tabs {
   display: flex;
   align-items: stretch;
