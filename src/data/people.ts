@@ -93,6 +93,7 @@ export const boardOfDirectors: PersonCard[] = [
   },
 ];
 
+
 export const voithFamilyStats: FamilyStat[] = [
   { value: "2,000+", label: "Team members" },
   { value: "4", label: "Core sectors" },
