@@ -5550,6 +5550,12 @@ main {
   color: var(--ink2);
   margin: 0;
 }
+.brand-context-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
 .brand-meta {
   display: flex;
   flex-direction: column;

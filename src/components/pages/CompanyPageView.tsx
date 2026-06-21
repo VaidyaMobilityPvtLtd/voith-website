@@ -124,12 +124,24 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
                   ) : null}
                 </dl>
               ) : null}
-              <Link
-                href={`${routes.industries}/${slug}`}
-                className="sec-cta sec-cta--solid"
-              >
-                Explore the {data.label} sector →
-              </Link>
+              <div className="brand-context-actions">
+                <Link
+                  href={`${routes.industries}/${slug}`}
+                  className="sec-cta sec-cta--solid"
+                >
+                  Explore the {data.label} sector →
+                </Link>
+                {company.website ? (
+                  <a
+                    href={company.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sec-cta"
+                  >
+                    Visit website ↗
+                  </a>
+                ) : null}
+              </div>
             </div>
           </Reveal>
         </section>

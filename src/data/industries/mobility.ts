@@ -30,6 +30,7 @@ export const mobilitySector: SectorPage = {
       name: "Construction & Heavy Equipment and Earth Movers",
       role: "XCMG · Sole distributor · Est. 2018",
       image: "/brands/uheem.png",
+      website: "https://uheem.com.np",
       description:
         "VOITH's heavy-equipment company, Construction & Heavy Equipment and Earth Movers Pvt. Ltd. (UHEEM), and the sole authorised distributor of XCMG construction machinery in Nepal, supporting infrastructure projects nationwide with sales, service, and genuine parts.",
       detail: {
@@ -203,6 +204,7 @@ export const mobilitySector: SectorPage = {
           role: "Toyota Motor Corporation, Japan",
           image: "/brands/toyota-hero.jpg",
           logo: "/brands/toyota_logo.png",
+          website: "https://www.toyota.com.np/en.html",
           description:
             "Nepal's most trusted automotive brand, from electrified hybrids to rugged SUVs, distributed by UTS since 1967.",
           detail: {
@@ -297,6 +299,7 @@ export const mobilitySector: SectorPage = {
           role: "Italian luxury motorcycles, Recently partnered",
           image: "/brands/morbidelli_hero.jpg",
           logo: "/brands/morbidelli_logo.png",
+          website: "https://www.morbidelli.com/np-en",
           description:
             "The Italian motorcycle marque, introduced to Nepal in November 2025, Trail, Street Fighter, and Cruiser series for the luxury segment.",
           detail: {
@@ -404,6 +407,7 @@ export const mobilitySector: SectorPage = {
           role: "Italian heritage motorcycles, Recently partnered",
           image: "/brands/benelli.png",
           logo: "/brands/benelli_logo.png",
+          website: "https://www.benelli.com/np-en",
           description:
             "One of the world's oldest motorcycle makers, founded in Pesaro, Italy, in 1911, now part of VOITH's two-wheeler portfolio.",
           detail: {
@@ -478,6 +482,7 @@ export const mobilitySector: SectorPage = {
           role: "Electric motorcycles, India",
           image: "/brands/ultraviolette_hero.jpg",
           logo: "/brands/ultraviolette_logo.png",
+          website: "https://www.ultraviolette.com/np",
           description:
             "High-performance electric motorcycles from India, the flagship F77, launched through the UV Space Pod in Naxal.",
           detail: {
@@ -571,6 +576,7 @@ export const mobilitySector: SectorPage = {
           role: "Electric scooters, India",
           image: "/brands/ather_energy_hero.webp",
           logo: "/brands/ather_energy_logo.png",
+          website: "https://www.atherenergy.com.np",
           description:
             "Nepal's leading electric scooter brand, connected, performance-oriented EVs backed by the Ather Grid charging network.",
           detail: {

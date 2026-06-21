@@ -20,7 +20,7 @@ export const family: FamilyMember[] = [
   {
     initials: "SV",
     name: "Suraj Vaidya",
-    role: "Chairman",
+    role: "President",
     bio: "Promoter of economic growth. Former President of SAARC Chamber of Commerce & Industry and FNCCI. Advisor to the Prime Minister's Economic Council. Recipient of Jana Sewa Shree, one of Nepal's highest civilian honours. Honorary Consul General of the Philippines.",
   },
   {
@@ -66,7 +66,7 @@ export const boardOfDirectors: PersonCard[] = [
   {
     initials: "SV",
     name: "Suraj Vaidya",
-    role: "Chairman & Group CEO",
+    role: "President",
     image: "/SurajSir.JPG",
     bio: "Promoter of economic growth. Former President of SAARC Chamber of Commerce & Industry and FNCCI. Advisor to the Prime Minister's Economic Council. Recipient of Jana Sewa Shree, one of Nepal's highest civilian honours. Honorary Consul General of the Philippines. Leads VOITH's group strategy across mobility, construction, hospitality and diversified services.",
   },
@@ -74,7 +74,7 @@ export const boardOfDirectors: PersonCard[] = [
     initials: "RSV",
     name: "Ritu Singh Vaidya",
     role: "Managing Director",
-    image: "/RituMam.JPG",
+    image: "/IMG1.png",
     bio: "Miss India 1991 and First runner-up Miss World. President of NAIMA, the Nepal Automotive Importers and Manufacturers Association. The only woman shark on Shark Tank Nepal. Past President of Young Presidents' Organisation (YPO). Drives operational excellence, brand and culture across VOITH's portfolio.",
   },
   {
