@@ -26,6 +26,16 @@ export const employeeCompanyOrder = [
 
 export type EmployeeCompany = (typeof employeeCompanyOrder)[number];
 
+/**
+ * Departments hidden from the People directory (e.g. residence/household staff
+ * that shouldn't surface in the public team listing).
+ */
+export function isExcludedDepartment(department: string): boolean {
+  const d = department.trim().toLowerCase();
+  // Only the President House / Jasutara Niwas residences — not President Office.
+  return d.includes("jasutara") || (d.includes("president") && d.includes("house"));
+}
+
 /** Map API department names to a VOITH operating company. */
 export function resolveEmployeeCompany(department: string): EmployeeCompany {
   const d = department.trim().toLowerCase();
@@ -80,7 +90,6 @@ export function resolveEmployeeCompany(department: string): EmployeeCompany {
     d.startsWith("adm-") ||
     d.includes("admin") ||
     d.includes("web development") ||
-    d.includes("jasutara") ||
     d.includes("president") ||
     d.includes("board of director") ||
     d.includes("lukla outdoor")

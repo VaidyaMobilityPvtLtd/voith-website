@@ -21,6 +21,7 @@
 
 import https from "node:https";
 import {
+  isExcludedDepartment,
   resolveEmployeeCompany,
   type Employee,
 } from "@/lib/employee-shared";
@@ -111,7 +112,7 @@ export async function getEmployees(): Promise<Employee[]> {
           company: resolveEmployeeCompany(department),
         };
       })
-      .filter((e) => e.id && e.name);
+      .filter((e) => e.id && e.name && !isExcludedDepartment(e.department));
   } catch (err) {
     console.error("[employees] fetch failed:", err);
     return [];

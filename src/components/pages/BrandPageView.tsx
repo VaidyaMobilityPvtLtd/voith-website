@@ -114,9 +114,21 @@ export default function BrandPageView({ slug, companySlug, brandSlug }: Props) {
                   ) : null}
                 </dl>
               ) : null}
-              <Link href={companyBase} className="sec-cta sec-cta--solid">
-                About {company.name} →
-              </Link>
+              <div className="brand-context-actions">
+                <Link href={companyBase} className="sec-cta sec-cta--solid">
+                  About {company.name} →
+                </Link>
+                {brand.website ? (
+                  <a
+                    href={brand.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sec-cta"
+                  >
+                    Visit website ↗
+                  </a>
+                ) : null}
+              </div>
             </div>
           </Reveal>
         </section>

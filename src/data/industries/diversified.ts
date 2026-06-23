@@ -176,6 +176,7 @@ export const diversifiedSector: SectorPage = {
       name: "Honorary Consulate General of the Philippines",
       image: "/brands/philippines-consulate.png",
       role: "Diplomatic & trade services · Nepal",
+      website: "https://voith.com.np/philcongen/index.php",
       description:
         "VOITH's diplomatic arm in Nepal, fostering trade, cultural exchange, and consular support between the Philippines and Nepal through the Honorary Consulate General.",
       detail: {

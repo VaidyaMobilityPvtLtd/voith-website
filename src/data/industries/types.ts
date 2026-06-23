@@ -74,6 +74,8 @@ export type ChildBrand = {
    * this logo. Falls back to `image`, then the branded placeholder.
    */
   logo?: string;
+  /** Optional official external website, surfaced as a "Visit website" button. */
+  website?: string;
   /** Optional expanded content shown on the brand page. */
   detail?: BrandDetail;
   /** Marks an announced-but-not-yet-live brand. */
@@ -101,6 +103,8 @@ export type SectorBrand = {
    * this logo. Falls back to `image`, then the branded placeholder.
    */
   logo?: string;
+  /** Optional official external website, surfaced as a "Visit website" button. */
+  website?: string;
   /** Optional expanded content shown on the company page. */
   detail?: BrandDetail;
   /** Child brands distributed/operated by this company. */
