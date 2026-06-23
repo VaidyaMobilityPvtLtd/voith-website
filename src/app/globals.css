@@ -1456,6 +1456,7 @@ main {
   position: relative;
   background: #fffbf5;
   border-top: 1px solid var(--border);
+  scroll-margin-top: 88px;
 }
 
 .imp-tl-head {

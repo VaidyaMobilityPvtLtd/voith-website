@@ -137,7 +137,7 @@ export default function InteractiveTimeline() {
             <span className="arc-tl-title-accent"> so far</span>
           </h2>
           <p className="arc-tl-intro">
-            {items.length} milestones from <strong>1960</strong> to <strong>2025</strong>, scroll up
+            {items.length} milestones from <strong>1960</strong> to <strong>2025</strong> — scroll up
             and down to scrub the dial through six decades.
           </p>
         </header>
