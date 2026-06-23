@@ -1445,25 +1445,22 @@ main {
   .arc-tl-wheel { height: 480px; }
 }
 
-/* ── IMPACT TIMELINE (horizontal, scroll/drag) ── */
+/* ── IMPACT TIMELINE (horizontal, scroll-pinned) ── */
 .imp-tl {
   --imp-col: clamp(172px, 22vw, 230px);
   --imp-card: calc(var(--imp-col) * 1.7);
-  --imp-h: clamp(620px, 74vh, 668px);
   --imp-media-h: 104px;
   --imp-gap-above: 32px;
   --imp-gap-below: 50px;
+  --imp-nav-h: 72px;
   position: relative;
   background: #fffbf5;
   border-top: 1px solid var(--border);
-  padding: clamp(56px, 7vw, 104px) 0;
-  overflow: hidden;
 }
-.imp-tl-shell { width: 100%; }
 
 .imp-tl-head {
   max-width: 760px;
-  padding: 0 var(--gutter);
+  padding: clamp(56px, 7vw, 104px) var(--gutter) clamp(28px, 4vw, 48px);
 }
 .imp-tl-kicker {
   font-size: 10px;
@@ -1503,19 +1500,30 @@ main {
   max-width: 560px;
 }
 
+.imp-tl-pin {
+  position: sticky;
+  top: var(--imp-nav-h);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - var(--imp-nav-h));
+  background: #fffbf5;
+}
 .imp-tl-frame {
   position: relative;
-  margin-top: clamp(28px, 4vw, 48px);
+  flex: 1;
+  min-height: 0;
+  margin-top: 0;
 }
 .imp-tl-viewport {
   position: relative;
-  height: var(--imp-h);
-  overflow-x: auto;
+  height: 100%;
+  overflow-x: hidden;
   overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
   cursor: grab;
-  touch-action: pan-x;
+  touch-action: pan-y;
   outline: none;
 }
 .imp-tl-viewport::-webkit-scrollbar { display: none; }
@@ -1752,8 +1760,9 @@ main {
   display: flex;
   align-items: center;
   gap: 20px;
+  flex-shrink: 0;
   max-width: 760px;
-  padding: clamp(22px, 3vw, 34px) var(--gutter) 0;
+  padding: clamp(14px, 2vw, 22px) var(--gutter) clamp(18px, 2.5vw, 28px);
 }
 .imp-tl-counter {
   flex-shrink: 0;
@@ -1865,7 +1874,6 @@ main {
   .imp-tl {
     --imp-col: clamp(150px, 44vw, 190px);
     --imp-card: calc(var(--imp-col) * 1.62);
-    --imp-h: clamp(560px, 86vh, 620px);
     --imp-media-h: 92px;
     --imp-gap-below: 46px;
   }

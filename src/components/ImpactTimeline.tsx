@@ -3,15 +3,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { storyMilestones } from "@/data/content";
 
-/** Strip a trailing ":", "," or "." used for sentence flow in the source data. */
+const SCROLL_PER_STEP_VH = 14;
+
 const cleanTopic = (s: string) => s.replace(/[\s:.,]+$/, "");
 
 export default function ImpactTimeline() {
   const items = storyMilestones;
   const last = items.length - 1;
 
-  const viewportRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const headRef = useRef<HTMLElement | null>(null);
+  const viewportRef = useRef<HTMLDivElement | null>(null);
   const colRefs = useRef<Array<HTMLDivElement | null>>([]);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -22,98 +24,133 @@ export default function ImpactTimeline() {
   const [padX, setPadX] = useState(24);
   const [dragging, setDragging] = useState(false);
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [sectionHeight, setSectionHeight] = useState<string | undefined>(undefined);
 
-  // Width of the leading/trailing gutter so the first & last node can reach
-  // the viewport centre. Recomputed from real measurements on mount/resize.
+  const navHeight = () =>
+    document.getElementById("nav")?.getBoundingClientRect().height ?? 72;
+
+  const getMetrics = useCallback(() => {
+    const sec = sectionRef.current;
+    const head = headRef.current;
+    const vp = viewportRef.current;
+    const vh = window.innerHeight;
+    const headerH = head?.offsetHeight ?? 0;
+    const pinStart = sec
+      ? sec.getBoundingClientRect().top + window.scrollY + headerH
+      : 0;
+    const scrollable = Math.max(1, (last * SCROLL_PER_STEP_VH / 100) * vh);
+    const max = vp ? Math.max(0, vp.scrollWidth - vp.clientWidth) : 0;
+    return { pinStart, scrollable, max, headerH };
+  }, [last]);
+
   const measurePad = useCallback(() => {
     const vp = viewportRef.current;
     const col = colRefs.current[0];
     if (!vp || !col) return;
-    const pad = Math.max(24, (vp.clientWidth - col.offsetWidth) / 2);
-    setPadX(pad);
+    setPadX(Math.max(24, (vp.clientWidth - col.offsetWidth) / 2));
   }, []);
 
-  // Derive the centred (active) milestone and the scroll-edge flags.
-  const recompute = useCallback(() => {
+  const applyProgress = useCallback(
+    (progress: number) => {
+      const vp = viewportRef.current;
+      if (!vp) return;
+      const max = Math.max(0, vp.scrollWidth - vp.clientWidth);
+      const left = progress * max;
+      if (Math.abs(vp.scrollLeft - left) > 0.5) vp.scrollLeft = left;
+
+      const center = left + vp.clientWidth / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      colRefs.current.forEach((c, i) => {
+        if (!c) return;
+        const cc = c.offsetLeft + c.offsetWidth / 2;
+        const d = Math.abs(cc - center);
+        if (d < bestDist) {
+          bestDist = d;
+          best = i;
+        }
+      });
+      setActive(best);
+      setAtStart(left <= 1);
+      setAtEnd(left >= max - 1);
+    },
+    [],
+  );
+
+  const syncFromScroll = useCallback(() => {
     rafRef.current = null;
-    const vp = viewportRef.current;
-    if (!vp) return;
-    const center = vp.scrollLeft + vp.clientWidth / 2;
-    let best = 0;
-    let bestDist = Infinity;
-    colRefs.current.forEach((c, i) => {
-      if (!c) return;
-      const cc = c.offsetLeft + c.offsetWidth / 2;
-      const d = Math.abs(cc - center);
-      if (d < bestDist) {
-        bestDist = d;
-        best = i;
-      }
-    });
-    setActive(best);
-    const max = vp.scrollWidth - vp.clientWidth;
-    setAtStart(vp.scrollLeft <= 1);
-    setAtEnd(vp.scrollLeft >= max - 1);
-  }, []);
+    const { pinStart, scrollable } = getMetrics();
+    const progress = Math.max(0, Math.min(1, (window.scrollY - pinStart) / scrollable));
+    applyProgress(progress);
+  }, [applyProgress, getMetrics]);
+
+  const updateSectionHeight = useCallback(() => {
+    const head = headRef.current;
+    const headerH = head?.offsetHeight ?? 0;
+    const nav = navHeight();
+    setSectionHeight(
+      `calc(${headerH}px + (100dvh - ${nav}px) + ${last * SCROLL_PER_STEP_VH}vh)`,
+    );
+  }, [last]);
 
   useEffect(() => {
-    const vp = viewportRef.current;
-    if (!vp) return;
     const onScroll = () => {
       if (rafRef.current != null) return;
-      rafRef.current = requestAnimationFrame(recompute);
+      rafRef.current = requestAnimationFrame(syncFromScroll);
     };
     const onResize = () => {
       measurePad();
-      recompute();
+      updateSectionHeight();
+      syncFromScroll();
     };
-    vp.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
+
     measurePad();
-    recompute();
+    updateSectionHeight();
+    syncFromScroll();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
     return () => {
-      vp.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
     };
-  }, [measurePad, recompute]);
+  }, [measurePad, syncFromScroll, updateSectionHeight]);
 
-  // The leading gutter (padX) shifts every column; recompute the active index
-  // once React has painted the new padding, otherwise it reads stale offsets.
   useEffect(() => {
-    recompute();
-  }, [padX, recompute]);
+    syncFromScroll();
+  }, [padX, syncFromScroll]);
 
-  const scrollToIndex = useCallback(
+  const jumpTo = useCallback(
     (idx: number) => {
-      const vp = viewportRef.current;
-      const col = colRefs.current[Math.max(0, Math.min(last, idx))];
-      if (!vp || !col) return;
-      const target = col.offsetLeft + col.offsetWidth / 2 - vp.clientWidth / 2;
-      vp.scrollTo({ left: target, behavior: "smooth" });
+      const { pinStart, scrollable } = getMetrics();
+      if (last <= 0) return;
+      const clamped = Math.max(0, Math.min(last, idx));
+      window.scrollTo({
+        top: pinStart + (clamped / last) * scrollable,
+        behavior: "smooth",
+      });
     },
-    [last],
+    [getMetrics, last],
   );
 
-  // ── Drag to scroll ────────────────────────────────────────────────
-  const drag = useRef({ startX: 0, startLeft: 0 });
+  const drag = useRef({ startX: 0, startScrollY: 0 });
   const onPointerDown = (e: React.PointerEvent) => {
-    const vp = viewportRef.current;
-    if (!vp) return;
-    // Touch / pen scroll natively (touch-action: pan-x); drag is mouse only.
     if (e.pointerType !== "mouse") return;
-    // Let buttons / links handle their own clicks.
     if ((e.target as HTMLElement).closest("button, a")) return;
-    drag.current = { startX: e.clientX, startLeft: vp.scrollLeft };
+    drag.current = { startX: e.clientX, startScrollY: window.scrollY };
     setDragging(true);
   };
 
   useEffect(() => {
     if (!dragging) return;
     const onMove = (e: PointerEvent) => {
-      const vp = viewportRef.current;
-      if (!vp) return;
-      vp.scrollLeft = drag.current.startLeft - (e.clientX - drag.current.startX);
+      const { scrollable, max } = getMetrics();
+      if (max <= 0 || scrollable <= 0) return;
+      const dx = e.clientX - drag.current.startX;
+      window.scrollTo({
+        top: drag.current.startScrollY + (-dx / max) * scrollable,
+      });
     };
     const onUp = () => setDragging(false);
     window.addEventListener("pointermove", onMove);
@@ -124,56 +161,30 @@ export default function ImpactTimeline() {
       window.removeEventListener("pointerup", onUp);
       window.removeEventListener("pointercancel", onUp);
     };
-  }, [dragging]);
-
-  // ── Vertical wheel → horizontal scroll (only while timeline is in view) ──
-  useEffect(() => {
-    const vp = viewportRef.current;
-    const section = sectionRef.current;
-    if (!vp || !section) return;
-
-    const isEngaged = () => {
-      const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const visible = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
-      // Ignore wheel until the timeline has scrolled into view (not just peeking at the bottom).
-      if (rect.top > vh * 0.42) return false;
-      if (visible < Math.min(rect.height * 0.38, vh * 0.34)) return false;
-      return true;
-    };
-
-    const onWheel = (e: WheelEvent) => {
-      if (!isEngaged()) return;
-      // Trackpads with horizontal delta scroll natively.
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-      if (e.deltaY === 0) return;
-      const max = vp.scrollWidth - vp.clientWidth;
-      const room = e.deltaY > 0 ? vp.scrollLeft < max - 1 : vp.scrollLeft > 1;
-      if (!room) return; // at an edge → let the page scroll
-      e.preventDefault();
-      vp.scrollLeft += e.deltaY * 0.85;
-    };
-    vp.addEventListener("wheel", onWheel, { passive: false });
-    return () => vp.removeEventListener("wheel", onWheel);
-  }, []);
+  }, [dragging, getMetrics]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
+    const pin = sectionRef.current?.querySelector(".imp-tl-pin");
+    if (!pin) return;
+    const r = pin.getBoundingClientRect();
+    const nav = navHeight();
+    if (r.top > nav + 8 || r.bottom < window.innerHeight - 8) return;
+
     if (e.key === "ArrowLeft") {
       e.preventDefault();
-      scrollToIndex(active - 1);
+      jumpTo(active - 1);
     } else if (e.key === "ArrowRight") {
       e.preventDefault();
-      scrollToIndex(active + 1);
+      jumpTo(active + 1);
     } else if (e.key === "Home") {
       e.preventDefault();
-      scrollToIndex(0);
+      jumpTo(0);
     } else if (e.key === "End") {
       e.preventDefault();
-      scrollToIndex(last);
+      jumpTo(last);
     }
   };
 
-  // ── "Read more" modal ─────────────────────────────────────────────
   useEffect(() => {
     const d = dialogRef.current;
     if (!d) return;
@@ -192,19 +203,24 @@ export default function ImpactTimeline() {
   const activeItem = openIdx != null ? items[openIdx] : null;
 
   return (
-    <section ref={sectionRef} className="imp-tl" aria-labelledby="imp-tl-heading">
-      <div className="imp-tl-shell">
-        <header className="imp-tl-head">
-          <p className="imp-tl-kicker">Six decades of impact</p>
-          <h2 id="imp-tl-heading" className="imp-tl-title">
-            Moments that <span className="imp-tl-title-accent">shaped Nepal</span>
-          </h2>
-          <p className="imp-tl-intro">
-            From the first Toyota on Kathmandu&rsquo;s roads to the journey to Kailash &mdash;
-            scroll, drag or use the arrows to travel through the milestones that built our story.
-          </p>
-        </header>
+    <section
+      ref={sectionRef}
+      className="imp-tl"
+      aria-labelledby="imp-tl-heading"
+      style={sectionHeight ? { height: sectionHeight } : undefined}
+    >
+      <header ref={headRef} className="imp-tl-head">
+        <p className="imp-tl-kicker">Six decades of impact</p>
+        <h2 id="imp-tl-heading" className="imp-tl-title">
+          Moments that <span className="imp-tl-title-accent">shaped Nepal</span>
+        </h2>
+        <p className="imp-tl-intro">
+          From the first Toyota on Kathmandu&rsquo;s roads to the journey to Kailash &mdash;
+          scroll, drag or use the arrows to travel through the milestones that built our story.
+        </p>
+      </header>
 
+      <div className="imp-tl-pin">
         <div className="imp-tl-frame">
           <div
             ref={viewportRef}
@@ -262,7 +278,7 @@ export default function ImpactTimeline() {
                       className="imp-tl-node"
                       aria-label={`Jump to ${m.year}: ${cleanTopic(m.topic)}`}
                       aria-current={isActive ? "true" : undefined}
-                      onClick={() => scrollToIndex(i)}
+                      onClick={() => jumpTo(i)}
                     />
                     <span className="imp-tl-year">{m.year}</span>
                   </div>
@@ -275,7 +291,7 @@ export default function ImpactTimeline() {
             <button
               type="button"
               className="imp-tl-arrow"
-              onClick={() => scrollToIndex(active - 1)}
+              onClick={() => jumpTo(active - 1)}
               disabled={atStart}
               aria-label="Previous milestone"
             >
@@ -285,7 +301,7 @@ export default function ImpactTimeline() {
             <button
               type="button"
               className="imp-tl-arrow"
-              onClick={() => scrollToIndex(active + 1)}
+              onClick={() => jumpTo(active + 1)}
               disabled={atEnd}
               aria-label="Next milestone"
             >
@@ -305,7 +321,7 @@ export default function ImpactTimeline() {
               style={{ width: `${last === 0 ? 100 : (active / last) * 100}%` }}
             />
           </div>
-          <p className="imp-tl-hint">Drag &middot; scroll &middot; &lsaquo;&nbsp;&rsaquo;</p>
+          <p className="imp-tl-hint">Scroll &middot; drag &middot; &lsaquo;&nbsp;&rsaquo;</p>
         </div>
       </div>
 
