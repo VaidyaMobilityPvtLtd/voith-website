@@ -8,6 +8,7 @@
  *   industries/        sectorPages split per sector (mobility, construction,
  *                      hospitality, diversified) + types + helpers
  *   impact.ts          milestones, story timeline, footprint map
+ *   footprint-map.ts   Nepal map (/nepal.svg) brands + dot markers
  *   people.ts          family, leadership, teams
  *   future.ts          future page
  *   contact.ts         contact channels, offices, topics
@@ -19,6 +20,7 @@ export * from "./home";
 export * from "./industries/types";
 export * from "./industries";
 export * from "./impact";
+export * from "./footprint-map";
 export * from "./people";
 export * from "./future";
 export * from "./contact";

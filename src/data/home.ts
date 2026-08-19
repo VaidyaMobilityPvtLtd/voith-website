@@ -61,16 +61,16 @@ export const businesses: Business[] = [
     letter: "M",
     color: "#C41A1A",
     category: "Mobility",
-    sub: "UTS · Trayana · Vaidya Energy · UHEEM",
+    sub: "UTS · Trayana · Vaidya Energy",
     description:
-      "From Toyota to Ather EV, from Italian motorcycles to construction equipment, Nepal's most complete mobility portfolio, serving every segment of the market.",
+      "From Toyota to Ather EV to Italian motorcycles, Nepal's most complete mobility portfolio, serving every segment of the market.",
     image: "/timeline/homepage.jpg",
   },
   {
     letter: "C",
     color: "#1D6DB5",
     category: "Construction",
-    sub: "Huaxin Narayani · TCLI · TMCC",
+    sub: "Huaxin Narayani · TCLI · TMCC · UHEEM",
     description:
       "From limestone quarries in Nuwakot to Nepal's largest cement plant (4,000 tons per day), a USD 250M joint venture with world leader Huaxin Cement.",
     image: "/sectors/construction.jpg",

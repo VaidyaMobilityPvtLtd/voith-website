@@ -1,5 +1,5 @@
 import Reveal from "./Reveal";
-import WorldMap from "./WorldMap";
+import NepalFootprintMap from "./NepalFootprintMap";
 import { globalFeatures } from "@/data/content";
 
 export default function Global() {
@@ -7,19 +7,19 @@ export default function Global() {
     <section id="global">
       <Reveal className="gl-top">
         <div>
-          <div className="gl-eyebrow">Global Partnerships</div>
+          <div className="gl-eyebrow">Nationwide Presence</div>
           <h2 className="gl-h2">
-            Built on International
+            High-Quality Products,
             <br />
-            Partnerships.
+            Trusted Across
             <br />
-            <span>4 Continents.</span>
+            <span>All of Nepal.</span>
           </h2>
         </div>
         <p className="gl-desc">
-          VOITH&apos;s supply chain, technology, and brand agreements span Japan, China, India,
-          Italy, Germany, South Korea, and beyond, bringing world-class products and expertise
-          directly to Nepal.
+          From Toyota and Ather to XCMG and Huaxin Cement, VOITH brings world-class,
+          high-quality products to customers in every corner of Nepal, backed by sales,
+          service, and spare-parts networks spanning all seven provinces.
         </p>
       </Reveal>
       <hr className="gl-rule" />
@@ -32,17 +32,7 @@ export default function Global() {
           </div>
         ))}
       </Reveal>
-      <WorldMap />
-      <div className="gl-legend">
-        <div className="gl-legend-item">
-          <span className="gl-dot" style={{ background: "var(--red)" }} />
-          Partner Countries
-        </div>
-        <div className="gl-legend-item">
-          <span className="gl-dot" style={{ background: "rgba(255,255,255,.25)" }} />
-          Rest of World
-        </div>
-      </div>
+      <NepalFootprintMap />
     </section>
   );
 }

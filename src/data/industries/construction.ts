@@ -139,6 +139,123 @@ export const constructionSector: SectorPage = {
         ],
       },
     },
+    {
+      slug: "uheem",
+      mark: "UHEEM",
+      name: "Construction & Heavy Equipment and Earth Movers",
+      role: "XCMG · Sole distributor · Est. 2018",
+      image: "/brands/uheem.png",
+      website: "https://uheem.com.np",
+      description:
+        "VOITH's heavy-equipment company, Construction & Heavy Equipment and Earth Movers Pvt. Ltd. (UHEEM), and the sole authorised distributor of XCMG construction machinery in Nepal, supporting infrastructure projects nationwide with sales, service, and genuine parts.",
+      detail: {
+        established: "Established · April 2018",
+        origin: "Sole distributor, XCMG, China",
+        intro: [
+          "Construction & Heavy Equipment and Earth Movers Pvt. Ltd. (UHEEM) is VOITH's specialised heavy-equipment and construction-machinery company. Established in April 2018, it strengthens the group's presence in Nepal's heavy-equipment and infrastructure-development sector.",
+          "UHEEM is the sole authorised distributor of XCMG construction machinery in Nepal, focusing on distribution, sales, and after-sales support, backed by reliable spare-parts availability and professional service across the country.",
+          "From excavators and wheel loaders to motor graders, backhoe loaders, pneumatic rollers, and horizontal directional drills, UHEEM brings world-class Chinese engineering to Nepal's highways, hydropower, housing, and mining projects.",
+          "Guided by VOITH's long-term commitment to customer-first service, UHEEM builds enduring business relationships based on mutual goals, delivering quality, affordable heavy equipment tailored to the needs of contractors and developers across Nepal.",
+        ],
+        stats: [
+          { value: "2018", label: "Established" },
+          { value: "XCMG", label: "Exclusive brand" },
+          { value: "2", label: "Offices · KTM & Laxminiya" },
+        ],
+        highlights: [
+          {
+            title: "Exclusive XCMG partnership",
+            description:
+              "UHEEM is Nepal's sole authorised distributor for XCMG, one of the world's leading construction-equipment manufacturers, covering earth-moving, lifting, road-building, and concrete machinery.",
+          },
+          {
+            title: "Nationwide after-sales support",
+            description:
+              "Professional service teams, genuine spare parts, and responsive customer care ensure equipment uptime for contractors working on Nepal's most demanding infrastructure projects.",
+          },
+          {
+            title: "Part of the VOITH group",
+            description:
+              "UHEEM sits alongside United Traders Syndicate, Vaidya Energy, Trayana, and Pitstop under Vaidya's Organization of Industries & Trading Houses, Nepal's leading business group.",
+          },
+        ],
+        locationsLabel: "Offices",
+        locations: [
+          {
+            name: "UHEEM, Kathmandu",
+            kind: "Head Office",
+            address: "Anandanagar, Dhumbarahi, Kathmandu 44600, Nepal",
+            phone: "+977 985-1217690 · 01-4008813",
+            email: "customercare@uheem.com.np",
+          },
+          {
+            name: "UHEEM, Laxminiya",
+            kind: "Branch",
+            address: "Laxminiya Gaunpalika-07, on the Janakpur highway",
+            phone: "9851114569 · 01-4542901",
+            email: "info@uheem.com.np",
+          },
+        ],
+      },
+      children: [
+        {
+          slug: "xcmg",
+          mark: "XC",
+          name: "XCMG",
+          role: "Construction & industrial machinery, China",
+          image: "/brands/xcmg.png",
+          logo: "/brands/xcmg_logo.png",
+          description:
+            "One of the world's leading construction-equipment manufacturers, distributed exclusively in Nepal by UHEEM.",
+          detail: {
+            origin: "XCMG, China",
+            intro: [
+              "XCMG is one of the world's leading manufacturers of construction equipment and industrial machinery. Founded in China, it is globally recognised for advanced engineering across earth-moving, lifting, road-building, and concrete machinery.",
+              "In Nepal, XCMG is distributed exclusively by UHEEM, bringing world-class construction machinery and dependable after-sales support to the country's infrastructure projects, from urban road networks to remote hydropower sites.",
+              "XCMG's product range spans excavators, wheel loaders, motor graders, backhoe loaders, pneumatic rollers, and horizontal directional drills, equipment engineered for durability, performance, and total cost of ownership in demanding conditions.",
+            ],
+            stats: [
+              { value: "6+", label: "Equipment categories" },
+              { value: "Global", label: "Top-3 manufacturer" },
+              { value: "UHEEM", label: "Nepal distributor" },
+            ],
+            highlights: [
+              {
+                title: "Built for Nepal's terrain",
+                description:
+                  "XCMG machinery is deployed across highways, housing, hydropower, and mining, engineered to perform in Himalayan conditions and on Nepal's challenging construction sites.",
+              },
+              {
+                title: "Full lifecycle support",
+                description:
+                  "UHEEM provides sales, operator guidance, maintenance, and genuine spare parts, keeping XCMG fleets productive throughout the project lifecycle.",
+              },
+            ],
+            lineupLabel: "XCMG equipment available in Nepal",
+            lineup: [
+              {
+                category: "Earth moving",
+                items: ["Excavator", "Wheel Loader", "Backhoe Loader"],
+              },
+              {
+                category: "Road & compaction",
+                items: ["Motor Grader", "Pneumatic Roller"],
+              },
+              {
+                category: "Specialised machinery",
+                items: [
+                  "Horizontal Directional Drill",
+                  "Hoisting Machinery",
+                  "Underground Mining Machinery",
+                  "Drilling Machinery",
+                  "Concrete Machinery",
+                ],
+              },
+            ],
+          },
+        },
+      ],
+    },
   ],
   highlights: [
     {

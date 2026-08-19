@@ -2667,12 +2667,12 @@ main {
 .d4 { transition-delay: 0.32s; }
 
 /* ── GLOBAL MAP ── */
-#global { background: var(--dark); padding: 72px var(--gutter) 0; overflow: hidden; }
+#global { background: var(--dark); padding: 56px var(--gutter) 0; overflow: hidden; }
 .gl-top {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  margin-bottom: 36px;
+  gap: 48px;
+  margin-bottom: 24px;
   align-items: center;
 }
 .gl-eyebrow {
@@ -2703,8 +2703,8 @@ main {
 }
 .gl-h2 span { color: var(--red); }
 .gl-desc { font-size: 14.5px; color: rgba(255, 255, 255, 0.38); line-height: 1.85; }
-.gl-rule { border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 0 0 36px; }
-.gl-feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-bottom: 56px; }
+.gl-rule { border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 0 0 24px; }
+.gl-feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 32px; }
 .gl-feat {
   padding-left: 16px;
   border-left: 2px solid rgba(196, 26, 26, 0.45);
@@ -2767,6 +2767,217 @@ main {
   color: rgba(255, 255, 255, 0.3);
 }
 .gl-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+/* Nepal footprint map + right-hand legend (replaces the world map) */
+.nm-wrap {
+  position: relative;
+  padding-bottom: 28px;
+}
+.nm-layout {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  /* Cap + center the whole row so the map fills its side instead of floating
+     small in a full-bleed section; the map (flex:1) then takes all the space
+     left of the fixed legend. */
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.nm-frame {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.nm-map-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* nepal.svg is light linework + dark country fill on a transparent
+     background, so it sits directly on the dark section. */
+}
+
+/* Interactive dot overlay — positions come from src/data/footprint-map.ts,
+   expressed as % of the image so they track any rendered size. */
+.nm-dots {
+  position: absolute;
+  inset: 0;
+}
+.nm-dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1;
+  min-width: 9px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  transition: filter 0.18s ease, box-shadow 0.18s ease;
+}
+/* Only detail-carrying dots are focusable buttons; the rest are decorative. */
+button.nm-dot {
+  cursor: pointer;
+}
+.nm-dot:hover,
+.nm-dot:focus-visible {
+  z-index: 3;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+  outline: none;
+}
+/* Opaque + darkened so the dimmed overlay recedes into the dark map while
+   still hiding the colored marker baked into the SVG underneath it (a
+   brighten-based dim would leave white dots looking untouched). */
+.nm-dot--dim {
+  filter: grayscale(1) brightness(0.4);
+}
+.nm-dot-tip {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 11px;
+  border-radius: 8px;
+  background: #101418;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.35;
+  white-space: nowrap;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 4;
+}
+.nm-dot-tip strong {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.nm-dot-tip span {
+  color: rgba(255, 255, 255, 0.6);
+}
+.nm-dot:hover .nm-dot-tip,
+.nm-dot:focus-visible .nm-dot-tip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+/* Dots near the right edge: right-align the tip so it can't push past the
+   viewport on small screens. */
+.nm-dot--edge-r .nm-dot-tip {
+  left: auto;
+  right: -6px;
+  transform: translate(0, 4px);
+}
+.nm-dot--edge-r:hover .nm-dot-tip,
+.nm-dot--edge-r:focus-visible .nm-dot-tip {
+  transform: translate(0, 0);
+}
+.nm-legend {
+  flex: 0 0 232px;
+  align-self: center;
+}
+.nm-legend-title {
+  font-family: var(--fd);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 18px;
+}
+.nm-legend-group {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin: 18px 0 11px;
+}
+.nm-legend-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.nm-legend-item {
+  display: flex;
+}
+/* Legend entries are buttons: hover previews a brand's dots, click pins it. */
+.nm-legend-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  width: calc(100% + 16px);
+  margin: -4px -8px;
+  padding: 4px 8px;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  transition: background 0.15s ease;
+}
+.nm-legend-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.nm-legend-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.06);
+  outline: 2px solid rgba(255, 255, 255, 0.75);
+  outline-offset: 1px;
+}
+.nm-legend-btn--pinned {
+  background: rgba(255, 255, 255, 0.1);
+}
+.nm-legend-count {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+.nm-legend-dot {
+  width: 11px;
+  height: 11px;
+  margin-top: 3px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+}
+.nm-legend-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.nm-legend-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.85);
+}
+.nm-legend-note {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.4;
+}
+.nm-caption {
+  text-align: center;
+  margin: 14px 0 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.32);
+}
+@media (max-width: 820px) {
+  .nm-layout { flex-direction: column; align-items: stretch; gap: 20px; }
+  .nm-frame { margin: 0 auto; max-width: 700px; }
+  .nm-legend { flex-basis: auto; max-width: 320px; margin: 0 auto; }
+}
 
 /* ── INNER PAGES (distinct UI from homepage) ── */
 .pg { min-height: 60vh; }
@@ -2949,7 +3160,7 @@ main {
   inset: 0;
   background: linear-gradient(
     155deg,
-    color-mix(in srgb, var(--sector-color) 30%, transparent) 0%,
+    rgba(8, 8, 14, 0.12) 0%,
     rgba(8, 8, 14, 0.2) 45%,
     rgba(8, 8, 14, 0.72) 100%
   );
@@ -5053,7 +5264,7 @@ main {
 .sec-brand-row--flip .sec-brand-copy   { order: 1; }
 .sec-brand-figure {
   position: relative;
-  background-color: var(--sector-color);
+  background-color: var(--border);
   background-size: cover;
   background-position: center;
   display: flex;
@@ -5065,16 +5276,11 @@ main {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    150deg,
-    color-mix(in srgb, var(--sector-color) 78%, transparent) 0%,
-    color-mix(in srgb, var(--sector-color) 42%, transparent) 50%,
-    rgba(8, 8, 14, 0.45) 100%
-  );
+  background: none;
   pointer-events: none;
   transition: opacity 0.4s ease;
 }
-.sec-brand-row:hover .sec-brand-figure::after { opacity: 0.82; }
+.sec-brand-row:hover .sec-brand-figure::after { opacity: 1; }
 .sec-brand-figure .sec-brand-blob {
   position: relative;
   z-index: 1;
@@ -5902,7 +6108,8 @@ main {
   padding: 18px 20px 20px;
   border-top: 3px solid var(--sector-color);
 }
-.brand-child-body h3 {
+.brand-child-body h3,
+.brand-child-body h4 {
   font-family: var(--fd);
   font-size: 18px;
   font-weight: 600;
@@ -5931,16 +6138,93 @@ main {
 .brand-child-card:hover .brand-child-cta { color: var(--sector-color); }
 .brand-child-card:hover .brand-child-cta-arrow { transform: translateX(5px); }
 
+/* ── Tab-filtered child brands (unique layout, e.g. UTS · Two / Four Wheelers) ── */
+.brand-tabs {
+  background: transparent;
+}
+.brand-tabs-head {
+  margin-bottom: 20px;
+}
+.brand-tabs-head .brand-section-title {
+  margin: 0;
+}
+.brand-tabs-head .brand-section-title::before {
+  display: none;
+}
+.brand-tabs-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 22px;
+}
+.brand-tab {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 2px 14px;
+  margin-bottom: -1px;
+  font-family: var(--fb);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.brand-tab:hover {
+  color: var(--ink);
+}
+.brand-tab.is-active {
+  color: var(--sector-color);
+  border-bottom-color: var(--sector-color);
+}
+.brand-tabs-meta {
+  margin-bottom: 22px;
+}
+.brand-tabs-cat {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sector-color);
+  margin: 0 0 5px;
+}
+.brand-tabs-shown {
+  font-family: var(--fd);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+.brand-tabs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 296px));
+  gap: 18px;
+  animation: brandTabsFade 0.35s ease;
+}
+@keyframes brandTabsFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-tabs-grid { animation: none; }
+}
+@media (max-width: 640px) {
+  .brand-tabs-bar { gap: 20px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .brand-tabs-bar::-webkit-scrollbar { display: none; }
+  .brand-tab { white-space: nowrap; }
+  .brand-tabs-grid { grid-template-columns: 1fr; }
+}
+
 /* Reusable card media slot + branded placeholder */
 .card-media {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background:
-    radial-gradient(120% 120% at 0% 0%,
-      color-mix(in srgb, var(--media-color) 32%, transparent), transparent 62%),
-    linear-gradient(150deg,
-      color-mix(in srgb, var(--media-color) 18%, #11111a) 0%, #11111a 100%);
+  background: #11111a;
 }
 .card-media img {
   position: absolute;

@@ -7,6 +7,7 @@ import {
 } from "@/data/content";
 import BrandDetailSections from "./BrandDetailSections";
 import BrandChildrenCarousel from "../BrandChildrenCarousel";
+import BrandChildrenTabs from "../BrandChildrenTabs";
 import CardMedia from "../CardMedia";
 import Reveal from "../Reveal";
 
@@ -187,17 +188,32 @@ export default function CompanyPageView({ slug, companySlug }: Props) {
             ) : null}
 
             {children.length > 0 ? (
-              <BrandChildrenCarousel
-                title={
-                  children.length === 1
-                    ? "Brand under " + company.name
-                    : "Brands under " + company.name
-                }
-                children={children}
-                companyBase={companyBase}
-                color={data.color}
-                fallbackImage={fallbackImage}
-              />
+              company.childGroups && company.childGroups.length > 0 ? (
+                <BrandChildrenTabs
+                  title={
+                    children.length === 1
+                      ? "Brand under " + company.name
+                      : "Brands under " + company.name
+                  }
+                  children={children}
+                  groupOrder={company.childGroups}
+                  companyBase={companyBase}
+                  color={data.color}
+                  fallbackImage={fallbackImage}
+                />
+              ) : (
+                <BrandChildrenCarousel
+                  title={
+                    children.length === 1
+                      ? "Brand under " + company.name
+                      : "Brands under " + company.name
+                  }
+                  children={children}
+                  companyBase={companyBase}
+                  color={data.color}
+                  fallbackImage={fallbackImage}
+                />
+              )
             ) : null}
 
             {detail ? (

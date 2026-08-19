@@ -32,12 +32,12 @@ export const industryDropdown: IndustryDropdownItem[] = [
   {
     label: "Mobility",
     slug: "mobility",
-    tagline: "UTS · Trayana · Vaidya Energy · UHEEM",
+    tagline: "UTS · Trayana · Vaidya Energy",
   },
   {
     label: "Construction",
     slug: "construction",
-    tagline: "Huaxin Narayani · Tadi",
+    tagline: "Huaxin Narayani · Tadi · UHEEM",
   },
   {
     label: "Hospitality",

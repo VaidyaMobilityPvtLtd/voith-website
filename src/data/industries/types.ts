@@ -66,6 +66,13 @@ export type ChildBrand = {
   name: string;
   role: string;
   description: string;
+  /**
+   * Optional grouping label used by companies that categorise their child
+   * brands, e.g. UTS → "Two Wheelers" / "Four Wheelers". Must match one of the
+   * parent company's `childGroups` entries. Ignored unless the company sets
+   * `childGroups`.
+   */
+  category?: string;
   /** Optional card/hero image. Falls back to a branded placeholder. */
   image?: string;
   /**
@@ -109,6 +116,14 @@ export type SectorBrand = {
   detail?: BrandDetail;
   /** Child brands distributed/operated by this company. */
   children?: ChildBrand[];
+  /**
+   * When set, the company page groups its child brands under these category
+   * headings (rendered in this order) instead of a single carousel. Categories
+   * match each child's `category`; children without a listed category fall into
+   * an "Other" group at the end. Currently used by United Traders Syndicate to
+   * split Two Wheelers / Four Wheelers; add labels here to introduce new groups.
+   */
+  childGroups?: string[];
   /** Marks an announced-but-not-yet-live company. */
   comingSoon?: boolean;
   /**
