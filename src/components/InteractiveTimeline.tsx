@@ -11,7 +11,9 @@ const CY = VBH / 2;      // vertically centered → 3 o'clock is at (CX-R, CY)
 const R = 470;
 const THETA_MAX = 1.05;  // ~60° above and below 3 o'clock
 const TICK_COUNT = 80;
-const SCROLL_PER_STEP_VH = 14; // viewport-heights of scroll consumed per milestone
+const SLOT_STRIDE = 3; // one year label, then two empty slots before the next
+const SCROLL_PER_STEP_VH = 14 * SLOT_STRIDE; // desktop: extra slot gaps slow the scrub
+const COMPACT_MQ = "(max-width: 768px)";
 
 type Point = { x: number; y: number };
 
@@ -26,10 +28,11 @@ export default function InteractiveTimeline() {
   const items = storyMilestones;
   const last = items.length - 1;
   const [progress, setProgress] = useState(0); // 0..1, derived from scroll position
+  const [compact, setCompact] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
   const rafRef = useRef<number | null>(null);
 
-  const step = (2 * THETA_MAX) / Math.max(1, last);
+  const step = ((2 * THETA_MAX) / Math.max(1, last)) * SLOT_STRIDE;
 
   // Continuous index tracks scroll smoothly; rounded `active` snaps to nearest for highlights.
   const continuous = progress * last;
@@ -54,8 +57,20 @@ export default function InteractiveTimeline() {
     return list;
   }, []);
 
+  useEffect(() => {
+    const mq = window.matchMedia(COMPACT_MQ);
+    const onChange = () => setCompact(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
   // Bind scroll position within the section to `progress` (0..1).
   useEffect(() => {
+    if (compact) {
+      setProgress(0);
+      return;
+    }
     const update = () => {
       rafRef.current = null;
       const sec = sectionRef.current;
@@ -81,7 +96,7 @@ export default function InteractiveTimeline() {
       window.removeEventListener("resize", onScroll);
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [compact]);
 
   const jumpTo = useCallback(
     (idx: number) => {
@@ -119,15 +134,17 @@ export default function InteractiveTimeline() {
   }, [active, jumpTo]);
 
   const activeItem = items[active];
-  const sectionHeight = `calc(100vh + ${last * SCROLL_PER_STEP_VH}vh)`;
+  const sectionHeight = compact
+    ? undefined
+    : `calc(100vh + ${last * SCROLL_PER_STEP_VH}vh)`;
 
   return (
     <section
       ref={sectionRef}
       id="history"
-      className="arc-tl"
+      className={`arc-tl${compact ? " is-compact" : ""}`}
       aria-labelledby="arc-tl-heading"
-      style={{ height: sectionHeight }}
+      style={sectionHeight ? { height: sectionHeight } : undefined}
     >
       <div className="arc-tl-pin">
         <header className="arc-tl-head">

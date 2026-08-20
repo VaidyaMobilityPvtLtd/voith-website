@@ -42,7 +42,7 @@ export const pageMeta = {
       "Mobility, construction, hospitality, and diversified services. VOITH's four sectors building Nepal's economy.",
     stat: "4",
     statLabel: "Core sectors",
-    heroImage: "/IndustriesHero.png",
+    heroImage: "/IndustriesHero.jpg",
   },
   impact: {
     eyebrow: "Community",
@@ -51,7 +51,7 @@ export const pageMeta = {
       "Partnerships, values, and milestones that reflect VOITH's commitment to Nepal's people and institutions.",
     stat: "60+",
     statLabel: "Years of contribution",
-    heroImage: "/impact-hero.png",
+    heroImage: "/impact-hero.jpg",
   },
   people: {
     eyebrow: "Leadership",
@@ -69,7 +69,7 @@ export const pageMeta = {
       "Hospitality, electric mobility, digital platforms, and local manufacturing. This is where VOITH is headed next.",
     stat: "6",
     statLabel: "Major initiatives",
-    heroImage: "/future-hero.png",
+    heroImage: "/future-hero.jpg",
   },
   contact: {
     eyebrow: "Get in touch",

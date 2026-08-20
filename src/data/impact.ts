@@ -135,28 +135,12 @@ export const storyMilestones: StoryMilestone[] = [
     imagePosition: "center 45%",
   },
   {
-    year: "1991",
-    chipLabel: "1991",
-    topic: "Mahindra MOU Signed",
-    body: "United Traders Syndicate signed an official memorandum of understanding with Mahindra, expanding VOITH’s mobility portfolio and strengthening its role in Nepal’s automotive market.",
-    image: "/timeline/1991-mahindra.png",
-    imagePosition: "center center",
-  },
-  {
     year: "2000",
     chipLabel: "2000",
     topic: "Dr. Shoichiro Toyoda’s Landmark Visit to Nepal",
     body: "United Traders Syndicate was honored to host Dr. Shoichiro Toyoda in Nepal, marking a historic visit that celebrated cultural exchange, leadership ties, and a shared commitment to sustainability.",
     image: "/timeline/2000-toyoda-visit.png",
     imagePosition: "center 30%",
-  },
-  {
-    year: "2003",
-    chipLabel: "2003",
-    topic: "Guranse Tea Factory Established",
-    body: "VOITH established the Guranse Tea factory, supporting Nepal’s tea industry and creating opportunities for rural communities in the eastern hills.",
-    image: "/timeline/2003-guranse-tea.png",
-    imagePosition: "center 40%",
   },
   {
     year: "2004",
@@ -181,14 +165,6 @@ export const storyMilestones: StoryMilestone[] = [
     body: "VOITH has played a pioneering role in strengthening Nepal’s sports ecosystem, driven by a deep belief in the power of sports to inspire excellence and uplift communities. Under the leadership of Chairman Vaidya, a former college cricket captain, VOITH has consistently supported athletes, infrastructure, and major sporting events across decades.",
     image: "/timeline/2005-sports-legacy.png",
     imagePosition: "center 25%",
-  },
-  {
-    year: "2006",
-    chipLabel: "2006",
-    topic: "Subaru Official MOU Signed",
-    body: "VOITH signed an official memorandum of understanding with Subaru, adding another trusted global automotive brand to its portfolio in Nepal.",
-    image: "/timeline/2006-subaru-mou.png",
-    imagePosition: "center center",
   },
   {
     year: "2007",

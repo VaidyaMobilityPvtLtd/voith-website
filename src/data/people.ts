@@ -78,18 +78,18 @@ export const boardOfDirectors: PersonCard[] = [
     bio: "Miss India 1991 and First runner-up Miss World. President of NAIMA, the Nepal Automotive Importers and Manufacturers Association. The only woman shark on Shark Tank Nepal. Past President of Young Presidents' Organisation (YPO). Drives operational excellence, brand and culture across VOITH's portfolio.",
   },
   {
-    initials: "SuV",
-    name: "Suryansh Vaidya",
-    role: "CEO, Vaidya Energy · Strategic Growth Director",
-    image: "/SuryanshSir.JPG",
-    bio: "Driving Nepal's EV transition as CEO of Vaidya Energy, sole authorised Ather Energy distributor. Ather won Best Stall at NADA 2024. Finalising new EV partnerships and expanding the two-wheeler portfolio. Honorary Consul General of the Philippines in Nepal. Leads strategic growth initiatives across the next-generation VOITH portfolio.",
-  },
-  {
     initials: "SVB",
     name: "Savanna Vaidya Basnyat",
     role: "Director, VOITH Hospitality",
     image: "/people/SavanaMam.png",
     bio: "Savanna is a seasoned hospitality professional with over 15 years of experience, known for her strategic approach to business development. With a deep focus on time, adaptation, and the human aspects that drive business success, she blends business acumen with a passion for the hospitality industry, expertise shaped by work with prestigious brands like Taj and spanning operations, development, and organisational growth. She is expanding VOITH's portfolio in the hospitality sector as the Founder of Sasvata Wildlife Resort and Himalayan Sasvata, focusing on innovative hotel-development projects that leverage Nepal's mega biodiversity.",
+  },
+  {
+    initials: "SuV",
+    name: "Suryansh Vaidya",
+    role: "CEO, Vaidya Energy · Strategic Growth Director",
+    image: "/SuryanshSir.JPG",
+    bio: "Driving Nepal's EV transition as CEO of Vaidya Energy, sole authorised Ather Energy distributor. Ather won Best Stall at NADA 2024. Finalising new EV partnerships and expanding the two-wheeler portfolio. Honorary Consul General of the Philippines in Nepal. Leads strategic growth initiatives across the next-generation VOITH portfolio.",
   },
 ];
 

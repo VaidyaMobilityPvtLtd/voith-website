@@ -91,7 +91,7 @@ export const businesses: Business[] = [
     sub: "WEAN · Lumbini · Pitstop · Philippines Consulate",
     description:
       "Micro-credit empowering millions of Nepali women, one of Nepal's largest insurance companies, a boutique automotive workshop, and the Honorary Consulate General of the Philippines, diversified services across Nepal.",
-    image: "/sectors/diversified-hero.png",
+    image: "/sectors/diversified-hero.jpg",
   },
 ];
 

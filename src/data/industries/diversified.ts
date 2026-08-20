@@ -14,7 +14,7 @@ export const diversifiedSector: SectorPage = {
     "Micro-credit, insurance, automotive care, and diplomatic services, diversified industrial, financial, and consular offerings across Nepal.",
   stat: "4",
   statLabel: "Service businesses",
-  heroImage: "/sectors/diversified-hero.png",
+  heroImage: "/sectors/diversified-hero.jpg",
   intro:
     "Beyond mobility, construction, and hospitality, VOITH operates a portfolio of diversified industrial and financial services: micro-credit, insurance, specialised automotive care, and the Honorary Consulate General of the Philippines in Nepal.",
   stats: [

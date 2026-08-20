@@ -36,6 +36,7 @@ export default function Reveal({
     return () => obs.disconnect();
   }, []);
 
+
   const classes = ["rev", delay ? `d${delay}` : "", className].filter(Boolean).join(" ");
 
   return (

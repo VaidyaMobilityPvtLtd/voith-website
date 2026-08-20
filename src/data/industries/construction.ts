@@ -14,7 +14,7 @@ export const constructionSector: SectorPage = {
     "From limestone quarries in Nuwakot to Nepal's largest cement plant, a USD 250M joint venture with the world leader Huaxin Cement.",
   stat: "4,000",
   statLabel: "Tons per day capacity",
-  heroImage: "/sectors/ConstructionHero.png",
+  heroImage: "/sectors/construction.jpg",
   intro:
     "Nepal's construction sector contributes about 10–11% of GDP and uses roughly 35% of the national budget, employing millions as the country advances rapid infrastructure development. VOITH's construction arm is anchored by Huaxin Cement Narayani, Nepal's largest cement facility, and the Tadi group: Tadi Cement & Lime Industries and Tadi Mining & Construction, supplying limestone and minerals from Nuwakot for highways, housing, hydropower, and the next decade of build-out.",
   stats: [
