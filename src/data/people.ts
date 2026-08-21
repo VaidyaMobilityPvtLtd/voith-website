@@ -55,14 +55,21 @@ export type FamilyTeam = {
 
 export type FamilyStat = { value: string; label: string };
 
-export const boardOfDirectors: PersonCard[] = [
-  {
-    initials: "VGV",
-    name: "Dr. Vijaya Gajananda Vaidya",
-    role: "Founder & Late Chairman",
-    badge: "In Memoriam",
-    image: "/dr-vaidya.png",
-  },
+/**
+ * The group's founder, featured on his own at the top of the people page,
+ * ahead of the current management.
+ */
+export const founder: PersonCard = {
+  initials: "VGV",
+  name: "Dr. Vijaya Gajananda Vaidya",
+  role: "Founder & Late Chairman",
+  badge: "In Memoriam",
+  image: "/dr-vaidya.png",
+  bio: "A pioneering entrepreneur who founded a small business at 34 that grew into Nepal's leading business conglomerate. He became an authorised Toyota dealer in 1968 and formally founded Vaidya's Organization in 1981, later serving as Honorary Consul of the Philippines. In his very first year he sold 353 cars against a target of six. That relentless drive remains the company's defining character.",
+};
+
+/** Current leadership: the board of directors, without the founder. */
+export const management: PersonCard[] = [
   {
     initials: "SV",
     name: "Suraj Vaidya",
@@ -92,6 +99,9 @@ export const boardOfDirectors: PersonCard[] = [
     bio: "Driving Nepal's EV transition as CEO of Vaidya Energy, sole authorised Ather Energy distributor. Ather won Best Stall at NADA 2024. Finalising new EV partnerships and expanding the two-wheeler portfolio. Honorary Consul General of the Philippines in Nepal. Leads strategic growth initiatives across the next-generation VOITH portfolio.",
   },
 ];
+
+/** The full board, founder first. */
+export const boardOfDirectors: PersonCard[] = [founder, ...management];
 
 
 export const voithFamilyStats: FamilyStat[] = [

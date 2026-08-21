@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   features,
   getYearsSinceFounding,
-  heroItems,
+  heroGroups,
   routes,
   type Feature,
 } from "@/data/content";
@@ -61,16 +61,30 @@ export default function Hero() {
               across four industries
             </div>
           </div>
-          <div className="hr-items">
-            {heroItems.map((item) => (
-              <Link key={item.title} href={item.href} className="hr-item">
-                <div>
-                  <div className="hr-item-title">{item.title}</div>
-                  <div className="hr-item-sub">{item.sub}</div>
+          <div className="hr-scroll">
+            <div className="hr-items">
+              <div className="hr-items-head">Our Companies</div>
+              {heroGroups.map((group) => (
+                <div className="hr-group" key={group.slug}>
+                  <div className="hr-group-head">
+                    <span>{group.label}</span>
+                    <span className="hr-group-count">{group.items.length}</span>
+                  </div>
+                  {group.items.map((item) => (
+                    <Link key={item.href} href={item.href} className="hr-item">
+                      <div className="hr-item-copy">
+                        <div className="hr-item-title">{item.title}</div>
+                        <div className="hr-item-sub">{item.sub}</div>
+                        {item.status ? (
+                          <span className="hr-item-badge">{item.status}</span>
+                        ) : null}
+                      </div>
+                      <div className="hr-arrow">→</div>
+                    </Link>
+                  ))}
                 </div>
-                <div className="hr-arrow">→</div>
-              </Link>
-            ))}
+              ))}
+            </div>
           </div>
           <div className="hr-contact">
             <div className="hr-contact-icon">✉</div>

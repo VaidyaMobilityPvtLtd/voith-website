@@ -2,26 +2,54 @@
 // Part of the VOITH site content. Edit freely, re-exported via data/content.ts.
 
 import { routes } from "./shared";
+import { sectorOrder, sectorPages } from "./industries";
+import type { SectorSlug } from "./industries/types";
 
-export type HeroItem = { title: string; sub: string; href: string };
+export type HeroItem = {
+  title: string;
+  sub: string;
+  href: string;
+  /** Optional badge, e.g. "Coming Soon", mirrors the company's `status`. */
+  status?: string;
+};
 
-export const heroItems: HeroItem[] = [
-  {
-    title: "United Traders Syndicate",
-    sub: "Toyota · Keeway · Benelli · Morbidelli · Est. 1967",
-    href: routes.industries,
-  },
-  {
-    title: "Vaidya Energy",
-    sub: "Leading EV scooter brand · Ather Energy",
-    href: routes.industries,
-  },
-  {
-    title: "UHEEM",
-    sub: "XCMG construction equipment · Est. 2018",
-    href: routes.industries,
-  },
-];
+/** One sector's operating companies, as rendered in the hero panel list. */
+export type HeroGroup = {
+  slug: SectorSlug;
+  label: string;
+  items: HeroItem[];
+};
+
+/**
+ * Compact hero titles for companies whose registered name is too long for a
+ * panel row. Keyed by company slug; every other company uses its `name`.
+ */
+const heroTitleOverrides: Record<string, string> = {
+  uheem: "UHEEM",
+  "philippines-consulate": "Philippines Consulate General",
+};
+
+/**
+ * Every operating company across the four sectors, grouped by sector and
+ * linked to its own page. Derived from `sectorPages` so the hero list stays
+ * in step whenever a company is added, renamed, or moved.
+ */
+export const heroGroups: HeroGroup[] = sectorOrder.map((slug) => ({
+  slug,
+  label: sectorPages[slug].label,
+  items: sectorPages[slug].brands.map((company) => ({
+    title: heroTitleOverrides[company.slug] ?? company.name,
+    sub: company.role,
+    href: `${routes.industries}/${slug}/${company.slug}`,
+    status: company.status ?? (company.comingSoon ? "Coming Soon" : undefined),
+  })),
+}));
+
+/** The same companies as a flat list, in sector order. */
+export const heroItems: HeroItem[] = heroGroups.flatMap((group) => group.items);
+
+/** Total number of operating companies shown in the hero. */
+export const heroCompanyCount = heroItems.length;
 
 export type Feature = {
   label: string;

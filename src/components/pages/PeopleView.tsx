@@ -6,31 +6,26 @@ import type { FamilyStat, FamilyTeam, PersonCard } from "@/data/content";
 import type { Employee } from "@/lib/employee-shared";
 import { employeeCompanyOrder } from "@/lib/employee-shared";
 
-type TabKey = "board" | "family";
-
-type Tab = { key: TabKey; label: string };
-
-const tabs: Tab[] = [
-  { key: "board", label: "Board of Directors" },
-  { key: "family", label: "VOITH Family" },
-];
-
 type Props = {
-  boardOfDirectors: PersonCard[];
+  founder: PersonCard;
+  management: PersonCard[];
   voithFamily: FamilyTeam[];
   voithFamilyStats: FamilyStat[];
   employees: Employee[];
 };
 
-export default function PeopleTabs({
-  boardOfDirectors,
+/**
+ * The people page, read top to bottom: the founder, then current management,
+ * then the whole VOITH family behind its company and department filters.
+ */
+export default function PeopleView({
+  founder,
+  management,
   voithFamily,
   voithFamilyStats,
   employees,
 }: Props) {
-  const [active, setActive] = useState<TabKey>("board");
   const [openPerson, setOpenPerson] = useState<PersonCard | null>(null);
-  const current = tabs.find((t) => t.key === active)!;
 
   useEffect(() => {
     if (!openPerson) return;
@@ -48,45 +43,72 @@ export default function PeopleTabs({
 
   return (
     <>
-      <div className="people-tabs" role="tablist" aria-label="Leadership sections">
-        {tabs.map((t) => (
-          <button
-            key={t.key}
-            type="button"
-            role="tab"
-            aria-selected={active === t.key}
-            className={`people-tab${active === t.key ? " is-active" : ""}`}
-            onClick={() => setActive(t.key)}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
+      <FounderFeature person={founder} />
 
       <section className="people-section">
-        {!(active === "family" && employees.length > 0) ? (
-          <h2 className="people-section-title">{current.label}</h2>
-        ) : null}
+        <h2 className="people-section-title">Management</h2>
+        <PeopleGrid people={management} onOpen={setOpenPerson} />
+      </section>
 
-        {active === "board" && (
-          <PeopleGrid people={boardOfDirectors} onOpen={setOpenPerson} />
-        )}
-        {active === "family" &&
-          (employees.length > 0 ? (
-            <FamilyDirectory employees={employees} />
-          ) : (
+      <section className="people-section people-section--family">
+        {employees.length > 0 ? (
+          <FamilyDirectory employees={employees} />
+        ) : (
+          <>
+            <h2 className="people-section-title">VOITH Family</h2>
             <FamilyView
               teams={voithFamily}
               stats={voithFamilyStats}
               onOpen={setOpenPerson}
             />
-          ))}
+          </>
+        )}
       </section>
 
       {openPerson ? (
         <PersonModal person={openPerson} onClose={() => setOpenPerson(null)} />
       ) : null}
     </>
+  );
+}
+
+/** The founder, given his own full-width block above the management grid. */
+function FounderFeature({ person }: { person: PersonCard }) {
+  return (
+    <section className="people-founder" aria-labelledby="people-founder-name">
+      <p className="people-eyebrow">The Founder</p>
+      <article className="people-founder-card">
+        <div
+          className={`people-founder-photo${person.image ? " has-img" : ""}`}
+          aria-hidden="true"
+        >
+          {person.image ? (
+            <Image
+              src={person.image}
+              alt=""
+              fill
+              sizes="(max-width: 800px) 100vw, 340px"
+              className="people-founder-img"
+              priority
+            />
+          ) : (
+            <span>{person.initials}</span>
+          )}
+        </div>
+        <div className="people-founder-body">
+          {person.badge ? (
+            <span className="people-card-badge">{person.badge}</span>
+          ) : null}
+          <h2 id="people-founder-name" className="people-founder-name">
+            {person.name}
+          </h2>
+          <p className="people-founder-role">{person.role}</p>
+          {person.bio ? (
+            <p className="people-founder-bio">{person.bio}</p>
+          ) : null}
+        </div>
+      </article>
+    </section>
   );
 }
 
@@ -324,9 +346,9 @@ function FamilyDirectory({ employees }: { employees: Employee[] }) {
     return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b));
   }, [scoped]);
 
-  const sectionTitle =
+  const scopeLabel =
     company === "all"
-      ? "Departments of VOITH"
+      ? "Departments across every VOITH company"
       : `Departments of ${company}`;
 
   const onCompanyChange = (next: string) => {
@@ -345,7 +367,7 @@ function FamilyDirectory({ employees }: { employees: Employee[] }) {
 
   return (
     <div className="family-view">
-      <h2 className="people-section-title">{sectionTitle}</h2>
+      <h2 className="people-section-title">VOITH Family</h2>
 
       <div
         className="emp-company-filter"
@@ -379,6 +401,8 @@ function FamilyDirectory({ employees }: { employees: Employee[] }) {
           );
         })}
       </div>
+
+      <p className="emp-scope">{scopeLabel}</p>
 
       {departments.length === 0 ? (
         <p className="emp-empty">No team members in this company.</p>

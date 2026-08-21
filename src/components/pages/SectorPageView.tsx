@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  getSectorMarquee,
   routes,
   sectorOrder,
   sectorPages,
@@ -8,6 +9,7 @@ import {
 } from "@/data/content";
 import CardMedia from "../CardMedia";
 import Reveal from "../Reveal";
+import SectorMarquee from "../SectorMarquee";
 
 type Props = { slug: SectorSlug };
 
@@ -15,6 +17,7 @@ export default function SectorPageView({ slug }: Props) {
   const data = sectorPages[slug];
   const otherSectors = sectorOrder.filter((s) => s !== slug);
   const fallbackImage = sectorPlaceholderImages[slug];
+  const marqueeItems = getSectorMarquee(slug);
 
   return (
     <div className={`pg pg-sector pg-sector-${slug}`} style={{ "--sector-color": data.color } as React.CSSProperties}>
@@ -69,6 +72,8 @@ export default function SectorPageView({ slug }: Props) {
             </ul>
           </div>
         </section>
+
+        <SectorMarquee label={data.label} items={marqueeItems} />
 
         <section className="sec-brands">
           <Reveal as="h2" className="pg-section-title">

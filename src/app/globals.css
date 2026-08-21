@@ -196,6 +196,22 @@ a {
   transition: background 0.2s;
 }
 .nav-btn:hover { background: var(--red-d); }
+.nav-phil {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 8px;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+.nav-phil:hover { background: var(--red-soft); transform: translateY(-1px); }
+.nav-phil-img {
+  width: 36px;
+  height: 40px;
+  object-fit: contain;
+}
 .nav-links a.active {
   color: var(--red);
   font-weight: 600;
@@ -526,12 +542,15 @@ main {
 /* ── HERO ── */
 #hero {
   display: grid;
-  grid-template-rows: 1fr auto;
-  min-height: calc(100vh - 72px);
+  /* minmax(0, 1fr): the row must not grow to fit the scrolling company list. */
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: calc(100vh - 72px);
+  min-height: 620px;
 }
 .hero-main {
   display: grid;
   grid-template-columns: 1fr 400px;
+  grid-template-rows: minmax(0, 1fr);
   min-height: 0;
 }
 .hl {
@@ -621,6 +640,7 @@ main {
   background: var(--dark);
   display: flex;
   flex-direction: column;
+  min-height: 0;
   overflow: hidden;
 }
 .hr-stat {
@@ -642,19 +662,99 @@ main {
   color: rgba(255, 255, 255, 0.36);
   line-height: 1.5;
 }
-.hr-items { flex: 1; display: flex; flex-direction: column; }
+/*
+ * Company list. Every operating company across the four sectors lives here,
+ * so the list scrolls inside the panel between the stat block and the contact
+ * bar. `.hr-scroll` holds the bottom fade that hints at the overflow.
+ */
+.hr-scroll {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+.hr-scroll::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 52px;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--dark), rgba(17, 17, 24, 0));
+}
+.hr-items {
+  flex: 1;
+  min-height: 0;
+  /* Clears the fade above, so the last company stays readable at full scroll. */
+  padding-bottom: 44px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+.hr-items::-webkit-scrollbar { width: 6px; }
+.hr-items::-webkit-scrollbar-track { background: transparent; }
+.hr-items::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 3px;
+}
+.hr-items::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+.hr-items-head {
+  padding: 13px 36px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+.hr-group-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 36px;
+  background: var(--dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+.hr-group-count {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.28);
+}
 .hr-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 36px;
+  gap: 14px;
+  padding: 14px 36px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   cursor: pointer;
   transition: background 0.2s;
 }
 .hr-item:hover { background: rgba(255, 255, 255, 0.04); }
+.hr-item-copy { min-width: 0; }
 .hr-item-title { font-size: 14px; font-weight: 600; color: var(--red); margin-bottom: 2px; }
 .hr-item-sub { font-size: 12px; color: rgba(255, 255, 255, 0.3); }
+.hr-item-badge {
+  display: inline-block;
+  margin-top: 7px;
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 40px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.5);
+}
 .hr-arrow {
   color: rgba(255, 255, 255, 0.2);
   font-size: 16px;
@@ -3834,40 +3934,80 @@ button.nm-dot {
     );
 }
 
-.people-tabs {
-  display: flex;
-  align-items: stretch;
-  gap: clamp(20px, 3vw, 40px);
-  padding: 0 var(--gutter);
-  border-bottom: 1px solid var(--border);
+/* Founder feature — the first block on the people page. */
+.people-founder {
   background: var(--white);
-  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
 }
-.people-tab {
-  position: relative;
-  padding: 22px 4px 18px;
-  font-family: var(--fd);
-  font-size: clamp(15px, 1.6vw, 18px);
-  font-weight: 600;
-  color: var(--muted);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  white-space: nowrap;
-  letter-spacing: -0.01em;
-  transition: color 0.2s;
+.people-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 clamp(18px, 2.4vw, 24px);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
 }
-.people-tab:hover { color: var(--ink); }
-.people-tab.is-active { color: var(--ink); }
-.people-tab.is-active::after {
+.people-eyebrow::before {
   content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 3px;
+  width: 24px;
+  height: 2px;
   background: var(--red);
-  border-radius: 2px 2px 0 0;
+}
+.people-founder-card {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.people-founder-photo {
+  position: relative;
+  min-height: 340px;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--fd);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.people-founder-img {
+  object-fit: cover;
+  object-position: center top;
+}
+.people-founder-body {
+  padding: clamp(26px, 3.2vw, 44px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.people-founder-name {
+  font-family: var(--fd);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 10px 0 6px;
+  color: var(--ink);
+}
+.people-founder-role {
+  margin: 0;
+  font-size: clamp(14px, 1.5vw, 16px);
+  font-weight: 600;
+  color: var(--red);
+}
+.people-founder-bio {
+  margin: 18px 0 0;
+  max-width: 68ch;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
 }
 
 .people-section { background: var(--white); }
@@ -4185,6 +4325,13 @@ button.nm-dot {
 }
 
 /* ── VOITH Family — company filter + department accordion ── */
+.emp-scope {
+  margin: 0 0 clamp(18px, 2.4vw, 24px);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
 .emp-company-filter {
   display: flex;
   flex-wrap: wrap;
@@ -5286,6 +5433,152 @@ button.nm-dot {
   text-transform: uppercase;
   color: var(--muted);
   line-height: 1.45;
+}
+
+/*
+ * Sector brand marquee — the band between the overview and "Inside the
+ * sector". The lane is rendered twice and translated by exactly one copy
+ * (half the track, plus half a gap), so the loop is seamless.
+ */
+.sec-marquee {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.pg-body .sec-marquee {
+  padding: 48px 0;
+}
+.sec-marquee-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding: 0 var(--gutter);
+  margin-bottom: 28px;
+}
+.sec-marquee-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sector-color, var(--red));
+}
+.sec-marquee-eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background: var(--sector-color, var(--red));
+}
+.sec-marquee-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.sec-marquee-viewport {
+  position: relative;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+}
+.sec-marquee-track {
+  --marquee-gap: 14px;
+  display: flex;
+  width: max-content;
+  gap: var(--marquee-gap);
+  padding: 14px var(--gutter);
+  animation: sec-marquee-run linear infinite;
+  animation-duration: calc(var(--lane-count, 6) * 4.5s);
+}
+.sec-marquee-viewport:hover .sec-marquee-track,
+.sec-marquee-viewport:focus-within .sec-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes sec-marquee-run {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - var(--marquee-gap) / 2)); }
+}
+.sec-marquee-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 20px 9px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--white);
+  transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s;
+}
+.sec-marquee-chip:hover {
+  border-color: color-mix(in srgb, var(--sector-color, var(--red)) 55%, var(--border));
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--sector-color, var(--red)) 16%, transparent);
+  transform: translateY(-2px);
+}
+.sec-marquee-logo {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.sec-marquee-logo img {
+  display: block;
+}
+.sec-marquee-logo img.is-logo {
+  width: 74%;
+  height: 74%;
+  object-fit: contain;
+}
+.sec-marquee-logo img.is-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sec-marquee-mark {
+  font-family: var(--fd);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--sector-color, var(--red));
+}
+.sec-marquee-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.sec-marquee-arrow {
+  font-size: 12px;
+  color: var(--muted);
+  transition: color 0.22s;
+}
+.sec-marquee-chip:hover .sec-marquee-arrow {
+  color: var(--sector-color, var(--red));
+}
+/* No animation: let the band scroll by hand instead. */
+@media (prefers-reduced-motion: reduce) {
+  .sec-marquee-viewport {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .sec-marquee-track { animation: none; }
 }
 
 .sec-brands { background: var(--surface); }
@@ -6433,9 +6726,10 @@ a:hover > .card-media--logo img,
 }
 @media (max-width: 800px) {
   :root { --px: 28px; }
-  #hero { min-height: auto; }
-  .hero-main { grid-template-columns: 1fr; }
+  #hero { height: auto; min-height: auto; grid-template-rows: auto auto; }
+  .hero-main { grid-template-columns: 1fr; grid-template-rows: auto; }
   .hr-panel { min-height: 0; }
+  .hr-scroll { flex: 0 0 auto; height: min(56vh, 380px); }
   .hr-big { font-size: clamp(52px, 16vw, 72px); }
   #milestones { grid-template-columns: 1fr; }
   .mile-l { min-height: 260px; padding: 48px 28px; }
@@ -6565,8 +6859,8 @@ a:hover > .card-media--logo img,
   .people-card { grid-template-columns: 108px 1fr; }
   .people-card-photo { min-height: 108px; font-size: 22px; }
   .people-card-body { padding: 18px 20px; }
-  .people-tabs { gap: 18px; }
-  .people-tab { padding: 18px 2px 14px; }
+  .people-founder-card { grid-template-columns: 1fr; }
+  .people-founder-photo { min-height: 320px; }
   .family-stat { padding: 20px 22px; }
   .pg-future .pg-init-row { grid-template-columns: 1fr; min-height: auto; }
   .pg-future .pg-init-row--flip .pg-init-figure { order: 0; }
@@ -6662,6 +6956,7 @@ a:hover > .card-media--logo img,
   .nav-l { gap: 16px; }
   .nav-r { gap: 10px; }
   .nav-logo-img { width: 48px; height: 48px; }
+  .nav-phil-img { width: 28px; height: 31px; }
   .nav-links {
     position: fixed;
     top: 64px;
@@ -6786,7 +7081,6 @@ a:hover > .card-media--logo img,
   .imp-tl-dialog { width: min(720px, calc(100vw - 24px)); max-width: 100%; }
 
   .people-card { min-width: 0; }
-  .people-tab { min-height: 44px; }
 
   .foot-list a { min-height: 44px; display: inline-flex; align-items: center; }
 
@@ -6824,8 +7118,14 @@ a:hover > .card-media--logo img,
   .pg-body section { padding: 48px var(--gutter); }
   .brand-hero .pg-hero-content { padding-bottom: 40px; }
 
+  .sec-marquee-name { font-size: 13px; }
+  .sec-marquee-logo { width: 38px; height: 38px; }
+  .sec-marquee-track { --marquee-gap: 10px; }
+
   .hl { padding: 36px var(--gutter); }
   .hr-item,
+  .hr-items-head,
+  .hr-group-head,
   .hr-stat,
   .hr-contact { padding-left: 24px; padding-right: 24px; }
 

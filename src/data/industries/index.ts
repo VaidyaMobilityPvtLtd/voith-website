@@ -8,6 +8,7 @@ import type {
   SectorBrand,
   ChildBrand,
 } from "./types";
+import { routes } from "../shared";
 import { mobilitySector } from "./mobility";
 import { constructionSector } from "./construction";
 import { hospitalitySector } from "./hospitality";
@@ -98,4 +99,58 @@ export function allChildBrandParams(): Array<{
       (b.children ?? []).map((c) => ({ slug, company: b.slug, brand: c.slug })),
     ),
   );
+}
+
+/**
+ * One entry in a sector's brand marquee: the product-level entity a visitor
+ * recognises, e.g. Toyota rather than United Traders Syndicate. Companies with
+ * child brands contribute their children; leaf companies contribute themselves.
+ */
+export type SectorMarqueeItem = {
+  /** Stable React key, unique within the sector. */
+  key: string;
+  name: string;
+  /** Short initials, shown when the brand has no artwork. */
+  mark: string;
+  /** Logo when the brand has one, otherwise its card photo. */
+  image?: string;
+  /** True when `image` is a logo (contain) rather than a photo (cover). */
+  isLogo: boolean;
+  /** The brand's own site when it has one, otherwise its page on this site. */
+  href: string;
+  external: boolean;
+};
+
+function toMarqueeItem(
+  brand: SectorBrand | ChildBrand,
+  key: string,
+  internalHref: string,
+): SectorMarqueeItem {
+  return {
+    key,
+    name: brand.name,
+    mark: brand.mark,
+    image: brand.logo ?? brand.image,
+    isLogo: Boolean(brand.logo),
+    href: brand.website ?? internalHref,
+    external: Boolean(brand.website),
+  };
+}
+
+/** Every brand shown in a sector's marquee, in company order. */
+export function getSectorMarquee(slug: SectorSlug): SectorMarqueeItem[] {
+  return sectorPages[slug].brands.flatMap((company) => {
+    const companyHref = `${routes.industries}/${slug}/${company.slug}`;
+    const children = company.children ?? [];
+    if (children.length === 0) {
+      return [toMarqueeItem(company, company.slug, companyHref)];
+    }
+    return children.map((child) =>
+      toMarqueeItem(
+        child,
+        `${company.slug}/${child.slug}`,
+        `${companyHref}/${child.slug}`,
+      ),
+    );
+  });
 }

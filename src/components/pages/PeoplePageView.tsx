@@ -1,12 +1,13 @@
 import {
-  boardOfDirectors,
+  founder,
+  management,
   pageMeta,
   voithFamily,
   voithFamilyStats,
 } from "@/data/content";
 import { getEmployees } from "@/lib/employees";
 import PageShell from "./PageShell";
-import PeopleTabs from "./PeopleTabs";
+import PeopleView from "./PeopleView";
 
 const meta = pageMeta.people;
 
@@ -23,8 +24,9 @@ export default async function PeoplePageView() {
       statLabel={meta.statLabel}
       heroImage={meta.heroImage}
     >
-      <PeopleTabs
-        boardOfDirectors={boardOfDirectors}
+      <PeopleView
+        founder={founder}
+        management={management}
         voithFamily={voithFamily}
         voithFamilyStats={voithFamilyStats}
         employees={employees}
