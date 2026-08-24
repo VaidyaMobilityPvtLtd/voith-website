@@ -40,7 +40,8 @@ export const family: FamilyMember[] = [
 export type PersonCard = {
   initials: string;
   name: string;
-  role: string;
+  /** Omitted for people shown by name and photo alone. */
+  role?: string;
   badge?: string;
   image?: string;
   bio?: string;
@@ -90,6 +91,11 @@ export const management: PersonCard[] = [
     role: "Director, VOITH Hospitality",
     image: "/people/SavanaMam.png",
     bio: "Savanna is a seasoned hospitality professional with over 15 years of experience, known for her strategic approach to business development. With a deep focus on time, adaptation, and the human aspects that drive business success, she blends business acumen with a passion for the hospitality industry, expertise shaped by work with prestigious brands like Taj and spanning operations, development, and organisational growth. She is expanding VOITH's portfolio in the hospitality sector as the Founder of Sasvata Wildlife Resort and Himalayan Sasvata, focusing on innovative hotel-development projects that leverage Nepal's mega biodiversity.",
+  },
+  {
+    initials: "SbV",
+    name: "Sabrina Vaidya",
+    image: "/people/SabrinaMam.jpeg",
   },
   {
     initials: "SuV",

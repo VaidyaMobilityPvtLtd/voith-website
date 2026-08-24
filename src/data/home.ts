@@ -58,7 +58,7 @@ export type Feature = {
 };
 
 export const features: Feature[] = [
-  { label: "Employed", value: "2000+", icon: "people" },
+  { label: "Employed", value: "300+", icon: "people" },
   { label: "Industries", value: "4 Sectors", icon: "growth" },
 ];
 

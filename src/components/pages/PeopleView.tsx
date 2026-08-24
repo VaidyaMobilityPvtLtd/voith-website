@@ -102,7 +102,9 @@ function FounderFeature({ person }: { person: PersonCard }) {
           <h2 id="people-founder-name" className="people-founder-name">
             {person.name}
           </h2>
-          <p className="people-founder-role">{person.role}</p>
+          {person.role ? (
+            <p className="people-founder-role">{person.role}</p>
+          ) : null}
           {person.bio ? (
             <p className="people-founder-bio">{person.bio}</p>
           ) : null}
@@ -161,7 +163,7 @@ function PersonCardView({
       <div className="people-card-body">
         {p.badge ? <span className="people-card-badge">{p.badge}</span> : null}
         <Heading className="people-card-name">{p.name}</Heading>
-        <p className="people-card-role">{p.role}</p>
+        {p.role ? <p className="people-card-role">{p.role}</p> : null}
       </div>
     </>
   );
@@ -172,7 +174,7 @@ function PersonCardView({
         type="button"
         className="people-card people-card--button"
         onClick={() => onOpen(p)}
-        aria-label={`View ${p.name}, ${p.role}`}
+        aria-label={p.role ? `View ${p.name}, ${p.role}` : `View ${p.name}`}
       >
         {content}
       </button>
@@ -230,7 +232,9 @@ function PersonModal({
           <h2 id="person-modal-title" className="person-modal-name">
             {person.name}
           </h2>
-          <p className="person-modal-role">{person.role}</p>
+          {person.role ? (
+            <p className="person-modal-role">{person.role}</p>
+          ) : null}
           {person.bio ? <p className="person-modal-bio">{person.bio}</p> : null}
         </div>
       </div>

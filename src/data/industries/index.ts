@@ -103,19 +103,16 @@ export function allChildBrandParams(): Array<{
 
 /**
  * One entry in a sector's brand marquee: the product-level entity a visitor
- * recognises, e.g. Toyota rather than United Traders Syndicate. Companies with
- * child brands contribute their children; leaf companies contribute themselves.
+ * recognises, e.g. Toyota rather than United Traders Syndicate. Only brands
+ * with a logo of their own appear — the band shows artwork and nothing else,
+ * so a brand with no logo has nothing to contribute and is left out.
  */
 export type SectorMarqueeItem = {
   /** Stable React key, unique within the sector. */
   key: string;
+  /** Carried on the link, not drawn: the logo already spells the name. */
   name: string;
-  /** Short initials, shown when the brand has no artwork. */
-  mark: string;
-  /** Logo when the brand has one, otherwise its card photo. */
-  image?: string;
-  /** True when `image` is a logo (contain) rather than a photo (cover). */
-  isLogo: boolean;
+  logo: string;
   /** The brand's own site when it has one, otherwise its page on this site. */
   href: string;
   external: boolean;
@@ -125,32 +122,33 @@ function toMarqueeItem(
   brand: SectorBrand | ChildBrand,
   key: string,
   internalHref: string,
-): SectorMarqueeItem {
+): SectorMarqueeItem | null {
+  if (!brand.logo) return null;
   return {
     key,
     name: brand.name,
-    mark: brand.mark,
-    image: brand.logo ?? brand.image,
-    isLogo: Boolean(brand.logo),
+    logo: brand.logo,
     href: brand.website ?? internalHref,
     external: Boolean(brand.website),
   };
 }
 
-/** Every brand shown in a sector's marquee, in company order. */
+/** Every logo-bearing brand in a sector's marquee, in company order. */
 export function getSectorMarquee(slug: SectorSlug): SectorMarqueeItem[] {
-  return sectorPages[slug].brands.flatMap((company) => {
-    const companyHref = `${routes.industries}/${slug}/${company.slug}`;
-    const children = company.children ?? [];
-    if (children.length === 0) {
-      return [toMarqueeItem(company, company.slug, companyHref)];
-    }
-    return children.map((child) =>
-      toMarqueeItem(
-        child,
-        `${company.slug}/${child.slug}`,
-        `${companyHref}/${child.slug}`,
-      ),
-    );
-  });
+  return sectorPages[slug].brands
+    .flatMap((company) => {
+      const companyHref = `${routes.industries}/${slug}/${company.slug}`;
+      const children = company.children ?? [];
+      if (children.length === 0) {
+        return [toMarqueeItem(company, company.slug, companyHref)];
+      }
+      return children.map((child) =>
+        toMarqueeItem(
+          child,
+          `${company.slug}/${child.slug}`,
+          `${companyHref}/${child.slug}`,
+        ),
+      );
+    })
+    .filter((item): item is SectorMarqueeItem => item !== null);
 }

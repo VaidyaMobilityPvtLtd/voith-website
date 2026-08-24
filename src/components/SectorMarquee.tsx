@@ -7,35 +7,14 @@ type Props = {
   items: SectorMarqueeItem[];
 };
 
-function ChipBody({ item }: { item: SectorMarqueeItem }) {
-  return (
-    <>
-      <span className="sec-marquee-logo">
-        {item.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={item.image}
-            alt=""
-            loading="lazy"
-            className={item.isLogo ? "is-logo" : "is-photo"}
-          />
-        ) : (
-          <span className="sec-marquee-mark">{item.mark}</span>
-        )}
-      </span>
-      <span className="sec-marquee-name">{item.name}</span>
-      <span className="sec-marquee-arrow" aria-hidden="true">
-        {item.external ? "↗" : "→"}
-      </span>
-    </>
-  );
-}
-
 /**
- * Continuously scrolling band of a sector's brands, each linking to that
- * brand's own website (or its page here when it has no external site).
- * The lane is rendered twice so the CSS translate loops seamlessly; the
- * second pass is decorative and hidden from assistive tech.
+ * Static band of a sector's brand logos, each linking to that brand's own
+ * website (or its page here when it has no external site). Nothing is drawn
+ * but the artwork — the logos already carry their names, which reach assistive
+ * tech and hover tooltips through the link instead.
+ *
+ * The row runs from the left gutter, under the eyebrow, however many brands a
+ * sector carries.
  */
 export default function SectorMarquee({ label, items }: Props) {
   if (items.length === 0) return null;
@@ -49,40 +28,37 @@ export default function SectorMarquee({ label, items }: Props) {
         </p>
       </div>
       <div className="sec-marquee-viewport">
-        <div
-          className="sec-marquee-track"
-          style={{ "--lane-count": items.length } as React.CSSProperties}
-        >
-          {[0, 1].map((pass) =>
-            items.map((item) => {
-              const dup = pass === 1;
-              const key = `${pass}-${item.key}`;
-              const cls = "sec-marquee-chip";
-              return item.external ? (
-                <a
-                  key={key}
-                  href={item.href}
-                  className={cls}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-hidden={dup || undefined}
-                  tabIndex={dup ? -1 : undefined}
-                >
-                  <ChipBody item={item} />
-                </a>
-              ) : (
-                <Link
-                  key={key}
-                  href={item.href}
-                  className={cls}
-                  aria-hidden={dup || undefined}
-                  tabIndex={dup ? -1 : undefined}
-                >
-                  <ChipBody item={item} />
-                </Link>
-              );
-            }),
-          )}
+        <div className="sec-marquee-track">
+          {items.map((item) => {
+            const cls = "sec-marquee-chip";
+            const body = (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={item.logo} alt="" loading="lazy" />
+            );
+            return item.external ? (
+              <a
+                key={item.key}
+                href={item.href}
+                className={cls}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={item.name}
+                title={item.name}
+              >
+                {body}
+              </a>
+            ) : (
+              <Link
+                key={item.key}
+                href={item.href}
+                className={cls}
+                aria-label={item.name}
+                title={item.name}
+              >
+                {body}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

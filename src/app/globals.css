@@ -5479,106 +5479,75 @@ button.nm-dot {
   color: var(--muted);
 }
 .sec-marquee-viewport {
-  position: relative;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent 0,
-    #000 6%,
-    #000 94%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    90deg,
-    transparent 0,
-    #000 6%,
-    #000 94%,
-    transparent 100%
-  );
+  padding: 0 var(--gutter);
 }
+/*
+ * The band is static — no scroll, no loop. Logos run from the left gutter,
+ * aligned under the eyebrow above them, and wrap onto further left-aligned
+ * rows when the lane outgrows the viewport.
+ */
 .sec-marquee-track {
-  --marquee-gap: 14px;
+  /* Size caps every logo is measured against, tall lockup or wide wordmark. */
+  --logo-h: 78px;
+  --logo-w: 160px;
   display: flex;
-  width: max-content;
-  gap: var(--marquee-gap);
-  padding: 14px var(--gutter);
-  animation: sec-marquee-run linear infinite;
-  animation-duration: calc(var(--lane-count, 6) * 4.5s);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  /* Uniform column gap that grows with the viewport, so the lane keeps its
+     rhythm on a wide screen without wrapping on a narrow one. */
+  gap: 34px clamp(48px, 5.2vw, 92px);
+  padding: 14px 0;
 }
-.sec-marquee-viewport:hover .sec-marquee-track,
-.sec-marquee-viewport:focus-within .sec-marquee-track {
-  animation-play-state: paused;
+/*
+ * Mobility alone carries enough logos to span the band, so its lane is
+ * justified edge to edge between the gutters; every other sector stays
+ * left-aligned. Below the mobile breakpoint the lane wraps, and justifying a
+ * two-logo row to both edges reads as a mistake, so the fill is desktop-only.
+ */
+@media (min-width: 769px) {
+  .pg-sector-mobility .sec-marquee-track {
+    justify-content: space-between;
+  }
 }
-@keyframes sec-marquee-run {
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(-50% - var(--marquee-gap) / 2)); }
-}
+/*
+ * Bare logos, nothing else: no plate, no border, no name beside them — each
+ * mark already spells its brand. The source art is trimmed to its ink, so a
+ * single pair of caps sizes every mark comparably: tall lockups reach the
+ * height cap, wide wordmarks reach the width cap, and all sit on one centre
+ * line. Desaturated at rest so a lane of mixed artwork reads as one band.
+ */
 .sec-marquee-chip {
   flex: 0 0 auto;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 9px 20px 9px 9px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--white);
-  transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s;
+  justify-content: center;
+  height: var(--logo-h);
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition: filter 0.24s, opacity 0.24s, transform 0.24s;
 }
 .sec-marquee-chip:hover {
-  border-color: color-mix(in srgb, var(--sector-color, var(--red)) 55%, var(--border));
-  box-shadow: 0 6px 20px color-mix(in srgb, var(--sector-color, var(--red)) 16%, transparent);
+  filter: none;
+  opacity: 1;
   transform: translateY(-2px);
 }
-.sec-marquee-logo {
-  flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--surface);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
+/* No border to carry focus, so the ring is drawn around the logo itself. */
+.sec-marquee-chip:focus-visible {
+  filter: none;
+  opacity: 1;
+  outline: 2px solid var(--sector-color, var(--red));
+  outline-offset: 8px;
+  border-radius: 4px;
 }
-.sec-marquee-logo img {
+.sec-marquee-chip img {
   display: block;
-}
-.sec-marquee-logo img.is-logo {
-  width: 74%;
-  height: 74%;
+  width: auto;
+  height: auto;
+  /* Explicit caps, not percentages: the box must never stretch the art. */
+  max-width: var(--logo-w);
+  max-height: var(--logo-h);
   object-fit: contain;
-}
-.sec-marquee-logo img.is-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.sec-marquee-mark {
-  font-family: var(--fd);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--sector-color, var(--red));
-}
-.sec-marquee-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ink);
-  white-space: nowrap;
-}
-.sec-marquee-arrow {
-  font-size: 12px;
-  color: var(--muted);
-  transition: color 0.22s;
-}
-.sec-marquee-chip:hover .sec-marquee-arrow {
-  color: var(--sector-color, var(--red));
-}
-/* No animation: let the band scroll by hand instead. */
-@media (prefers-reduced-motion: reduce) {
-  .sec-marquee-viewport {
-    overflow-x: auto;
-    scrollbar-width: thin;
-  }
-  .sec-marquee-track { animation: none; }
 }
 
 .sec-brands { background: var(--surface); }
@@ -7118,9 +7087,11 @@ a:hover > .card-media--logo img,
   .pg-body section { padding: 48px var(--gutter); }
   .brand-hero .pg-hero-content { padding-bottom: 40px; }
 
-  .sec-marquee-name { font-size: 13px; }
-  .sec-marquee-logo { width: 38px; height: 38px; }
-  .sec-marquee-track { --marquee-gap: 10px; }
+  .sec-marquee-track {
+    --logo-h: 56px;
+    --logo-w: 120px;
+    gap: 24px clamp(28px, 6vw, 44px);
+  }
 
   .hl { padding: 36px var(--gutter); }
   .hr-item,
