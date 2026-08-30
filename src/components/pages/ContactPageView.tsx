@@ -1,5 +1,5 @@
 import {
-  contactChannels,
+  contactDirect,
   footerContact,
   footerSocial,
   pageMeta,
@@ -25,36 +25,51 @@ export default function ContactPageView() {
           <p className="contact-eyebrow">Direct channels</p>
           <h2 className="pg-section-title">Talk to the right team</h2>
           <p className="contact-lead">
-            Every VOITH business has a dedicated point of contact. Pick the one
-            closest to what you need, or write to general inquiries and we'll
-            route you.
+            One point of contact for the whole group. Reach the desk closest
+            to what you need, or call reception and we'll route you.
           </p>
         </header>
 
-        <div className="contact-grid">
-          {contactChannels.map((c) => (
-            <article className="contact-card" key={c.label}>
-              <h3>{c.label}</h3>
-              <p className="contact-card-desc">{c.description}</p>
-              <div className="contact-card-meta">
-                <a
-                  href={`mailto:${c.email}`}
-                  className="contact-card-email"
-                >
-                  {c.email}
-                </a>
-                {c.phone ? (
-                  <a
-                    href={`tel:${c.phone.replace(/\s+/g, "")}`}
-                    className="contact-card-phone"
-                  >
-                    {c.phone}
-                  </a>
-                ) : null}
-              </div>
-            </article>
-          ))}
-        </div>
+        <article className="contact-desk">
+          <div className="contact-desk-body">
+            <div className="contact-desk-block">
+              <p className="contact-desk-label">Email</p>
+              <ul className="contact-desk-list">
+                {contactDirect.emails.map((e) => (
+                  <li key={e.address}>
+                    <span className="contact-desk-key">{e.label}</span>
+                    <a
+                      href={`mailto:${e.address}`}
+                      className="contact-desk-email"
+                    >
+                      {e.address}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="contact-desk-block">
+              <p className="contact-desk-label">Reception</p>
+              <ul className="contact-desk-list">
+                {contactDirect.phones.map((ph) => (
+                  <li key={ph.number}>
+                    {contactDirect.phones.length > 1 ? (
+                      <span className="contact-desk-key">{ph.label}</span>
+                    ) : null}
+                    <a
+                      href={`tel:${ph.number.replace(/[^+0-9]/g, "")}`}
+                      className="contact-desk-phone"
+                    >
+                      {ph.number}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <p className="contact-desk-hours">{contactDirect.hours}</p>
+            </div>
+          </div>
+        </article>
       </section>
 
       <section className="contact-form-section">

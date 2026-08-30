@@ -1,42 +1,26 @@
-// Contact page content: channels, offices, topics
+// Contact page content: the group contact desk, offices, topics
 // Part of the VOITH site content. Edit freely, re-exported via data/content.ts.
 
-export type ContactChannel = {
+export type ContactEmail = {
   label: string;
-  description: string;
-  email: string;
-  phone?: string;
+  address: string;
 };
 
-export const contactChannels: ContactChannel[] = [
-  {
-    label: "General inquiries",
-    description:
-      "Press, media, partnerships, or anything that doesn't fit another channel.",
-    email: "info@voith.com.np",
-    phone: "+977 1 442 0000",
-  },
-  {
-    label: "Sales, Toyota Nepal (UTS)",
-    description:
-      "Vehicle purchase inquiries, test drives, fleet, and dealership appointments.",
-    email: "sales@uts.com.np",
-    phone: "+977 1 442 1967",
-  },
-  {
-    label: "Vaidya Energy, Ather",
-    description:
-      "EV bookings, Ather Grid charging support, and two-wheeler distribution.",
-    email: "hello@vaidyaenergy.com",
-    phone: "+977 1 442 2024",
-  },
-  {
-    label: "Partnerships & Investments",
-    description:
-      "Joint ventures, distribution rights, and corporate development conversations.",
-    email: "partnerships@voith.com.np",
-  },
-];
+export type ContactPhone = {
+  label: string;
+  number: string;
+};
+
+/** Single group-wide contact desk shown on the contact page. */
+export const contactDirect = {
+  emails: [
+    { label: "General inquiries", address: "info@voith.com.np" },
+    { label: "Toyota Nepal (UTS)", address: "uts@voith.com.np" },
+    { label: "VSD", address: "vsd@voith.com.np" },
+  ] as ContactEmail[],
+  phones: [{ label: "Reception", number: "+977 01-4008801" }] as ContactPhone[],
+  hours: "Sun – Fri · 09:00 – 18:00 NPT",
+};
 
 export type ContactOffice = {
   city: string;

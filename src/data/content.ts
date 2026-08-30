@@ -11,7 +11,7 @@
  *   footprint-map.ts   Nepal map (/nepal.svg) brands + dot markers
  *   people.ts          family, leadership, teams
  *   future.ts          future page
- *   contact.ts         contact channels, offices, topics
+ *   contact.ts         contact desk, offices, topics
  *   why.ts             why-choose-us
  *   legal.ts           legal / privacy
  */
