@@ -16,7 +16,7 @@ export const contactDirect = {
   emails: [
     { label: "General inquiries", address: "info@voith.com.np" },
     { label: "Toyota Nepal (UTS)", address: "uts@voith.com.np" },
-    { label: "VSD", address: "vsd@voith.com.np" },
+    { label: "Vehicle Sales Department", address: "vsd@voith.com.np" },
   ] as ContactEmail[],
   phones: [{ label: "Reception", number: "+977 01-4008801" }] as ContactPhone[],
   hours: "Sun – Fri · 09:00 – 18:00 NPT",

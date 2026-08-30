@@ -139,28 +139,11 @@ export default function Nav() {
           </li>
         </ul>
       </div>
-      <div className="nav-r">
+      <div className="nav-r">  
         <span className="nav-est">Est. 1964</span>
         <Link href={routes.contact} className="nav-btn nav-btn-desk">
-          Contact VOITH
+          Contact VOITH  
         </Link>
-        <a
-          href="https://philippines-consulate.voith.com.np"
-          className="nav-phil"
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Consulate of the Philippines in Nepal"
-          aria-label="Consulate of the Philippines in Nepal (opens in a new tab)"
-        >
-          <Image
-            src="/phil_logo.svg"
-            alt=""
-            width={36}
-            height={40}
-            unoptimized
-            className="nav-phil-img"
-          />
-        </a>
         <button
           type="button"
           className="nav-toggle"
