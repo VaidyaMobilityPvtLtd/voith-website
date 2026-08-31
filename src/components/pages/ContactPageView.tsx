@@ -66,7 +66,14 @@ export default function ContactPageView() {
                   </li>
                 ))}
               </ul>
-              <p className="contact-desk-hours">{contactDirect.hours}</p>
+              <p className="contact-desk-hours">
+                <span className="contact-desk-hours-days">
+                  {contactDirect.hoursDays}
+                </span>
+                <span className="contact-desk-hours-time">
+                  {contactDirect.hoursTime}
+                </span>
+              </p>
             </div>
           </div>
         </article>
@@ -93,7 +100,7 @@ export default function ContactPageView() {
               <li>
                 <span>Hours</span>
                 <span className="contact-quick-val">
-                  Sun – Fri · 09:00 – 18:00 NPT
+                  Sun – Fri · 9 am – 6 pm NPT
                 </span>
               </li>
               <li>

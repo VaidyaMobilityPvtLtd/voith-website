@@ -172,7 +172,10 @@ export const footerSocial = [
   { label: "Facebook", href: "https://www.facebook.com/" },
   { label: "Instagram", href: "https://www.instagram.com/" },
   { label: "TikTok", href: "https://www.tiktok.com/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/vaidya-s-organization-of-industries-trading-houses/",
+  },
 ] as const;
 
 export const footerContact = {

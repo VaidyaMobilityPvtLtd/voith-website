@@ -4610,7 +4610,8 @@ button.nm-dot {
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   gap: 22px 34px;
 }
-.contact-desk-block { display: grid; align-content: start; gap: 8px; }
+/* Column layout so a trailing note (hours) can sit flush with the card floor */
+.contact-desk-block { display: flex; flex-direction: column; gap: 8px; }
 .contact-desk-block + .contact-desk-block {
   padding-left: 34px;
   border-left: 1px solid var(--border2);
@@ -4641,7 +4642,8 @@ button.nm-dot {
 .contact-desk-list li:last-child { padding-bottom: 0; border-bottom: 0; }
 .contact-desk-key {
   flex: 0 0 auto;
-  min-width: 152px;
+  /* Fits the longest label ("Vehicle Sales Department") so every value aligns */
+  min-width: 184px;
   font-size: 14px;
   color: var(--ink2);
 }
@@ -4655,10 +4657,22 @@ button.nm-dot {
 .contact-desk-phone { font-variant-numeric: tabular-nums; }
 .contact-desk-email:hover,
 .contact-desk-phone:hover { color: var(--red-d); }
+/* Days on top, times beneath — spaced to match the label/phone rhythm above,
+   so the four lines of the block read as one evenly stacked list */
 .contact-desk-hours {
-  font-size: 13px;
-  color: var(--muted);
-  margin: 6px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-weight: 700;
+  color: var(--ink2);
+  margin: 0;
+  padding-top: 9px;
+}
+.contact-desk-hours-days { font-size: 16px; }
+.contact-desk-hours-time {
+  font-size: 18px;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── CONTACT FORM — DARK MODERN ── */

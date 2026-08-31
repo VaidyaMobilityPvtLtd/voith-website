@@ -19,7 +19,9 @@ export const contactDirect = {
     { label: "Vehicle Sales Department", address: "vsd@voith.com.np" },
   ] as ContactEmail[],
   phones: [{ label: "Reception", number: "+977 01-4008801" }] as ContactPhone[],
-  hours: "Sun – Fri · 09:00 – 18:00 NPT",
+  /** Reception hours, rendered on two lines: days above, times below. */
+  hoursDays: "Sun – Fri",
+  hoursTime: "9 am – 6 pm NPT",
 };
 
 export type ContactOffice = {
